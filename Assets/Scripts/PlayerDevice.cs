@@ -26,7 +26,7 @@ public class PlayerDevice : MonoBehaviour
         OnInput(value, Directions.Down);
     }
 
-    void Right(InputValue value)
+    void OnRight(InputValue value)
     {
         OnInput(value, Directions.Right);
     }

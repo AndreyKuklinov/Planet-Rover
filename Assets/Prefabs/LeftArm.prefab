@@ -151,6 +151,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 8300413450173941154}
   hand_prefab: {fileID: 8809946568785903265, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
-  movement_speed: 3
+  movement_speed: 6
   direction: {x: -1, y: 0}
-  is_moving: 0

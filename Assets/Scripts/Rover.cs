@@ -7,6 +7,7 @@ public class Rover : MonoBehaviour
     [SerializeField] RoverArm[] arms = new RoverArm[4];
     [SerializeField] float movementSpeed;
 
+    //TODO: Rework queue to keep track of what arm first started extending, not retracting
     Queue<RoverArm> awaitingRetraction = new Queue<RoverArm>();
     RoverArm retractingArm = null;
 
@@ -59,8 +60,8 @@ public class Rover : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target) <= 0.001f)
         {
-            retractingArm = null;
             retractingArm.DestroyHand();
+            retractingArm = null;
         }
     }
 }
