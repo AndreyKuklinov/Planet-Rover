@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3433220677676228000}
   - component: {fileID: 8300437465091008188}
-  - component: {fileID: 2213291321464355089}
   m_Layer: 0
   m_Name: ArmRenderer
   m_TagString: Untagged
@@ -137,22 +136,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &2213291321464355089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511316992538604954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df245faf51f65ca41a657a74cbe55327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 8300437465091008188}
-  targets:
-  - {fileID: 0}
-  - {fileID: 511316992538604954}
 --- !u!1 &8809946568785903265
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +146,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6192793253210080228}
   - component: {fileID: 5339263210184581837}
-  - component: {fileID: 8399098074241932321}
   m_Layer: 0
   m_Name: Rover Hand
   m_TagString: Untagged
@@ -229,7 +211,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7c3c6d74bceb19447a4b7b72de82e5a5, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -239,17 +221,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8399098074241932321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8809946568785903265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aade5cc237e80cc448d1e3b96e6de06d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movement_speed: 3
-  _is_moving: 0
