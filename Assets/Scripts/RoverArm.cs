@@ -16,7 +16,10 @@ public class RoverArm : MonoBehaviour
     [ContextMenu("Start movement")]
     public void StartMovement()
     {
-        hand = Instantiate(hand_prefab);
+        if (is_moving)
+            return;
+
+        hand = Instantiate(hand_prefab, transform);
         is_moving = true;
     }
 
