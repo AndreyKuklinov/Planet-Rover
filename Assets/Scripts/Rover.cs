@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Rover : MonoBehaviour
 {
     [SerializeField] RoverArm[] arms = new RoverArm[4];
+    [SerializeField] float movement_speed;
 
-    Queue<Directions> awaitingConstriction = new Queue<Directions>();
+    Queue<RoverArm> awaitingRetraction = new Queue<RoverArm>();
+    RoverArm retractingArm = null;
 
     public void OnArmPressed(Directions armDirection)
     {
@@ -18,11 +21,46 @@ public class Rover : MonoBehaviour
 
     public void OnArmReleased(Directions armDirection)
     {
+        var arm = arms[((int)armDirection)];
+        if (!arm.IsHandExtended)
+            return;
 
+        arm.StopExtending();
+        awaitingRetraction.Enqueue(arm);
     }
 
     void Update()
     {
+        UpdateRetractingArm();
+        MoveRetractingArm();
+    }
 
+    void UpdateRetractingArm()
+    {
+        if (awaitingRetraction.Count == 0 || retractingArm != null)
+            return;
+
+        retractingArm = awaitingRetraction.Dequeue();
+        retractingArm.UnchildHand();
+    }
+
+    void MoveRetractingArm()
+    {
+        if (retractingArm == null)
+            return;
+
+        var target = retractingArm.Hand.transform.position;
+
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            target,
+            movement_speed * Time.deltaTime
+        );
+
+        if (Vector3.Distance(transform.position, target) <= 0.001f)
+        {
+            retractingArm = null;
+            retractingArm.DestroyHand();
+        }
     }
 }
