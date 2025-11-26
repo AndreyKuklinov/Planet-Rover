@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7309484049913414329}
-  - component: {fileID: 4717165650951254792}
   - component: {fileID: 3154781355438930961}
   m_Layer: 0
   m_Name: Rover
@@ -37,52 +36,6 @@ Transform:
   - {fileID: 9009676748227674183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4717165650951254792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7073036248149461358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 66d162e67c84d4541bbd5aa6978fd505, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7981db75-c206-49bb-86e2-c6d17101d23c
-    m_ActionName: Hands/Up[/Keyboard/w]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1bf619d5-4960-4dd3-88b3-aa0cf822c39e
-    m_ActionName: Hands/Down[/Keyboard/s]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ce2f0b12-2e0a-4f2c-a493-ea93648ef962
-    m_ActionName: Hands/Left[/Keyboard/a]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4258efda-feac-4f79-a31f-a177a958b949
-    m_ActionName: Hands/Right[/Keyboard/d]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Hands
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!212 &3154781355438930961
 SpriteRenderer:
   m_ObjectHideFlags: 0

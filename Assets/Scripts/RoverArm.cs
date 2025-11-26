@@ -32,6 +32,7 @@ public class RoverArm : MonoBehaviour
     [ContextMenu("Destroy hand")]
     public void DestroyHand()
     {
+        is_moving = false;
         Destroy(hand);
     }
 
