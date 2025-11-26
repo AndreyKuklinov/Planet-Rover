@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7309484049913414329}
   - component: {fileID: 3154781355438930961}
-  - component: {fileID: 1788823952957484144}
+  - component: {fileID: 7673217809631484344}
   m_Layer: 0
   m_Name: Rover
   m_TagString: Untagged
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1788823952957484144
+--- !u!114 &7673217809631484344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,6 +106,7 @@ MonoBehaviour:
   - {fileID: 7399091798824962921}
   - {fileID: 2420508159797234503}
   - {fileID: 1627602709713896516}
+  movementSpeed: 5
 --- !u!1001 &1715130831015749530
 PrefabInstance:
   m_ObjectHideFlags: 0

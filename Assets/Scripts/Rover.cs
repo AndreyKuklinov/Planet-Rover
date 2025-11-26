@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rover : MonoBehaviour
 {
     [SerializeField] RoverArm[] arms = new RoverArm[4];
-    [SerializeField] float movement_speed;
+    [SerializeField] float movementSpeed;
 
     Queue<RoverArm> awaitingRetraction = new Queue<RoverArm>();
     RoverArm retractingArm = null;
@@ -32,7 +32,7 @@ public class Rover : MonoBehaviour
     void Update()
     {
         UpdateRetractingArm();
-        MoveRetractingArm();
+        MoveTowardsHand();
     }
 
     void UpdateRetractingArm()
@@ -44,7 +44,7 @@ public class Rover : MonoBehaviour
         retractingArm.UnchildHand();
     }
 
-    void MoveRetractingArm()
+    void MoveTowardsHand()
     {
         if (retractingArm == null)
             return;
@@ -54,7 +54,7 @@ public class Rover : MonoBehaviour
         transform.position = Vector3.MoveTowards(
             transform.position,
             target,
-            movement_speed * Time.deltaTime
+            movementSpeed * Time.deltaTime
         );
 
         if (Vector3.Distance(transform.position, target) <= 0.001f)
