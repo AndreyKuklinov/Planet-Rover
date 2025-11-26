@@ -9,46 +9,57 @@ public class RoverArm : MonoBehaviour
     [SerializeField] float movement_speed;
     [SerializeField] Vector2 direction;
 
-    [SerializeField] bool is_moving = false;
-
-    GameObject hand;
+    public bool IsHandMoving { get; private set; }
+    public GameObject Hand { get; private set; }
+    public bool IsHandExtended
+        => Hand != null;
 
     [ContextMenu("Start movement")]
-    public void StartMovement()
+    public void ExtendHand()
     {
-        if (is_moving)
+        if (IsHandMoving)
             return;
 
-        hand = Instantiate(hand_prefab, transform);
-        is_moving = true;
+        Hand = Instantiate(hand_prefab, transform);
+        IsHandMoving = true;
     }
 
     [ContextMenu("Stop movement")]
-    public void StopMovement()
+    public void StopExtending()
     {
-        is_moving = false;
+        IsHandMoving = false;
     }
 
     [ContextMenu("Destroy hand")]
     public void DestroyHand()
     {
-        is_moving = false;
-        Destroy(hand);
+        if (!IsHandExtended)
+            return;
+        IsHandMoving = false;
+        Destroy(Hand);
+    }
+
+    [ContextMenu("Unchild hand")]
+    public void UnchildHand()
+    {
+        if (!IsHandExtended)
+            return;
+        Hand.transform.SetParent(null);
     }
 
     void Update()
     {
-        if (is_moving)
+        if (IsHandMoving)
         {
-            hand.transform.position += (Vector3)(movement_speed * Time.deltaTime * direction);
+            Hand.transform.position += (Vector3)(movement_speed * Time.deltaTime * direction);
         }
 
-        if (hand != null)
+        if (IsHandExtended)
         {
             lineRenderer.enabled = true;
             lineRenderer.SetPositions(new Vector3[] {
                 transform.position,
-                hand.transform.position
+                Hand.transform.position
             });
         }
         else
