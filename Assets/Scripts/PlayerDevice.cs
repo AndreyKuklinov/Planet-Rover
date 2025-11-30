@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerDevice : MonoBehaviour
 {
-    public HashSet<Directions> AllowedDirections;
+    public HashSet<Directions> AllowedDirections = new HashSet<Directions>() { Directions.Right, Directions.Left };
     public Rover Rover;
 
     [SerializeField] bool isTestingOn;
