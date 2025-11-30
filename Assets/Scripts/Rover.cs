@@ -12,7 +12,7 @@ public class Rover : MonoBehaviour
     Queue<RoverArm> awaitingRetraction = new Queue<RoverArm>();
     RoverArm retractingArm = null;
 
-    public void OnArmPressed(Directions armDirection)
+    public void OnArmPressed(Direction armDirection)
     {
         var arm = arms[(int)armDirection];
         if (arm.IsHandExtended)
@@ -23,7 +23,7 @@ public class Rover : MonoBehaviour
             awaitingRetraction.Enqueue(arm);
     }
 
-    public void OnArmReleased(Directions armDirection)
+    public void OnArmReleased(Direction armDirection)
     {
         var arm = arms[((int)armDirection)];
         if (!arm.IsHandMoving)

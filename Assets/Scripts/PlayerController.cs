@@ -4,34 +4,34 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerDevice : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public HashSet<Directions> AllowedDirections = new HashSet<Directions>() { Directions.Right, Directions.Left };
+    public HashSet<Direction> AllowedDirections;
     public Rover Rover;
 
     [SerializeField] bool isTestingOn;
 
     void OnUp(InputValue value)
     {
-        OnInput(value, Directions.Up);
+        OnInput(value, Direction.Up);
     }
 
     void OnLeft(InputValue value)
     {
-        OnInput(value, Directions.Left);
+        OnInput(value, Direction.Left);
     }
 
     void OnDown(InputValue value)
     {
-        OnInput(value, Directions.Down);
+        OnInput(value, Direction.Down);
     }
 
     void OnRight(InputValue value)
     {
-        OnInput(value, Directions.Right);
+        OnInput(value, Direction.Right);
     }
 
-    void OnInput(InputValue value, Directions direction)
+    void OnInput(InputValue value, Direction direction)
     {
         if (!isTestingOn && !AllowedDirections.Contains(direction))
             return;
