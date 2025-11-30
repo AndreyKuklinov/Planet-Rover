@@ -106,7 +106,8 @@ MonoBehaviour:
   - {fileID: 7399091798824962921}
   - {fileID: 2420508159797234503}
   - {fileID: 1627602709713896516}
-  movementSpeed: 5
+  movementSpeed: 15
+  queueArmWhenStarted: 0
 --- !u!1001 &1715130831015749530
 PrefabInstance:
   m_ObjectHideFlags: 0

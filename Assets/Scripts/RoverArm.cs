@@ -17,7 +17,7 @@ public class RoverArm : MonoBehaviour
     [ContextMenu("Start movement")]
     public void ExtendHand()
     {
-        if (IsHandMoving)
+        if (IsHandExtended)
             return;
 
         Hand = Instantiate(hand_prefab, transform);
@@ -27,6 +27,9 @@ public class RoverArm : MonoBehaviour
     [ContextMenu("Stop movement")]
     public void StopExtending()
     {
+        if (!IsHandMoving)
+            return;
+
         IsHandMoving = false;
     }
 
@@ -35,6 +38,7 @@ public class RoverArm : MonoBehaviour
     {
         if (!IsHandExtended)
             return;
+
         IsHandMoving = false;
         Destroy(Hand);
     }
@@ -44,16 +48,26 @@ public class RoverArm : MonoBehaviour
     {
         if (!IsHandExtended)
             return;
+
         Hand.transform.SetParent(null);
     }
 
     void Update()
     {
+        MoveHand();
+        UpdateArmLine();
+    }
+
+    void MoveHand()
+    {
         if (IsHandMoving)
         {
             Hand.transform.position += (Vector3)(movement_speed * Time.deltaTime * direction);
         }
+    }
 
+    void UpdateArmLine()
+    {
         if (IsHandExtended)
         {
             lineRenderer.enabled = true;

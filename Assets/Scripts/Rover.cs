@@ -6,6 +6,7 @@ public class Rover : MonoBehaviour
 {
     [SerializeField] RoverArm[] arms = new RoverArm[4];
     [SerializeField] float movementSpeed;
+    [SerializeField] bool queueArmWhenStarted;
 
     //TODO: Rework queue to keep track of what arm first started extending, not retracting
     Queue<RoverArm> awaitingRetraction = new Queue<RoverArm>();
@@ -13,21 +14,24 @@ public class Rover : MonoBehaviour
 
     public void OnArmPressed(Directions armDirection)
     {
-        var arm = arms[((int)armDirection)];
+        var arm = arms[(int)armDirection];
         if (arm.IsHandExtended)
             return;
 
         arm.ExtendHand();
+        if (queueArmWhenStarted)
+            awaitingRetraction.Enqueue(arm);
     }
 
     public void OnArmReleased(Directions armDirection)
     {
         var arm = arms[((int)armDirection)];
-        if (!arm.IsHandExtended)
+        if (!arm.IsHandMoving)
             return;
 
         arm.StopExtending();
-        awaitingRetraction.Enqueue(arm);
+        if (!queueArmWhenStarted)
+            awaitingRetraction.Enqueue(arm);
     }
 
     void Update()
@@ -39,6 +43,10 @@ public class Rover : MonoBehaviour
     void UpdateRetractingArm()
     {
         if (awaitingRetraction.Count == 0 || retractingArm != null)
+            return;
+
+        var firstInQueue = awaitingRetraction.First();
+        if (firstInQueue.IsHandMoving)
             return;
 
         retractingArm = awaitingRetraction.Dequeue();
