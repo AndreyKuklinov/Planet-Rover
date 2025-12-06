@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     public HashSet<Direction> AllowedDirections;
     public Rover Rover;
 
-    [SerializeField] bool isTestingOn;
-
     void OnUp(InputValue value)
     {
         OnInput(value, Direction.Up);
@@ -33,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     void OnInput(InputValue value, Direction direction)
     {
-        if (!isTestingOn && !AllowedDirections.Contains(direction))
+        if (!AllowedDirections.Contains(direction))
             return;
 
         if (value.isPressed)
