@@ -8,7 +8,7 @@ public class Mover : MonoBehaviour
 
     public bool IsMoving { get; private set; }
 
-    private Action move;
+    private Action move = () => { };
     private Vector2 currentVector;
     private float movementSpeed;
 

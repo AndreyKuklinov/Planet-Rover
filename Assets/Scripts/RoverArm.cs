@@ -7,17 +7,18 @@ public class RoverArm : MonoBehaviour
     [field: SerializeField] public Direction Direction { get; private set; }
 
     [SerializeField] bool canVoluntarilyStop = true;
-    [SerializeField] Mover handPrefab;
+    [SerializeField] Hand handPrefab;
     [SerializeField] float handSpeed;
 
-    private Mover hand;
-    bool moveMyHandPlease;
+    public bool IsRetracting;
+
+    private Hand hand;
 
     public bool IsHandExtended
         => hand != null;
 
-    public Vector3 HandPosition
-        => hand.transform.position;
+    public Vector3 Target
+        => hand.Target.position;
 
     public void Extend()
     {
@@ -26,19 +27,25 @@ public class RoverArm : MonoBehaviour
             hand = Instantiate(handPrefab, transform);
         }
 
-        hand.MoveInDirection(Direction, handSpeed);
+        hand.Mover.MoveInDirection(Direction, handSpeed);
     }
 
-    public void Grab()
+    public void StopHand()
     {
         if (!canVoluntarilyStop)
             return;
 
-        hand.StopMoving();
+        hand.Mover.StopMoving();
+    }
+
+    public void DetachHand()
+    {
+        hand.transform.SetParent(null);
     }
 
     public void Deactivate()
     {
         Destroy(hand.gameObject);
+        IsRetracting = false;
     }
 }

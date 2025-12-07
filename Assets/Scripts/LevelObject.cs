@@ -9,7 +9,7 @@ public class LevelObject : MonoBehaviour
         AttachToGrid();
     }
 
-    void AttachToGrid()
+    public void AttachToGrid()
     {
         var grid = FindObjectOfType<LevelGrid>();
 

@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36fffc31e664ce40a3b0f7f0ee3aad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  <Direction>k__BackingField: 0
   canVoluntarilyStop: 1
-  handPrefab: {fileID: 2097976647122020694, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
-  handSpeed: 10
+  handPrefab: {fileID: 4922780711204251716, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+  handSpeed: 7
+  IsRetracting: 0

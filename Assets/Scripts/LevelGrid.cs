@@ -13,9 +13,15 @@ public class LevelGrid : MonoBehaviour
         Objects.Add(obj, new Vector2(cell.x, cell.y));
     }
 
+    public Vector3 SnapToGrid(Vector3 position)
+    {
+        var cell = WorldToCell(position);
+        return CellToWorld(cell);
+    }
+
     public Vector3Int WorldToCell(Vector3 position)
         => grid.WorldToCell(position);
 
     public Vector3 CellToWorld(Vector3Int position)
-        => grid.CellToWorld(position);
+        => grid.GetCellCenterWorld(position);
 }
