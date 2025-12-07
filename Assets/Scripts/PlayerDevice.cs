@@ -4,10 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerDevice : MonoBehaviour
 {
     public HashSet<Direction> AllowedDirections;
-    public Rover Rover;
+    private GameController gameController;
 
     void OnUp(InputValue value)
     {
@@ -31,12 +31,9 @@ public class PlayerController : MonoBehaviour
 
     void OnInput(InputValue value, Direction direction)
     {
-        if (!AllowedDirections.Contains(direction))
-            return;
+        if(gameController == null)
+            gameController = FindObjectOfType<GameController>();
 
-        if (value.isPressed)
-            Rover.OnArmPressed(direction);
-        else
-            Rover.OnArmReleased(direction);
+        gameController.PressDirection(value, direction, this);
     }
 }

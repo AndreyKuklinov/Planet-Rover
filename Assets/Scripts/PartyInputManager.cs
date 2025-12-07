@@ -5,9 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PartyInputManager : MonoBehaviour
 {
-    [SerializeField] Rover rover;
-
-    private List<PlayerController> players = new List<PlayerController>();
+    private List<PlayerDevice> players = new List<PlayerDevice>();
 
     private readonly Dictionary<int, HashSet<Direction>[]> allowedDirections = new Dictionary<int, HashSet<Direction>[]>()
     {
@@ -30,13 +28,13 @@ public class PartyInputManager : MonoBehaviour
 
     void OnPlayerJoined(PlayerInput playerInput)
     {
-        players.Add(playerInput.GetComponent<PlayerController>());
+        players.Add(playerInput.GetComponent<PlayerDevice>());
         ConfigurePlayers();
     }
 
     void OnPlayerLeft(PlayerInput playerInput)
     {
-        players.Remove(playerInput.GetComponent<PlayerController>());
+        players.Remove(playerInput.GetComponent<PlayerDevice>());
         ConfigurePlayers();
     }
 
@@ -44,7 +42,6 @@ public class PartyInputManager : MonoBehaviour
     {
         for (var i = 0; i < players.Count; i++)
         {
-            players[i].Rover = rover;
             players[i].AllowedDirections = allowedDirections[players.Count][i];
         }
     }

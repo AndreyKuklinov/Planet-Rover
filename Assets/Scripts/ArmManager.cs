@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ArmManager : MonoBehaviour
 {
-    [SerializeField] NewArm[] arms = new NewArm[4];
+    [SerializeField] RoverArm[] arms = new RoverArm[4];
 
-    public void OnButtonPressed(Direction direction)
+    public void Extend(Direction direction)
     {
-        
+        GetArm(direction).Extend();
     }
 
-    public void OnButtonReleased(Direction direction)
+    public void Grab(Direction direction)
     {
-        
+        GetArm(direction).Grab();
     }
 
-    NewArm GetArm(Direction direction)
+    RoverArm GetArm(Direction direction)
         => arms[(int)direction];
 }

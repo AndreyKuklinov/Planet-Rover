@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8369092896944796225}
   - component: {fileID: 3851624921872592045}
-  - component: {fileID: 9213209616421843285}
+  - component: {fileID: 8626962247180124928}
   m_Layer: 0
   m_Name: PlayerDevice
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_DefaultActionMap: Hands
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &9213209616421843285
+--- !u!114 &8626962247180124928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,8 +72,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2948871419467366799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3af4e9f9bc6bf4ba02faf5cc046ee9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a6e9299e79b6a7468484e5ce4239b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rover: {fileID: 0}
-  isTestingOn: 0
+  GameController: {fileID: 0}
