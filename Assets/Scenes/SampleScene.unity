@@ -380,6 +380,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1627602709713896516, guid: a4b576645fef90348b527450d650d304, type: 3}
+      propertyPath: direction
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2420508159797234503, guid: a4b576645fef90348b527450d650d304, type: 3}
+      propertyPath: direction
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7073036248149461358, guid: a4b576645fef90348b527450d650d304, type: 3}
       propertyPath: m_Name
       value: Rover
@@ -423,6 +431,10 @@ PrefabInstance:
     - target: {fileID: 7309484049913414329, guid: a4b576645fef90348b527450d650d304, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399091798824962921, guid: a4b576645fef90348b527450d650d304, type: 3}
+      propertyPath: direction
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

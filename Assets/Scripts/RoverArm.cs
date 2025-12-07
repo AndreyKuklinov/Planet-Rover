@@ -5,14 +5,20 @@ using UnityEngine;
 public class RoverArm : MonoBehaviour
 {
     [SerializeField] LineRenderer lineRenderer;
-    [SerializeField] GameObject hand_prefab;
-    [SerializeField] float movement_speed;
-    [SerializeField] Vector2 direction;
+    [SerializeField] Mover handPrefab;
+    [SerializeField] float movementSpeed;
+    [SerializeField] Direction direction;
 
-    public bool IsHandMoving { get; private set; }
-    public GameObject Hand { get; private set; }
+    public bool IsHandMoving
+        => Hand.IsMoving;
+    public Mover Hand { get; private set; }
     public bool IsHandExtended
         => Hand != null;
+
+    public void OnButtonPressed()
+    {
+        ExtendHand();
+    }
 
     [ContextMenu("Start movement")]
     public void ExtendHand()
@@ -20,17 +26,14 @@ public class RoverArm : MonoBehaviour
         if (IsHandExtended)
             return;
 
-        Hand = Instantiate(hand_prefab, transform);
-        IsHandMoving = true;
+        Hand = Instantiate(handPrefab, transform);
+        Hand.MoveInDirection(direction, movementSpeed);
     }
 
     [ContextMenu("Stop movement")]
     public void StopExtending()
     {
-        if (!IsHandMoving)
-            return;
-
-        IsHandMoving = false;
+        Hand.StopMoving();
     }
 
     [ContextMenu("Destroy hand")]
@@ -39,8 +42,8 @@ public class RoverArm : MonoBehaviour
         if (!IsHandExtended)
             return;
 
-        IsHandMoving = false;
-        Destroy(Hand);
+        Hand.StopMoving();
+        Destroy(Hand.gameObject);
     }
 
     [ContextMenu("Unchild hand")]
@@ -54,16 +57,7 @@ public class RoverArm : MonoBehaviour
 
     void Update()
     {
-        MoveHand();
         UpdateArmLine();
-    }
-
-    void MoveHand()
-    {
-        if (IsHandMoving)
-        {
-            Hand.transform.position += (Vector3)(movement_speed * Time.deltaTime * direction);
-        }
     }
 
     void UpdateArmLine()
