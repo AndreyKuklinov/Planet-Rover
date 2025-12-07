@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    [field: SerializeField] public Grid Grid;
+    [SerializeField] LevelGrid grid;
 
-    
 }

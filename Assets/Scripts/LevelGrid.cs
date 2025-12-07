@@ -4,12 +4,12 @@ public class LevelGrid : MonoBehaviour
 {
     [SerializeField] Grid grid;
 
-    private readonly Map<Vector2, LevelObject> objects = new();
+    public readonly Map<Vector2, LevelObject> Objects = new();
 
     public void PlaceObject(LevelObject obj)
     {
         var cell = grid.WorldToCell(obj.transform.position);
         obj.transform.position = grid.CellToWorld(cell);
-        objects.Add(obj, new Vector2(cell.x, cell.y));
+        Objects.Add(obj, new Vector2(cell.x, cell.y));
     }
 }

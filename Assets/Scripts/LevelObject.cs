@@ -6,7 +6,16 @@ public class LevelObject : MonoBehaviour
 {
     void Start()
     {
+        AttachToGrid();
+    }
+
+    void AttachToGrid()
+    {
         var grid = FindObjectOfType<LevelGrid>();
+
+        if (grid == null)
+            return;
+
         grid.PlaceObject(this);
     }
 }
