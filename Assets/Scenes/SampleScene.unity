@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: direction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5083256349959151209, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: <Direction>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -294,6 +298,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5083256349959151209, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: direction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083256349959151209, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: <Direction>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
@@ -530,6 +538,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5083256349959151209, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: direction
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083256349959151209, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: <Direction>k__BackingField
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}

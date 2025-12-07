@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RoverArm : MonoBehaviour
 {
-    [SerializeField] Direction direction;
+    [field: SerializeField] public Direction Direction { get; private set; }
+
     [SerializeField] bool canVoluntarilyStop = true;
     [SerializeField] Mover handPrefab;
     [SerializeField] float handSpeed;
@@ -21,7 +22,7 @@ public class RoverArm : MonoBehaviour
             hand = Instantiate(handPrefab, transform);
         }
 
-        hand.MoveInDirection(direction, handSpeed);
+        hand.MoveInDirection(Direction, handSpeed);
     }
 
     public void Grab()
