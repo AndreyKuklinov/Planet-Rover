@@ -65,9 +65,10 @@ public class ArmManager : MonoBehaviour
     {
         if(movementArm != null)
         {
-            roverObj.AttachToGrid();
             movementArm.Deactivate();
             movementArm = null;
+            roverBody.StopMoving();
+            roverObj.AttachToGrid();
         }
     }
 }

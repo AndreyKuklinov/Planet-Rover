@@ -20,6 +20,9 @@ public class RoverArm : MonoBehaviour
     public Vector3 Target
         => hand.Target.position;
 
+    public Vector3 HandPosition
+        => hand.transform.position;
+
     public void Extend()
     {
         if(hand == null)

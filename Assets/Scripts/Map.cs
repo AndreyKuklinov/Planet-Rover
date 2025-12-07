@@ -1,11 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
-using UnityEngine;
 
 public class Map<TPosition, TObject>
 {
