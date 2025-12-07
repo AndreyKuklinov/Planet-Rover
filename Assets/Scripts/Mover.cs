@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
+    // TODO: Possibly reorganise this functional nonsense
     public event Action ReachedDestination;
 
     public bool IsMoving { get; private set; }

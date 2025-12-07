@@ -11,9 +11,13 @@ public class RoverArm : MonoBehaviour
     [SerializeField] float handSpeed;
 
     private Mover hand;
+    bool moveMyHandPlease;
 
     public bool IsHandExtended
         => hand != null;
+
+    public Vector3 HandPosition
+        => hand.transform.position;
 
     public void Extend()
     {

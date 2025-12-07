@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
+    // TODO: Figure out how to actually do this
     [SerializeField] ArmManager armManager;
 
     public void PressDirection(InputValue value, Direction direction, PlayerDevice player)

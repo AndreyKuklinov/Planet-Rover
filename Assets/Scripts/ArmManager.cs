@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ArmManager : MonoBehaviour
 {
+    [SerializeField] LevelGrid levelGrid;
     [SerializeField] RoverArm[] arms = new RoverArm[4];
 
     private RoverArm grabbingArm;
@@ -22,16 +23,10 @@ public class ArmManager : MonoBehaviour
     {
         var arm = GetArm(direction);
 
-        if (grabbingArm == arm || !arm.IsHandExtended)
+        if (!arm.IsHandExtended)
             return;
 
         arm.Grab();
-
-        if(grabbingArm != null)
-            grabbingArm.Deactivate();
-
-
-        grabbingArm = GetArm(direction);
     }
 
     RoverArm GetArm(Direction direction)
