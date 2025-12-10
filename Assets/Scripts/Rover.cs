@@ -22,7 +22,7 @@ public class Rover : MonoBehaviour
     {
         var arm = GetArm(direction);
 
-        if (arm.IsHandExtended)
+        if (arm.IsRetracting)
             return;
 
         arm.Extend();
@@ -32,15 +32,25 @@ public class Rover : MonoBehaviour
     {
         var arm = GetArm(direction);
 
-        if (!arm.IsHandExtended || arm.IsRetracting)
+        if (arm.IsRetracting)
             return;
 
         var handCell = levelGrid.WorldToCell(arm.Target);
-        if (levelGrid.Objects.IsEmpty(handCell))
-            MoveToHand(arm);
+
+        if (arm.IsHoldingObject)
+        {
+            if (levelGrid.Objects.IsEmpty(handCell))
+                arm.DropObject();
+        }
 
         else
-            arm.GrabObject(levelGrid.Objects.GetObject(handCell));
+        {
+            if (levelGrid.Objects.IsEmpty(handCell))
+                MoveToHand(arm);
+
+            else
+                arm.GrabObject(levelGrid.Objects.GetObject(handCell));
+        }
     }
 
     void MoveToHand(RoverArm arm)
@@ -51,7 +61,7 @@ public class Rover : MonoBehaviour
             levelGrid.Objects.Remove(levelObject);
 
         movementArm = arm;
-        movementArm.IsRetracting = true;
+        movementArm.GrabEmpty();
 
         movementArm.DetachHand();
         movementArm.StopHand();

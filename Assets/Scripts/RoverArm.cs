@@ -10,10 +10,13 @@ public class RoverArm : MonoBehaviour
     [SerializeField] Hand handPrefab;
     [SerializeField] float handSpeed;
 
-    public bool IsRetracting;
+    public bool IsRetracting { get; private set; }
 
     private Hand hand;
     private LevelObject grabbedObject;
+
+    public bool IsHoldingObject
+        => grabbedObject != null;
 
     public bool IsHandExtended
         => hand != null;
@@ -23,6 +26,15 @@ public class RoverArm : MonoBehaviour
 
     public Vector3 HandPosition
         => hand.transform.position;
+
+    void Update()
+    {
+        if (IsHoldingObject && IsRetracting && hand.Mover.IsAtDestination)
+        {
+            hand.Mover.StopMoving();
+            IsRetracting = false;
+        }
+    }
 
     public void Extend()
     {
@@ -57,5 +69,20 @@ public class RoverArm : MonoBehaviour
     {
         obj.transform.SetParent(hand.transform);
         hand.Mover.MoveToTransform(transform, handSpeed);
+        grabbedObject = obj;
+        IsRetracting = true;
+    }
+
+    public void DropObject()
+    {
+        grabbedObject.transform.SetParent(null);
+        grabbedObject.AttachToGrid();
+        grabbedObject = null;
+        Deactivate();
+    }
+
+    public void GrabEmpty()
+    {
+        IsRetracting = true; 
     }
 }
