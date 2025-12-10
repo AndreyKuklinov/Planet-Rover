@@ -646,6 +646,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armManager: {fileID: 1629968050}
+  partyManager: {fileID: 978509609}
+--- !u!114 &978509609 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5193713711339032704, guid: c762cd90e690b684fac8beec8447ebef, type: 3}
+  m_PrefabInstance: {fileID: 2694562194346573766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978509604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78df7429570b80947a5034090cee7277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1142659337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,11 +1065,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361956286523861104, guid: c762cd90e690b684fac8beec8447ebef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.52
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7361956286523861104, guid: c762cd90e690b684fac8beec8447ebef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7361956286523861104, guid: c762cd90e690b684fac8beec8447ebef, type: 3}
       propertyPath: m_LocalPosition.z

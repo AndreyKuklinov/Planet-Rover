@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerDevice : MonoBehaviour
 {
+    public delegate void DirectionTriggeredHandler(
+        InputValue inputValue, 
+        Direction direction, 
+        PlayerDevice playerDevice
+    );
+    public event DirectionTriggeredHandler DirectionTriggered;
+
     public HashSet<Direction> AllowedDirections;
     private GameController gameController;
 
@@ -34,6 +42,6 @@ public class PlayerDevice : MonoBehaviour
         if(gameController == null)
             gameController = FindObjectOfType<GameController>();
 
-        gameController.PressDirection(value, direction, this);
+        DirectionTriggered?.Invoke(value, direction, this);
     }
 }

@@ -5,14 +5,18 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-    // TODO: Figure out how to actually do this
     [SerializeField] ArmManager armManager;
+    [SerializeField] PartyInputManager partyManager;
 
-    public void PressDirection(InputValue value, Direction direction, PlayerDevice player)
+    void Start()
+    {
+        partyManager.DirectionTriggered += OnDirectionTriggered;
+    }
+
+    void OnDirectionTriggered(InputValue value, Direction direction, PlayerDevice player)
     {
         if (!player.AllowedDirections.Contains(direction))
             return;
-
         if (value.isPressed)
             armManager.Extend(direction);
         else

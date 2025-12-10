@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,11 @@ using UnityEngine.InputSystem;
 
 public class PartyInputManager : MonoBehaviour
 {
-    private List<PlayerDevice> players = new List<PlayerDevice>();
+    public event PlayerDevice.DirectionTriggeredHandler DirectionTriggered;
 
-    private readonly Dictionary<int, HashSet<Direction>[]> allowedDirections = new Dictionary<int, HashSet<Direction>[]>()
+    private readonly List<PlayerDevice> players = new();
+
+    private readonly Dictionary<int, HashSet<Direction>[]> allowedDirections = new()
     {
         {
             1,
@@ -28,8 +31,15 @@ public class PartyInputManager : MonoBehaviour
 
     void OnPlayerJoined(PlayerInput playerInput)
     {
-        players.Add(playerInput.GetComponent<PlayerDevice>());
+        var device = playerInput.GetComponent<PlayerDevice>();
+        players.Add(device);
         ConfigurePlayers();
+        device.DirectionTriggered += OnDirectionTriggered;
+    }
+
+    void OnDirectionTriggered(InputValue inputValue, Direction direction, PlayerDevice playerDevice)
+    {
+        DirectionTriggered?.Invoke(inputValue, direction, playerDevice);
     }
 
     void OnPlayerLeft(PlayerInput playerInput)
