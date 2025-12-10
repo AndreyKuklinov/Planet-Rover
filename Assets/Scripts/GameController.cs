@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] ArmManager armManager;
+    [SerializeField] Rover armManager;
     [SerializeField] PartyInputManager partyManager;
 
     void Start()

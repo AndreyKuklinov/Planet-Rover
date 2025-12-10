@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmManager : MonoBehaviour
+public class Rover : MonoBehaviour
 {
-    [SerializeField] LevelObject roverObj;
-    [SerializeField] Mover roverBody;
+    [SerializeField] LevelObject levelObject;
+    [SerializeField] Mover mover;
     [SerializeField] float roverSpeed;
     [SerializeField] LevelGrid levelGrid;
     [SerializeField] RoverArm[] arms = new RoverArm[4];
 
     private RoverArm movementArm;
 
-    void Start()
+    void Update()
     {
-        roverBody.ReachedDestination += OnRoverReachedDestination;
+        if (mover.IsAtDestination)
+            OnReachedDestination();
     }
 
     public void Extend(Direction direction)
@@ -39,15 +40,15 @@ public class ArmManager : MonoBehaviour
             MoveToHand(arm);
 
         else
-            arm.Deactivate();
+            arm.GrabObject(levelGrid.Objects.GetObject(handCell));
     }
 
-    public void MoveToHand(RoverArm arm)
+    void MoveToHand(RoverArm arm)
     {
         if (movementArm != null)
             movementArm.Deactivate();
         else
-            levelGrid.Objects.Remove(roverObj);
+            levelGrid.Objects.Remove(levelObject);
 
         movementArm = arm;
         movementArm.IsRetracting = true;
@@ -55,20 +56,20 @@ public class ArmManager : MonoBehaviour
         movementArm.DetachHand();
         movementArm.StopHand();
         var target = levelGrid.SnapToGrid(movementArm.Target);
-        roverBody.MoveToPosition(target, roverSpeed);
+        mover.MoveToPosition(target, roverSpeed);
     }
 
     RoverArm GetArm(Direction direction)
         => arms[(int)direction];
 
-    public void OnRoverReachedDestination()
+    void OnReachedDestination()
     {
-        if(movementArm != null)
-        {
-            movementArm.Deactivate();
-            movementArm = null;
-            roverBody.StopMoving();
-            roverObj.AttachToGrid();
-        }
+        if (movementArm == null)
+            return;
+
+        movementArm.Deactivate();
+        movementArm = null;
+        mover.StopMoving();
+        levelObject.AttachToGrid();
     }
 }

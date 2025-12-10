@@ -13,6 +13,7 @@ public class RoverArm : MonoBehaviour
     public bool IsRetracting;
 
     private Hand hand;
+    private LevelObject grabbedObject;
 
     public bool IsHandExtended
         => hand != null;
@@ -50,5 +51,11 @@ public class RoverArm : MonoBehaviour
     {
         Destroy(hand.gameObject);
         IsRetracting = false;
+    }
+
+    public void GrabObject(LevelObject obj)
+    {
+        obj.transform.SetParent(hand.transform);
+        hand.Mover.MoveToTransform(transform, handSpeed);
     }
 }
