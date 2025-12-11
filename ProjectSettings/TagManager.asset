@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Rover Hands
+    uniqueID: 2034242417
+    locked: 0
+  - name: Level Objects
+    uniqueID: 530406101
+    locked: 0

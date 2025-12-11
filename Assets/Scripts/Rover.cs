@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
@@ -17,6 +18,12 @@ public class Rover : MonoBehaviour
     {
         if (mover.IsAtDestination)
             OnReachedDestination();
+
+        foreach(var arm in arms)
+        {
+            if (IsArmOverImpassableObjects(arm))
+                arm.RetractHand();
+        }
     }
 
     public void Extend(Direction direction)
@@ -41,10 +48,18 @@ public class Rover : MonoBehaviour
         else
         {
             if (levelGrid.Objects.IsEmpty(handCell))
+            {
                 MoveToHand(arm);
+                return;
+            }
+
+            var obj = levelGrid.Objects.GetObject(handCell);
+
+            if (obj.IsGrabbable)
+                arm.GrabObject(obj);
 
             else
-                arm.GrabObject(levelGrid.Objects.GetObject(handCell));
+                arm.RetractHand();
         }
     }
 
@@ -76,5 +91,12 @@ public class Rover : MonoBehaviour
         movementArm = null;
         mover.StopMoving();
         levelObject.AttachToGrid();
+    }
+
+    bool IsArmOverImpassableObjects(RoverArm arm)
+    {
+        var armPos = levelGrid.WorldToCell(arm.transform.position);
+        var handPos = levelGrid.WorldToCell(arm.HandPosition);
+        return levelGrid.GetObjectsOnLine(armPos, handPos).Any(x => x.IsImpassable);
     }
 }

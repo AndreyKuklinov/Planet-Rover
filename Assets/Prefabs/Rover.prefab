@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelObject: {fileID: 3506957614284788329}
   mover: {fileID: 4508055378203844797}
-  roverSpeed: 1
+  roverSpeed: 15
   levelGrid: {fileID: 0}
   arms:
   - {fileID: 8704951163649841259}
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e2fd3c767e44e40882a22d83601292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsImpassable: 0
 --- !u!114 &4508055378203844797
 MonoBehaviour:
   m_ObjectHideFlags: 0

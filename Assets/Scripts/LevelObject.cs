@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LevelObject : MonoBehaviour
 {
+    [field: SerializeField] public bool IsImpassable;
+    [field: SerializeField] public bool IsGrabbable;
+
     private LevelGrid grid;
 
     void Start()
