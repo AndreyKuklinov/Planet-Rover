@@ -77,7 +77,7 @@ public class RoverArm : MonoBehaviour
         if (CurrentState != HandState.Extending)
             return;
 
-        obj.AttachToObject(hand.transform);
+        obj.AttachToObject(hand.Target.transform);
         grabbedObject = obj;
         RetractHand();
     }

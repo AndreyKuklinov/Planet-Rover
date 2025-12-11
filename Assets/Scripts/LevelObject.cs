@@ -24,6 +24,7 @@ public class LevelObject : MonoBehaviour
     public void AttachToObject(Transform target)
     {
         transform.SetParent(target.transform);
+        transform.position = target.position;
         grid.RemoveObject(this);
     }
 }
