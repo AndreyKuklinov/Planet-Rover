@@ -31,7 +31,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 144778059396102853}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5083256349959151209
@@ -48,9 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Direction>k__BackingField: 0
   canVoluntarilyStop: 1
-  handPrefab: {fileID: 4922780711204251716, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+  hand: {fileID: 1414790807741763941}
   handSpeed: 10
-  IsRetracting: 0
 --- !u!120 &6568338260342549353
 LineRenderer:
   serializedVersion: 2
@@ -169,3 +169,80 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 6568338260342549353}
   arm: {fileID: 5083256349959151209}
+--- !u!1001 &6337517161624828193
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8744854157989184388}
+    m_Modifications:
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809946568785903265, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_Name
+      value: Rover Hand
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809946568785903265, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+--- !u!4 &144778059396102853 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6192793253210080228, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+  m_PrefabInstance: {fileID: 6337517161624828193}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1414790807741763941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4922780711204251716, guid: 2394ba7521a9d0d46aee5af806a76070, type: 3}
+  m_PrefabInstance: {fileID: 6337517161624828193}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f795d79717646641b5650fa4a6c349f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,25 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RoverArm : MonoBehaviour
 {
+    public enum HandState
+    {
+        None,
+        Extending,
+        Retracting,
+        Holding
+    }
+
     [field: SerializeField] public Direction Direction { get; private set; }
 
-    [SerializeField] bool canVoluntarilyStop = true;
-    [SerializeField] Hand handPrefab;
+    [SerializeField] Hand hand;
     [SerializeField] float handSpeed;
 
-    public bool IsRetracting { get; private set; }
+    public HandState CurrentState { get; private set; }
 
-    private Hand hand;
     private LevelObject grabbedObject;
 
     public bool IsHoldingObject
         => grabbedObject != null;
 
-    public bool IsHandExtended
-        => hand != null;
+    public bool IsHandOut
+        => CurrentState != HandState.None;
 
     public Vector3 Target
         => hand.Target.position;
@@ -29,53 +36,55 @@ public class RoverArm : MonoBehaviour
 
     void Update()
     {
-        if (IsHoldingObject && IsRetracting && hand.Mover.IsAtDestination)
+        if (IsHoldingObject && CurrentState == HandState.Retracting && hand.Mover.IsAtDestination)
         {
             hand.Mover.StopMoving();
-            IsRetracting = false;
+            CurrentState = HandState.Holding;
         }
     }
 
     public void Extend()
     {
-        if(hand == null)
-        {
-            hand = Instantiate(handPrefab, transform);
-        }
-
-        hand.Mover.MoveInDirection(Direction, handSpeed);
-    }
-
-    public void StopHand()
-    {
-        if (!canVoluntarilyStop)
+        if (CurrentState == HandState.Extending || CurrentState == HandState.Retracting)
             return;
 
-        hand.Mover.StopMoving();
-    }
-
-    public void DetachHand()
-    {
-        hand.transform.SetParent(null);
+        hand.gameObject.SetActive(true);
+        hand.Mover.MoveInDirection(Direction, handSpeed);
+        CurrentState = HandState.Extending;
     }
 
     public void Deactivate()
     {
-        Destroy(hand.gameObject);
-        IsRetracting = false;
+        hand.gameObject.SetActive(false);
+        hand.transform.position = transform.position;
+        hand.transform.SetParent(transform);
+        CurrentState = HandState.None;
+    }
+
+    public void RetractHand()
+    {
+        hand.Mover.MoveToTransform(transform, handSpeed);
+        CurrentState = HandState.Retracting;
     }
 
     public void GrabObject(LevelObject obj)
     {
-        obj.transform.SetParent(hand.transform);
-        hand.Mover.MoveToTransform(transform, handSpeed);
+        if (CurrentState != HandState.Extending)
+            return;
+
+        obj.AttachToObject(hand.transform);
         grabbedObject = obj;
-        IsRetracting = true;
+        RetractHand();
     }
 
     public void DropObject()
     {
-        grabbedObject.transform.SetParent(null);
+        if (grabbedObject == null)
+            throw new InvalidOperationException("Trying to drop a non-existant object");
+
+        if (CurrentState != HandState.Extending)
+            return;
+
         grabbedObject.AttachToGrid();
         grabbedObject = null;
         Deactivate();
@@ -83,6 +92,11 @@ public class RoverArm : MonoBehaviour
 
     public void GrabEmpty()
     {
-        IsRetracting = true; 
+        if (CurrentState != HandState.Extending)
+            return;
+
+        hand.Mover.StopMoving();
+        hand.transform.SetParent(null);
+        CurrentState = HandState.Retracting;
     }
 }

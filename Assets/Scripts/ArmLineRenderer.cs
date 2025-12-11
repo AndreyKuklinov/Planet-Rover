@@ -9,7 +9,7 @@ public class ArmLineRenderer : MonoBehaviour
 
     void Update()
     {
-        if (!arm.IsHandExtended)
+        if (!arm.IsHandOut)
         {
             lineRenderer.enabled = false;
             return;

@@ -13,6 +13,11 @@ public class LevelGrid : MonoBehaviour
         Objects.Add(obj, new Vector2(cell.x, cell.y));
     }
 
+    public void RemoveObject(LevelObject obj)
+    {
+        Objects.Remove(obj);
+    }
+
     public Vector3 SnapToGrid(Vector3 position)
     {
         var cell = WorldToCell(position);

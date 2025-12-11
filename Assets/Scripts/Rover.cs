@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class Rover : MonoBehaviour
@@ -20,20 +21,12 @@ public class Rover : MonoBehaviour
 
     public void Extend(Direction direction)
     {
-        var arm = GetArm(direction);
-
-        if (arm.IsRetracting)
-            return;
-
-        arm.Extend();
+        GetArm(direction).Extend();
     }
 
     public void Grab(Direction direction)
     {
         var arm = GetArm(direction);
-
-        if (arm.IsRetracting)
-            return;
 
         var handCell = levelGrid.WorldToCell(arm.Target);
 
@@ -41,6 +34,8 @@ public class Rover : MonoBehaviour
         {
             if (levelGrid.Objects.IsEmpty(handCell))
                 arm.DropObject();
+            else
+                arm.RetractHand();
         }
 
         else
@@ -62,9 +57,6 @@ public class Rover : MonoBehaviour
 
         movementArm = arm;
         movementArm.GrabEmpty();
-
-        movementArm.DetachHand();
-        movementArm.StopHand();
         var target = levelGrid.SnapToGrid(movementArm.Target);
         mover.MoveToPosition(target, roverSpeed);
     }
