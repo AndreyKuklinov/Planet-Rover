@@ -41,13 +41,18 @@ public class RoverArm : MonoBehaviour
             hand.Mover.StopMoving();
             CurrentState = HandState.Holding;
         }
+
+        if(CurrentState == HandState.Retracting && hand.Mover.IsAtDestination)
+        {
+            Deactivate();
+        }
     }
 
     public void Extend()
     {
         if (CurrentState == HandState.Extending || CurrentState == HandState.Retracting)
             return;
-
+        
         hand.gameObject.SetActive(true);
         hand.Mover.MoveInDirection(Direction, handSpeed);
         CurrentState = HandState.Extending;
@@ -87,16 +92,17 @@ public class RoverArm : MonoBehaviour
 
         grabbedObject.AttachToGrid();
         grabbedObject = null;
-        Deactivate();
+        RetractHand();
     }
 
-    public void GrabEmpty()
+    public bool GrabEmpty()
     {
         if (CurrentState != HandState.Extending)
-            return;
+            return false;
 
         hand.Mover.StopMoving();
         hand.transform.SetParent(null);
         CurrentState = HandState.Retracting;
+        return true;
     }
 }

@@ -52,11 +52,14 @@ public class Rover : MonoBehaviour
     {
         if (movementArm != null)
             movementArm.Deactivate();
+
+        else if (!arm.GrabEmpty())
+            return;
+
         else
             levelGrid.Objects.Remove(levelObject);
 
         movementArm = arm;
-        movementArm.GrabEmpty();
         var target = levelGrid.SnapToGrid(movementArm.Target);
         mover.MoveToPosition(target, roverSpeed);
     }
