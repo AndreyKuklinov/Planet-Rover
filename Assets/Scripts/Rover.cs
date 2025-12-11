@@ -50,16 +50,16 @@ public class Rover : MonoBehaviour
 
     void MoveToHand(RoverArm arm)
     {
-        if (movementArm != null)
-            movementArm.Deactivate();
-
-        else if (!arm.GrabEmpty())
+        if (arm.CurrentState != RoverArm.HandState.Extending)
             return;
 
+        if (movementArm != null)
+            movementArm.Deactivate();
         else
             levelGrid.Objects.Remove(levelObject);
 
         movementArm = arm;
+        movementArm.GrabEmpty();
         var target = levelGrid.SnapToGrid(movementArm.Target);
         mover.MoveToPosition(target, roverSpeed);
     }

@@ -16,7 +16,8 @@ public class RoverArm : MonoBehaviour
     [field: SerializeField] public Direction Direction { get; private set; }
 
     [SerializeField] Hand hand;
-    [SerializeField] float handSpeed;
+    [SerializeField] float extendSpeed;
+    [SerializeField] float retractSpeed;
 
     public HandState CurrentState { get; private set; }
 
@@ -54,7 +55,7 @@ public class RoverArm : MonoBehaviour
             return;
         
         hand.gameObject.SetActive(true);
-        hand.Mover.MoveInDirection(Direction, handSpeed);
+        hand.Mover.MoveInDirection(Direction, extendSpeed);
         CurrentState = HandState.Extending;
     }
 
@@ -68,7 +69,7 @@ public class RoverArm : MonoBehaviour
 
     public void RetractHand()
     {
-        hand.Mover.MoveToTransform(transform, handSpeed);
+        hand.Mover.MoveToTransform(transform, retractSpeed);
         CurrentState = HandState.Retracting;
     }
 
@@ -95,14 +96,13 @@ public class RoverArm : MonoBehaviour
         RetractHand();
     }
 
-    public bool GrabEmpty()
+    public void GrabEmpty()
     {
         if (CurrentState != HandState.Extending)
-            return false;
+            return;
 
         hand.Mover.StopMoving();
         hand.transform.SetParent(null);
         CurrentState = HandState.Retracting;
-        return true;
     }
 }

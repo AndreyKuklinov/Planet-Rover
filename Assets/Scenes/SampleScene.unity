@@ -791,6 +791,10 @@ PrefabInstance:
       propertyPath: levelGrid
       value: 
       objectReference: {fileID: 1142659339}
+    - target: {fileID: 1086808823621009057, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
+      propertyPath: roverSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2166544069706232136, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
       propertyPath: m_Name
       value: Rover
