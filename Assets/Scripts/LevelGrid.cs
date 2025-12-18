@@ -39,37 +39,29 @@ public class LevelGrid : MonoBehaviour
         return pos;
     }
 
+    public static IEnumerable<Vector2Int> PointsOnLine(Vector2Int from, Vector2Int to)
+    {
+        if (from.x != to.x && from.y != to.y)
+            throw new ArgumentException("Only horizontal or vertical lines supported.");
+
+        var step = new Vector2Int(
+            Mathf.Clamp(to.x - from.x, -1, 1),
+            Mathf.Clamp(to.y - from.y, -1, 1)
+        );
+
+        for (var p = from; ; p += step)
+        {
+            yield return p;
+            if (p == to)
+                yield break;
+        }
+    }
+
     public List<LevelObject> GetObjectsOnLine(Vector2Int pos1, Vector2Int pos2)
     {
-        var res = new List<LevelObject>();
-
-        if (pos1.x == pos2.x)
-        {
-            for (var y = Mathf.Min(pos1.y, pos2.y); y <= Mathf.Max(pos1.y, pos2.y); y++)
-            {
-                var point = new Vector2(pos1.x, y);
-                var obj = Objects.GetObject(point);
-                if (obj != null)
-                    res.Add(obj);
-            }
-        }
-
-        else if (pos1.y == pos2.y)
-        {
-            for (var x = Mathf.Min(pos1.x, pos2.x); x <= Mathf.Max(pos1.x, pos2.x); x++)
-            {
-                var point = new Vector2(x, pos1.y);
-                var obj = Objects.GetObject(point);
-                if (obj != null)
-                    res.Add(obj);
-            }
-        }
-
-        else
-        {
-            throw new ArgumentException("Points are not on a line: " + pos1 + " " + pos2);
-        }
-
-        return res;
+        return PointsOnLine(pos1, pos2)
+            .Select(p => Objects.GetObject(p))
+            .Where(o => o != null)
+            .ToList();
     }
 }
