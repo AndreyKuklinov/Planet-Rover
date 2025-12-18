@@ -28,7 +28,7 @@ public class Rover : MonoBehaviour
     public void Grab(Direction direction)
     {
         var arm = GetArm(direction);
-
+        arm.MoveHandToTarget();
         var handCell = levelGrid.WorldToCell(arm.HandPosition);
 
         if (arm.IsHoldingObject)

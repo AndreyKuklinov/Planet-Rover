@@ -100,6 +100,11 @@ public class RoverArm : MonoBehaviour
         CurrentState = HandState.Retracting;
     }
 
+    public void MoveHandToTarget()
+    {
+        Hand.transform.position = target.transform.position;
+    }
+
     public void GrabObject(LevelObject obj)
     {
         if (CurrentState != HandState.Extending)
