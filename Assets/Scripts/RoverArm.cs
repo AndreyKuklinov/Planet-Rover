@@ -19,6 +19,7 @@ public class RoverArm : MonoBehaviour
 
     [SerializeField] LevelGrid levelGrid;
     [SerializeField] Transform target;
+    [SerializeField] float holdingDistance;
     [SerializeField] float targetSpeeed;
     [SerializeField] float handSpeed;
 
@@ -53,7 +54,6 @@ public class RoverArm : MonoBehaviour
         targetDistance = Mathf.Min(targetDistance, maxDistance);
         target.transform.position = transform.position + DirectionVector.GetVector3(Direction) * targetDistance;
 
-
         if (IsHoldingObject && CurrentState == HandState.Retracting && Hand.Mover.IsAtDestination)
         {
             Hand.Mover.StopMoving();
@@ -87,7 +87,16 @@ public class RoverArm : MonoBehaviour
 
     public void RetractHand()
     {
-        targetDistance = 0;
+        if (IsHoldingObject)
+        {
+            targetDistance = holdingDistance;
+        }
+
+        else
+        {
+            targetDistance = 0;
+        }
+
         CurrentState = HandState.Retracting;
     }
 
