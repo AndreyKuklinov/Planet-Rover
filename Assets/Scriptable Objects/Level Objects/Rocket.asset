@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdfdb960a7957c540828a095128ab6c8, type: 3}
-  m_Name: Obstacle
+  m_Script: {fileID: 11500000, guid: 0b5558188cdd6bd4ea097251a3d476fc, type: 3}
+  m_Name: Rocket
   m_EditorClassIdentifier: 
   <CanHandGoThrough>k__BackingField: 0
   <CanBeGrabbed>k__BackingField: 0
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 79248a57757abfb408daea3eb6eeb8c1, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 6fc12789b9e7db645bc9af6c1e8cac3a, type: 3}

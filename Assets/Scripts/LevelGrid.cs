@@ -83,7 +83,7 @@ public class LevelGrid : MonoBehaviour
                 continue;
             }
 
-            if (grabbedObj == null && obj.CanBeGrabbed || obj.CanBeDroppedOnto(grabbedObj))
+            if (grabbedObj == null && obj.CanBeGrabbed || obj.CanBeDroppedOnThis(grabbedObj))
             {
                 return point;
             }

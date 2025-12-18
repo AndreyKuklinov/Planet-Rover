@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2923958814578110793}
   - component: {fileID: 3297792618599156248}
-  - component: {fileID: 1291661271620835749}
+  - component: {fileID: 9022442606716414188}
   m_Layer: 0
-  m_Name: Sample A
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 530406101
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 73ee5cf634014c34493b64fdeb3cf1e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6fc12789b9e7db645bc9af6c1e8cac3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1291661271620835749
+--- !u!114 &9022442606716414188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,8 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8926348560427703860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e2fd3c767e44e40882a22d83601292, type: 3}
+  m_Script: {fileID: 11500000, guid: a3ef46969541a6f4e96bd75f9d4faecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: 8c8b6033498b78e40b3d9f4195e963e1, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: a7b7d0703c50bde4fb17e82ce20087e5, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
+  rocketData: {fileID: 11400000, guid: 14142a9254ad9e8449ce60650884e8fe, type: 2}
+  RequiredObjects: []

@@ -33,8 +33,15 @@ public class Rover : MonoBehaviour
 
         if (arm.IsHoldingObject)
         {
-            if (levelGrid.Objects.IsEmpty(handCell))
+            var target = levelGrid.Objects.GetObject(handCell);
+            if(target == null)
+            {
                 arm.DropObject();
+                return;
+            }
+
+            if (target.CanBeDroppedOnThis(arm.GrabbedObject))
+                arm.DropObjectOnto(target);
             else
                 arm.RetractHand();
         }

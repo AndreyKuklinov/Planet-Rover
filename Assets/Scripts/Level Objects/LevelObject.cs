@@ -4,35 +4,38 @@ using UnityEngine;
 
 public class LevelObject : MonoBehaviour 
 {
-    [SerializeField] LevelObjectData data;
+    [field: SerializeField] public LevelObjectData Data { get; private set; }
+
     [SerializeField] SpriteRenderer spriteRenderer;
 
     public bool CanHandGoThrough 
-        => data.CanHandGoThrough;
+        => Data.CanHandGoThrough;
     public bool CanBeGrabbed
-        => data.CanBeGrabbed;
+        => Data.CanBeGrabbed;
 
-    public virtual bool CanBeDroppedOnto(LevelObject levelObject)
+    public virtual bool CanBeDroppedOnThis(LevelObject levelObject)
         => false;
 
-    private LevelGrid grid;
+    public virtual void DropOnThis(LevelObject levelObject) { }
 
-    void Start()
+    protected LevelGrid grid;
+
+    protected virtual void Start()
     {
-        spriteRenderer.sprite = data.Sprite;
+        spriteRenderer.sprite = Data.Sprite;
         grid = FindObjectOfType<LevelGrid>();
         AttachToGrid();
     }
 
     void OnValidate()
     {
-        if (spriteRenderer == null || data == null)
+        if (spriteRenderer == null || Data == null)
             return;
 
         UnityEditor.EditorApplication.delayCall += () =>
         {
             if (this == null) return;
-            spriteRenderer.sprite = data.Sprite;
+            spriteRenderer.sprite = Data.Sprite;
         };
     }
 

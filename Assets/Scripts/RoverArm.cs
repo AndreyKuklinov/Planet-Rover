@@ -24,12 +24,12 @@ public class RoverArm : MonoBehaviour
     [SerializeField] float handSpeed;
 
     public HandState CurrentState { get; private set; }
+    public LevelObject GrabbedObject { get; private set; }
 
     private float targetDistance;
-    private LevelObject grabbedObject;
 
     public bool IsHoldingObject
-        => grabbedObject != null;
+        => GrabbedObject != null;
 
     public bool IsHandOut
         => CurrentState != HandState.None;
@@ -45,7 +45,7 @@ public class RoverArm : MonoBehaviour
         }
         
         var transformCell = levelGrid.WorldToCell(transform.position);
-        var stoppingSquare = levelGrid.GetStoppingSquare(transformCell, Direction, grabbedObject);
+        var stoppingSquare = levelGrid.GetStoppingSquare(transformCell, Direction, GrabbedObject);
         var maxDistance = (levelGrid.CellToWorld(stoppingSquare) - transform.position).magnitude;
 
         if (transformCell == stoppingSquare)
@@ -111,20 +111,33 @@ public class RoverArm : MonoBehaviour
             return;
 
         obj.AttachToObject(Hand.transform);
-        grabbedObject = obj;
+        GrabbedObject = obj;
         RetractHand();
     }
 
     public void DropObject()
     {
-        if (grabbedObject == null)
+        if (GrabbedObject == null)
             throw new InvalidOperationException("Trying to drop a non-existant object");
 
         if (CurrentState != HandState.Extending)
             return;
 
-        grabbedObject.AttachToGrid();
-        grabbedObject = null;
+        GrabbedObject.AttachToGrid();
+        GrabbedObject = null;
+        RetractHand();
+    }
+
+    public void DropObjectOnto(LevelObject levelObject)
+    {
+        if (GrabbedObject == null)
+            throw new InvalidOperationException("Trying to drop a non-existant object");
+
+        if (CurrentState != HandState.Extending)
+            return;
+
+        levelObject.DropOnThis(GrabbedObject);
+        GrabbedObject = null;
         RetractHand();
     }
 
