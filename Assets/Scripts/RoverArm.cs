@@ -14,8 +14,8 @@ public class RoverArm : MonoBehaviour
     }
 
     [field: SerializeField] public Direction Direction { get; private set; }
+    [field: SerializeField] public Hand Hand { get; private set; }
 
-    [SerializeField] Hand hand;
     [SerializeField] float extendSpeed;
     [SerializeField] float retractSpeed;
 
@@ -29,21 +29,18 @@ public class RoverArm : MonoBehaviour
     public bool IsHandOut
         => CurrentState != HandState.None;
 
-    public Vector3 Target
-        => hand.Target.position;
-
     public Vector3 HandPosition
-        => hand.transform.position;
+        => Hand.transform.position;
 
     void Update()
     {
-        if (IsHoldingObject && CurrentState == HandState.Retracting && hand.Mover.IsAtDestination)
+        if (IsHoldingObject && CurrentState == HandState.Retracting && Hand.Mover.IsAtDestination)
         {
-            hand.Mover.StopMoving();
+            Hand.Mover.StopMoving();
             CurrentState = HandState.Holding;
         }
 
-        if(CurrentState == HandState.Retracting && hand.Mover.IsAtDestination)
+        if(CurrentState == HandState.Retracting && Hand.Mover.IsAtDestination)
         {
             Deactivate();
         }
@@ -54,22 +51,22 @@ public class RoverArm : MonoBehaviour
         if (CurrentState == HandState.Extending || CurrentState == HandState.Retracting)
             return;
         
-        hand.gameObject.SetActive(true);
-        hand.Mover.MoveInDirection(Direction, extendSpeed);
+        Hand.gameObject.SetActive(true);
+        Hand.Mover.MoveInDirection(Direction, extendSpeed);
         CurrentState = HandState.Extending;
     }
 
     public void Deactivate()
     {
-        hand.gameObject.SetActive(false);
-        hand.transform.position = transform.position;
-        hand.transform.SetParent(transform);
+        Hand.gameObject.SetActive(false);
+        Hand.transform.position = transform.position;
+        Hand.transform.SetParent(transform);
         CurrentState = HandState.None;
     }
 
     public void RetractHand()
     {
-        hand.Mover.MoveToTransform(transform, retractSpeed);
+        Hand.Mover.MoveToTransform(transform, retractSpeed);
         CurrentState = HandState.Retracting;
     }
 
@@ -78,7 +75,7 @@ public class RoverArm : MonoBehaviour
         if (CurrentState != HandState.Extending)
             return;
 
-        obj.AttachToObject(hand.Target.transform);
+        obj.AttachToObject(Hand.transform);
         grabbedObject = obj;
         RetractHand();
     }
@@ -101,8 +98,8 @@ public class RoverArm : MonoBehaviour
         if (CurrentState != HandState.Extending)
             return;
 
-        hand.Mover.StopMoving();
-        hand.transform.SetParent(null);
+        Hand.Mover.StopMoving();
+        Hand.transform.SetParent(null);
         CurrentState = HandState.Retracting;
     }
 }

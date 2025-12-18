@@ -29,7 +29,7 @@ public class Rover : MonoBehaviour
     {
         var arm = GetArm(direction);
 
-        var handCell = levelGrid.WorldToCell(arm.Target);
+        var handCell = levelGrid.WorldToCell(arm.HandPosition);
 
         if (arm.IsHoldingObject)
         {
@@ -69,7 +69,7 @@ public class Rover : MonoBehaviour
 
         movementArm = arm;
         movementArm.GrabEmpty();
-        var target = levelGrid.SnapToGrid(movementArm.Target);
+        var target = levelGrid.SnapToGrid(movementArm.HandPosition);
         mover.MoveToPosition(target, roverSpeed);
     }
 

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Direction>k__BackingField: 0
-  hand: {fileID: 1414790807741763941}
+  <Hand>k__BackingField: {fileID: 1414790807741763941}
   extendSpeed: 12
   retractSpeed: 24
 --- !u!120 &6568338260342549353

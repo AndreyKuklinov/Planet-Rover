@@ -5,5 +5,5 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
     [field: SerializeField] public Mover Mover { get; private set; }
-    [field: SerializeField] public Transform Target { get; private set; }
+    [field: SerializeField] public SpriteRenderer SpriteRenderer { get; private set; }
 }

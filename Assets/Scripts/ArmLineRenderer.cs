@@ -17,7 +17,7 @@ public class ArmLineRenderer : MonoBehaviour
 
         lineRenderer.SetPositions(new[] {
             arm.transform.position,
-            arm.HandPosition
+            arm.Hand.SpriteRenderer.transform.position,
         });
         lineRenderer.enabled = true;
     }
