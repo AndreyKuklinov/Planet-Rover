@@ -6,6 +6,7 @@ using UnityEngine;
 public class Rocket : LevelObject
 {
     public event Action RocketCompleted;
+    public event Action RequiredObjectsChanged;
 
     [SerializeField] RocketData rocketData;
 
@@ -14,6 +15,7 @@ public class Rocket : LevelObject
     override protected void Start()
     {
         RequiredObjects = new List<LevelObjectData>(rocketData.RequiredObjects);
+        RequiredObjectsChanged?.Invoke();
         base.Start();
     }
 
@@ -27,6 +29,7 @@ public class Rocket : LevelObject
 
         Destroy(levelObject.gameObject);
         RequiredObjects.Remove(levelObject.Data);
+        RequiredObjectsChanged?.Invoke();
         CheckForCompletion();
     }
 
