@@ -2,21 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelObject : MonoBehaviour
+public class LevelObject : MonoBehaviour 
 {
-    [field: SerializeField] public bool CanHandGoThrough { get; private set; }
-    [field: SerializeField] public bool CanBeGrabbed { get; private set; }
+    [SerializeField] LevelObjectData data;
+    [SerializeField] SpriteRenderer spriteRenderer;
+
+    public bool CanHandGoThrough 
+        => data.CanHandGoThrough;
+    public bool CanBeGrabbed
+        => data.CanBeGrabbed;
 
     public virtual bool CanBeDroppedOnto(LevelObject levelObject)
         => false;
-    
 
     private LevelGrid grid;
 
     void Start()
     {
+        spriteRenderer.sprite = data.Sprite;
         grid = FindObjectOfType<LevelGrid>();
         AttachToGrid();
+    }
+
+    void OnValidate()
+    {
+        if (spriteRenderer == null || data == null)
+            return;
+
+        UnityEditor.EditorApplication.delayCall += () =>
+        {
+            if (this == null) return;
+            spriteRenderer.sprite = data.Sprite;
+        };
     }
 
     public void AttachToGrid()

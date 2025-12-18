@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3297792618599156248}
   - component: {fileID: 1291661271620835749}
   m_Layer: 0
-  m_Name: Sample
+  m_Name: Sample A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e2fd3c767e44e40882a22d83601292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CanHandGoThrough>k__BackingField: 0
-  <CanBeGrabbed>k__BackingField: 1
+  data: {fileID: 11400000, guid: c5140fb0e6586a1448038d36f78812bd, type: 2}
+  spriteRenderer: {fileID: 3297792618599156248}

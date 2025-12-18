@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e2fd3c767e44e40882a22d83601292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CanHandGoThrough>k__BackingField: 0
-  <CanBeGrabbed>k__BackingField: 0
+  data: {fileID: 11400000, guid: 468be786c1b761b40943eccbbeb00bc2, type: 2}
+  spriteRenderer: {fileID: 3297792618599156248}
