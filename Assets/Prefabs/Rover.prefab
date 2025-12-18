@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3408170690693512571}
   - component: {fileID: 1065684021941205656}
   - component: {fileID: 1086808823621009057}
-  - component: {fileID: 3506957614284788329}
   - component: {fileID: 4508055378203844797}
+  - component: {fileID: 2633547081100171228}
   m_Layer: 0
   m_Name: Rover
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2355042d877b20346896bd437c7379d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelObject: {fileID: 3506957614284788329}
+  levelObject: {fileID: 2633547081100171228}
   mover: {fileID: 4508055378203844797}
   roverSpeed: 15
   levelGrid: {fileID: 0}
@@ -112,19 +112,6 @@ MonoBehaviour:
   - {fileID: 2696861067234602498}
   - {fileID: 2526541298663310613}
   - {fileID: 1058356562341951093}
---- !u!114 &3506957614284788329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2166544069706232136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e2fd3c767e44e40882a22d83601292, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsImpassable: 0
 --- !u!114 &4508055378203844797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +122,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de5ecc33fd51bd4469da037eda8dda7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2633547081100171228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166544069706232136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8aa901afad47409b8bc8d17405cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4487107235245753858

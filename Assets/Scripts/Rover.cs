@@ -55,7 +55,7 @@ public class Rover : MonoBehaviour
 
             var obj = levelGrid.Objects.GetObject(handCell);
 
-            if (obj.IsGrabbable)
+            if (obj.CanBeGrabbed)
                 arm.GrabObject(obj);
 
             else
@@ -97,6 +97,7 @@ public class Rover : MonoBehaviour
     {
         var armPos = levelGrid.WorldToCell(arm.transform.position);
         var handPos = levelGrid.WorldToCell(arm.HandPosition);
-        return levelGrid.GetObjectsOnLine(armPos, handPos).Any(x => x.IsImpassable);
+        return levelGrid.GetObjectsOnLine(armPos, handPos)
+            .Any(x => x.GetHandMovementType(arm) == HandMovementType.Retract);
     }
 }
