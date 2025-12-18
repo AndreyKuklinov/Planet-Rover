@@ -32,11 +32,7 @@ public class LevelObject : MonoBehaviour
         if (spriteRenderer == null || Data == null)
             return;
 
-        UnityEditor.EditorApplication.delayCall += () =>
-        {
-            if (this == null) return;
-            spriteRenderer.sprite = Data.Sprite;
-        };
+         spriteRenderer.sprite = Data.Sprite;
     }
 
     public void AttachToGrid()
