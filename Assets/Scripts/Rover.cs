@@ -18,12 +18,6 @@ public class Rover : MonoBehaviour
     {
         if (mover.IsAtDestination)
             OnReachedDestination();
-
-        foreach(var arm in arms)
-        {
-            if (IsArmOverImpassableObjects(arm))
-                arm.RetractHand();
-        }
     }
 
     public void Extend(Direction direction)
@@ -91,13 +85,5 @@ public class Rover : MonoBehaviour
         movementArm = null;
         mover.StopMoving();
         levelObject.AttachToGrid();
-    }
-
-    bool IsArmOverImpassableObjects(RoverArm arm)
-    {
-        var armPos = levelGrid.WorldToCell(arm.transform.position);
-        var handPos = levelGrid.WorldToCell(arm.HandPosition);
-        return levelGrid.GetObjectsOnLine(armPos, handPos)
-            .Any(x => x.GetHandMovementType(arm) == HandMovementType.Retract);
     }
 }
