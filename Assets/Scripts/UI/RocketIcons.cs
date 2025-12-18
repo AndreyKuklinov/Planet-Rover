@@ -13,6 +13,7 @@ public class RocketIcons : MonoBehaviour
     void Start()
     {
         rocket.RequiredObjectsChanged += OnRocketObjectsChanged;
+        OnRocketObjectsChanged();
     }
 
     private void OnRocketObjectsChanged()
