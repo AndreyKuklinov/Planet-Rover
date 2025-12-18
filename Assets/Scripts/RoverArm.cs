@@ -47,6 +47,9 @@ public class RoverArm : MonoBehaviour
         var stoppingSquare = levelGrid.GetStoppingSquare(transformCell, Direction, grabbedObject);
         var maxDistance = (levelGrid.CellToWorld(stoppingSquare) - transform.position).magnitude;
 
+        if (transformCell == stoppingSquare)
+            maxDistance = 0;
+
         targetDistance = Mathf.Min(targetDistance, maxDistance);
         target.transform.position = transform.position + DirectionVector.GetVector3(Direction) * targetDistance;
 

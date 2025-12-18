@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArmLineRenderer : MonoBehaviour
 {
     [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] Rover rover;
     [SerializeField] RoverArm arm;
 
     void Update()
@@ -16,7 +17,7 @@ public class ArmLineRenderer : MonoBehaviour
         }
 
         lineRenderer.SetPositions(new[] {
-            arm.transform.position,
+            rover.transform.position,
             arm.Hand.SpriteRenderer.transform.position,
         });
         lineRenderer.enabled = true;

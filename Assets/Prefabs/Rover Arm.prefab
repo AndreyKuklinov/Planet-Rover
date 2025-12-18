@@ -50,9 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Direction>k__BackingField: 0
   <Hand>k__BackingField: {fileID: 1414790807741763941}
+  levelGrid: {fileID: 0}
   target: {fileID: 1471640698540632423}
   targetSpeeed: 12
-  handSpeed: 24
+  handSpeed: 30
 --- !u!120 &6568338260342549353
 LineRenderer:
   serializedVersion: 2
@@ -164,12 +165,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3037084310366124175}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2802f35a9426e374ba44613295551588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 6568338260342549353}
+  rover: {fileID: 0}
   arm: {fileID: 5083256349959151209}
 --- !u!1 &6170551689542129019
 GameObject:
@@ -210,7 +212,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6170551689542129019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

@@ -71,9 +71,9 @@ public class LevelGrid : MonoBehaviour
     {
         var prev = from;
         var step = DirectionVector.GetVector2Int(dir);
-        var point = prev + step;
+        var point = from;
 
-        while(IsWithinBounds(point))
+        while (IsWithinBounds(point))
         {
             var obj = Objects.GetObject(point);
             if (obj == null || obj.CanHandGoThrough)
