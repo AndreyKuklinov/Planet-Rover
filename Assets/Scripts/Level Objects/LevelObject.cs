@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LevelObject : MonoBehaviour
+public class LevelObject : MonoBehaviour
 {
-    public abstract HandMovementType GetHandMovementType(RoverArm arm);
-    public abstract bool CanBeDroppedOnto(LevelObject levelObject);
-    public abstract bool CanBeGrabbed { get; }
+    [field: SerializeField] public bool CanHandGoThrough { get; private set; }
+    [field: SerializeField] public bool CanBeGrabbed { get; private set; }
+
+    public virtual bool CanBeDroppedOnto(LevelObject levelObject)
+        => false;
+    
 
     private LevelGrid grid;
 
