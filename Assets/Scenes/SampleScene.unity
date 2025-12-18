@@ -475,6 +475,18 @@ PrefabInstance:
       propertyPath: levelObject
       value: 
       objectReference: {fileID: 1692572175}
+    - target: {fileID: 1438123535755755906, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926837965393376239, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071866786029312248, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.63
+      objectReference: {fileID: 0}
     - target: {fileID: 2166544069706232136, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
       propertyPath: m_Name
       value: Rover
@@ -518,6 +530,14 @@ PrefabInstance:
     - target: {fileID: 3408170690693512571, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3558025804485176216, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5124708007730709894, guid: 7127dc52c7c637e45a03f059eedb1815, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.63
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

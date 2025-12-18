@@ -10,17 +10,20 @@ public class RoverArm : MonoBehaviour
         None,
         Extending,
         Retracting,
+        MovingRover,
         Holding
     }
 
     [field: SerializeField] public Direction Direction { get; private set; }
     [field: SerializeField] public Hand Hand { get; private set; }
 
-    [SerializeField] float extendSpeed;
-    [SerializeField] float retractSpeed;
+    [SerializeField] Transform target;
+    [SerializeField] float targetSpeeed;
+    [SerializeField] float handSpeed;
 
     public HandState CurrentState { get; private set; }
 
+    private float targetDistance;
     private LevelObject grabbedObject;
 
     public bool IsHoldingObject
@@ -34,6 +37,12 @@ public class RoverArm : MonoBehaviour
 
     void Update()
     {
+        if (CurrentState == HandState.Extending)
+        {
+            targetDistance += targetSpeeed * Time.deltaTime;
+        }
+        target.transform.position = transform.position + DirectionVector.Get(Direction) * targetDistance;
+
         if (IsHoldingObject && CurrentState == HandState.Retracting && Hand.Mover.IsAtDestination)
         {
             Hand.Mover.StopMoving();
@@ -52,7 +61,7 @@ public class RoverArm : MonoBehaviour
             return;
         
         Hand.gameObject.SetActive(true);
-        Hand.Mover.MoveInDirection(Direction, extendSpeed);
+        Hand.Mover.MoveToTransform(target, handSpeed);
         CurrentState = HandState.Extending;
     }
 
@@ -61,12 +70,13 @@ public class RoverArm : MonoBehaviour
         Hand.gameObject.SetActive(false);
         Hand.transform.position = transform.position;
         Hand.transform.SetParent(transform);
+        targetDistance = 0;
         CurrentState = HandState.None;
     }
 
     public void RetractHand()
     {
-        Hand.Mover.MoveToTransform(transform, retractSpeed);
+        targetDistance = 0;
         CurrentState = HandState.Retracting;
     }
 
@@ -100,6 +110,7 @@ public class RoverArm : MonoBehaviour
 
         Hand.Mover.StopMoving();
         Hand.transform.SetParent(null);
-        CurrentState = HandState.Retracting;
+        targetDistance = 0;
+        CurrentState = HandState.MovingRover;
     }
 }
