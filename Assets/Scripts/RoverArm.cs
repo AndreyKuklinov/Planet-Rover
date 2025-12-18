@@ -17,6 +17,7 @@ public class RoverArm : MonoBehaviour
     [field: SerializeField] public Direction Direction { get; private set; }
     [field: SerializeField] public Hand Hand { get; private set; }
 
+    [SerializeField] LevelGrid levelGrid;
     [SerializeField] Transform target;
     [SerializeField] float targetSpeeed;
     [SerializeField] float handSpeed;
@@ -41,7 +42,14 @@ public class RoverArm : MonoBehaviour
         {
             targetDistance += targetSpeeed * Time.deltaTime;
         }
-        target.transform.position = transform.position + DirectionVector.Get(Direction) * targetDistance;
+        
+        var transformCell = levelGrid.WorldToCell(transform.position);
+        var stoppingSquare = levelGrid.GetStoppingSquare(transformCell, Direction, grabbedObject);
+        var maxDistance = (levelGrid.CellToWorld(stoppingSquare) - transform.position).magnitude;
+
+        targetDistance = Mathf.Min(targetDistance, maxDistance);
+        target.transform.position = transform.position + DirectionVector.GetVector3(Direction) * targetDistance;
+
 
         if (IsHoldingObject && CurrentState == HandState.Retracting && Hand.Mover.IsAtDestination)
         {

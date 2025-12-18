@@ -8,6 +8,8 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] Grid grid;
 
     public readonly Map<Vector2, LevelObject> Objects = new();
+    public Vector2Int MinBounds = new(-99, -99);
+    public Vector2Int MaxBounds = new(99, 99);
 
     public void PlaceObject(LevelObject obj)
     {
@@ -64,4 +66,34 @@ public class LevelGrid : MonoBehaviour
             .Where(o => o != null)
             .ToList();
     }
+
+    public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject grabbedObj)
+    {
+        var prev = from;
+        var step = DirectionVector.GetVector2Int(dir);
+        var point = prev + step;
+
+        while(IsWithinBounds(point))
+        {
+            var obj = Objects.GetObject(point);
+            if (obj == null || obj.CanHandGoThrough)
+            {
+                prev = point;
+                point += step;
+                continue;
+            }
+
+            if (grabbedObj == null && obj.CanBeGrabbed || obj.CanBeDroppedOnto(grabbedObj))
+            {
+                return point;
+            }
+
+            return prev;
+        }
+
+        return point;
+    }
+
+    bool IsWithinBounds(Vector2Int square)
+        => square.x > MinBounds.x && square.y > MinBounds.y && square.x < MaxBounds.x && square.y < MaxBounds.y;
 }
