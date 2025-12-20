@@ -26,15 +26,6 @@ public class LevelObject : MonoBehaviour
         grid = FindObjectOfType<LevelGrid>();
         AttachToGrid();
     }
-
-    void OnValidate()
-    {
-        if (spriteRenderer == null || Data == null)
-            return;
-
-         spriteRenderer.sprite = Data.Sprite;
-    }
-
     public void AttachToGrid()
     {
         if (grid == null)

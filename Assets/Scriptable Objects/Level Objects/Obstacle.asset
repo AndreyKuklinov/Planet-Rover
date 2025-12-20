@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CanHandGoThrough>k__BackingField: 0
   <CanBeGrabbed>k__BackingField: 0
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 79248a57757abfb408daea3eb6eeb8c1, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: cf663d52af680f248a5a13920c99badc, type: 3}
