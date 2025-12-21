@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 530406101
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 03aeeabf2b0f17140bfcc30346231a7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb28501a8677dbe45885c344c94fd451, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelObject: {fileID: 3934940451911641211}
   mover: {fileID: 4508055378203844797}
-  roverSpeed: 15
+  roverSpeed: 24
   levelGrid: {fileID: 0}
   arms:
   - {fileID: 8704951163649841259}
@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e2fd3c767e44e40882a22d83601292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  <Data>k__BackingField: {fileID: 11400000, guid: 4a6f7a97105619240b2d7f5a4336394e, type: 2}
+  spriteRenderer: {fileID: 1065684021941205656}
 --- !u!1001 &4487107235245753858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.286
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8986378306008514132, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 1086808823621009057}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -233,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.353
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -271,6 +275,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8986378306008514132, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 1086808823621009057}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -314,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.353
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -352,6 +360,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 8986378306008514132, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 1086808823621009057}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -399,7 +411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.423
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8744854157989184388, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -433,6 +445,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 8986378306008514132, guid: eaf2143f8866a7444b0ae84f0eb58b3d, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 1086808823621009057}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
