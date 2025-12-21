@@ -7,6 +7,9 @@ public class DemoSceneLoader : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyUp(KeyCode.Escape))
+            Application.Quit();
+
         for (int i = 1; i <= 9; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0 + i))
