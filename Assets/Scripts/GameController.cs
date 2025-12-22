@@ -18,8 +18,12 @@ public class GameController : MonoBehaviour
         if (!player.AllowedDirections.Contains(direction))
             return;
         if (value.isPressed)
+        {
             armManager.Extend(direction);
+        }
         else
+        {
             armManager.Grab(direction);
+        }
     }
 }

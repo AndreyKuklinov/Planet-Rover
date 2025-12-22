@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,7 +27,26 @@ public class PartyInputManager : MonoBehaviour
                 new HashSet<Direction>() { Direction.Up, Direction.Down },
                 new HashSet<Direction>() { Direction.Left, Direction.Right },
             }
-        }
+        },
+        {
+            3,
+            new[]
+            {
+                new HashSet<Direction>() { Direction.Up, Direction.Down },
+                new HashSet<Direction>() { Direction.Left },
+                new HashSet<Direction>() { Direction.Right },
+            }
+        },
+        {
+            4,
+            new[]
+            {
+                new HashSet<Direction>() { Direction.Up },
+                new HashSet<Direction>() { Direction.Down },
+                new HashSet<Direction>() { Direction.Left },
+                new HashSet<Direction>() { Direction.Right },
+            }
+        },
     };
 
     void OnPlayerJoined(PlayerInput playerInput)
@@ -53,6 +73,7 @@ public class PartyInputManager : MonoBehaviour
         for (var i = 0; i < players.Count; i++)
         {
             players[i].AllowedDirections = allowedDirections[players.Count][i];
+            Debug.Log(String.Join(" ", players[i].AllowedDirections));
         }
     }
 }
