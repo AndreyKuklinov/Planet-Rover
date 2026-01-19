@@ -2238,6 +2238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d223e1cd9fbd345a2c1cab7c6a6660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTestingModeOn: 0
   armManager: {fileID: 1629968050}
   partyManager: {fileID: 978509609}
 --- !u!114 &978509609 stripped

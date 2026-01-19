@@ -68,9 +68,9 @@ public class RoverArm : MonoBehaviour
 
     public void Extend()
     {
+        Debug.Log("Requested extension: " + Direction.ToString() + "; State: " + CurrentState.ToString());
         if (CurrentState == HandState.Extending || CurrentState == HandState.Retracting)
             return;
-        
         Hand.gameObject.SetActive(true);
         Hand.Mover.MoveToTransform(target, handSpeed);
         CurrentState = HandState.Extending;
@@ -87,6 +87,9 @@ public class RoverArm : MonoBehaviour
 
     public void RetractHand()
     {
+        if (CurrentState != HandState.Extending)
+            return;
+
         if (IsHoldingObject)
         {
             targetDistance = holdingDistance;
