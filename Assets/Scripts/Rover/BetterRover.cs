@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BetterRover : MonoBehaviour
 {
+    public bool IsMoving { get; private set; }
+    public Vector3 TargetPosition { get; private set; }
+    public BetterHand TargetHand { get; private set; }
+
     [SerializeField] BetterHand[] hands;
     [SerializeField] float movementSpeed;
 
     private LevelGrid levelGrid;
-    private Vector3 targetPosition;
-    private bool isMoving;
 
     public void TryExtend(Direction direction)
     {
@@ -25,7 +28,7 @@ public class BetterRover : MonoBehaviour
     void Start()
     {
         levelGrid = FindObjectOfType<LevelGrid>();
-        BetterHand.SelectedMovementCell += OnSelectedMovementCell;
+        BetterHand.SelectedMovementTarget += OnSelectedMovementTarget;
     }
 
     void Update()
@@ -34,35 +37,33 @@ public class BetterRover : MonoBehaviour
         CheckIfReachedTarget();
     }
 
-    void OnSelectedMovementCell(Vector2Int cell)
+    void OnSelectedMovementTarget(BetterHand hand, Vector3 target)
     {
-        StartMovingToCell(cell);
-    }
-
-    void StartMovingToCell(Vector2Int cell)
-    {
-        targetPosition = levelGrid.CellToWorld(cell);
-        isMoving = true;
+        TargetHand = hand;
+        TargetPosition = levelGrid.SnapToGrid(target);
+        IsMoving = true;
     }
 
     void MoveToTarget()
     {
-        if (!isMoving)
+        if (!IsMoving)
             return;
 
         transform.position = Vector3.MoveTowards(
             transform.position,
-            targetPosition,
+            TargetPosition,
             movementSpeed * Time.deltaTime
         );
     }
 
     void CheckIfReachedTarget()
     {
-        if (!isMoving)
+        if (!IsMoving)
             return;
 
-        if(Vector3.Distance(transform.position, targetPosition) <= 0.001f)
-            isMoving = false;
+        if (Vector3.Distance(transform.position, TargetPosition) <= 0.001f)
+        {
+            IsMoving = false;
+        }
     }
 }

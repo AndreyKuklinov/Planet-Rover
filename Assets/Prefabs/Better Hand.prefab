@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5813513674609946899}
   - component: {fileID: 6091276724954147042}
-  - component: {fileID: 3453055333997258467}
   m_Layer: 0
   m_Name: Hand Renderer
   m_TagString: Untagged
@@ -85,21 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3453055333997258467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172867662129987615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f23498357295dd04b95dea9c8a468f30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: {fileID: 2408782698507950839}
-  spriteRenderer: {fileID: 6091276724954147042}
-  visibleDistance: 0.5
 --- !u!1 &1483918746511455444
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3374833328247058556}
   - component: {fileID: 2408782698507950839}
+  - component: {fileID: 6421409979537266196}
   m_Layer: 0
   m_Name: Better Hand
   m_TagString: Untagged
@@ -148,3 +133,19 @@ MonoBehaviour:
   <Direction>k__BackingField: 0
   extendSpeed: 10
   retractSpeed: 12
+  holdingDistance: 0
+--- !u!114 &6421409979537266196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483918746511455444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23498357295dd04b95dea9c8a468f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: {fileID: 2408782698507950839}
+  spriteRenderer: {fileID: 6091276724954147042}
+  visibleDistance: 0.5

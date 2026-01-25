@@ -8,17 +8,43 @@ public class HandRenderer : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] float visibleDistance;
 
+    private BetterRover rover;
+    private Vector3 lastChosenMovementTarget;
+
     void Start()
     {
-        transform.rotation = Quaternion.LookRotation(
+        spriteRenderer.transform.rotation = Quaternion.LookRotation(
             Vector3.forward, 
             DirectionVector.GetVector3(hand.Direction)
         );
+
+        BetterHand.SelectedMovementTarget += OnHandSelectedMovementTarget;
+
+        rover = FindObjectOfType<BetterRover>();
     }
 
-    void Update()
+    void LateUpdate()
     {
-        spriteRenderer.enabled = hand.CurrentDistance >= visibleDistance || hand.IsHoldingObject;
-        transform.position = hand.HandPosition;
+        spriteRenderer.enabled = hand.CurrentDistance >= visibleDistance 
+            || hand.IsHoldingObject
+            || rover.IsMoving && rover.TargetHand == hand;
+
+        if (rover.IsMoving && rover.TargetHand == hand)
+        {
+            Debug.Log("huh");
+            spriteRenderer.transform.position = lastChosenMovementTarget;
+        }
+        else
+        {
+            spriteRenderer.transform.position = hand.HandPosition;
+        }
+    }
+
+    void OnHandSelectedMovementTarget(BetterHand h, Vector3 target)
+    {
+        if (h != hand)
+            return;
+
+        lastChosenMovementTarget = target;
     }
 }

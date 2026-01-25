@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BetterHand : MonoBehaviour
 {
-    public static event Action<Vector2Int> SelectedMovementCell;
+    public static event Action<BetterHand, Vector3> SelectedMovementTarget;
     [field: SerializeField] public Direction Direction { get; private set; }
 
     public LevelObject HeldObject { get; private set; }
@@ -42,10 +42,17 @@ public class BetterHand : MonoBehaviour
         if (IsRetracting || !IsExtending)
             return;
 
-        SelectedMovementCell?.Invoke(levelGrid.WorldToCell(HandPosition));
-
         IsExtending = false;
-        IsRetracting = true;
+
+        if (true)
+        {
+            SelectedMovementTarget?.Invoke(this, HandPosition);
+            RetractInstantly();
+        }
+        else
+        {
+            IsRetracting = true;
+        }
     }
 
     void Start()
@@ -57,6 +64,11 @@ public class BetterHand : MonoBehaviour
     {
         UpdateExtension();
         UpdateRetraction();
+    }
+
+    void RetractInstantly()
+    {
+        CurrentDistance = RestingDistance;
     }
 
     void UpdateExtension()
