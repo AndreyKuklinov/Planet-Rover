@@ -49,21 +49,14 @@ public class BetterHand : MonoBehaviour
 
         IsExtending = false;
         LastGrabbedPos = HandPosition;
-
-        if (true)
-        {
-            SelectedMovementTarget?.Invoke(this, HandPosition);
-            RetractInstantly();
-        }
-        else
-        {
-            IsRetracting = true;
-        }
+        SelectedMovementTarget?.Invoke(this, HandPosition);
+        RetractInstantly();
     }
 
     void Start()
     {
         levelGrid = FindObjectOfType<LevelGrid>();
+        rover.FinishedMoving += OnRoverFinishedMoving;
     }
 
     void Update()
@@ -75,6 +68,11 @@ public class BetterHand : MonoBehaviour
     void RetractInstantly()
     {
         CurrentDistance = RestingDistance;
+    }
+
+    void OnRoverFinishedMoving()
+    {
+        //TODO: pick up object
     }
 
     void UpdateExtension()

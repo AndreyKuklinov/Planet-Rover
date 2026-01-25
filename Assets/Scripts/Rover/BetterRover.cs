@@ -6,6 +6,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BetterRover : MonoBehaviour
 {
+    public event Action FinishedMoving;
+
     public bool IsMoving { get; private set; }
     public Vector3 TargetPosition { get; private set; }
     public BetterHand TargetHand { get; private set; }
@@ -64,6 +66,7 @@ public class BetterRover : MonoBehaviour
         if (Vector3.Distance(transform.position, TargetPosition) <= 0.001f)
         {
             IsMoving = false;
+            FinishedMoving?.Invoke();
         }
     }
 }
