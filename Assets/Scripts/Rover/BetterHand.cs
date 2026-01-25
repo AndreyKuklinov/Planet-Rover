@@ -13,7 +13,9 @@ public class BetterHand : MonoBehaviour
     public float CurrentDistance { get; private set; } = 0;
     public bool IsExtending { get; private set; } = false;
     public bool IsRetracting { get; private set; } = false;
-    
+    public Vector3 LastGrabbedPos { get; private set; }
+
+    [SerializeField] BetterRover rover;
     [SerializeField] float extendSpeed;
     [SerializeField] float retractSpeed;
     [SerializeField] float holdingDistance;
@@ -23,6 +25,9 @@ public class BetterHand : MonoBehaviour
     public bool IsHoldingObject
         => HeldObject != null;
 
+    public bool IsMovingRover
+        => rover.IsMoving && rover.TargetHand == this;
+
     public float RestingDistance
         => IsHoldingObject ? holdingDistance : 0;
 
@@ -31,7 +36,7 @@ public class BetterHand : MonoBehaviour
 
     public void TryExtend()
     {
-        if (IsExtending || IsRetracting)
+        if (IsExtending || IsRetracting || IsMovingRover)
             return;
 
         IsExtending = true;
@@ -39,10 +44,11 @@ public class BetterHand : MonoBehaviour
 
     public void TryGrab()
     {
-        if (IsRetracting || !IsExtending)
+        if (!IsExtending || IsRetracting || IsMovingRover)
             return;
 
         IsExtending = false;
+        LastGrabbedPos = HandPosition;
 
         if (true)
         {

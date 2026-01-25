@@ -1003,6 +1003,10 @@ PrefabInstance:
       value: Left Hand
       objectReference: {fileID: 0}
     - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 533509348}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: <Direction>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -1343,6 +1347,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Down Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 533509348}
     - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: <Direction>k__BackingField
       value: 2
@@ -2525,6 +2533,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 533509348}
     - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: <Direction>k__BackingField
       value: 3
@@ -5714,6 +5726,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Up Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: rover
+      value: 
+      objectReference: {fileID: 533509348}
     - target: {fileID: 3374833328247058556, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
