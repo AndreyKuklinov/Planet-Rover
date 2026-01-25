@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     [SerializeField] bool isTestingModeOn = false;
-    [SerializeField] Rover armManager;
+    [SerializeField] BetterRover rover;
     [SerializeField] PartyInputManager partyManager;
 
     void Start()
@@ -22,11 +22,11 @@ public class GameController : MonoBehaviour
         }
         if (value.isPressed)
         {
-            armManager.Extend(direction);
+            rover.TryExtend(direction);
         }
         else
         {
-            armManager.Grab(direction);
+            rover.TryGrab(direction);
         }
     }
 }
