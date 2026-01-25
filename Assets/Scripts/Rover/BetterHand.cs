@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class BetterHand : MonoBehaviour
 {
+    public static event Action<Vector2Int> SelectedMovementCell;
     [field: SerializeField] public Direction Direction { get; private set; }
 
     public LevelObject HeldObject { get; private set; }
@@ -39,6 +41,8 @@ public class BetterHand : MonoBehaviour
     {
         if (IsRetracting || !IsExtending)
             return;
+
+        SelectedMovementCell?.Invoke(levelGrid.WorldToCell(HandPosition));
 
         IsExtending = false;
         IsRetracting = true;
