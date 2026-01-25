@@ -73,7 +73,6 @@ public class PartyInputManager : MonoBehaviour
         for (var i = 0; i < players.Count; i++)
         {
             players[i].AllowedDirections = allowedDirections[players.Count][i];
-            Debug.Log(String.Join(" ", players[i].AllowedDirections));
         }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class HandRenderer : MonoBehaviour
 {
     [SerializeField] BetterHand hand;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] float visibleDistance;
 
     void Start()
     {
@@ -16,6 +18,7 @@ public class HandRenderer : MonoBehaviour
 
     void Update()
     {
+        spriteRenderer.enabled = hand.CurrentDistance >= visibleDistance || hand.IsHoldingObject;
         transform.position = hand.HandPosition;
     }
 }

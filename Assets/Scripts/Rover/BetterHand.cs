@@ -14,11 +14,15 @@ public class BetterHand : MonoBehaviour
     
     [SerializeField] float extendSpeed;
     [SerializeField] float retractSpeed;
+    [SerializeField] float holdingDistance;
 
     private LevelGrid levelGrid;
 
     public bool IsHoldingObject
         => HeldObject != null;
+
+    public float RestingDistance
+        => IsHoldingObject ? holdingDistance : 0;
 
     public Vector3 HandPosition
         => transform.position + CurrentDistance * DirectionVector.GetVector3(Direction);
@@ -33,8 +37,11 @@ public class BetterHand : MonoBehaviour
 
     public void TryGrab()
     {
-        if (IsRetracting)
+        if (IsRetracting || !IsExtending)
             return;
+
+        IsExtending = false;
+        IsRetracting = true;
     }
 
     void Start()
@@ -45,6 +52,7 @@ public class BetterHand : MonoBehaviour
     void Update()
     {
         UpdateExtension();
+        UpdateRetraction();
     }
 
     void UpdateExtension()
@@ -59,8 +67,17 @@ public class BetterHand : MonoBehaviour
         var maxDist = (levelGrid.CellToWorld(stoppingCell) - transform.position).magnitude;
 
         CurrentDistance = Mathf.Min(CurrentDistance, maxDist);
-
-        Debug.Log(CurrentDistance);
     }
 
+    void UpdateRetraction()
+    {
+        if (!IsRetracting)
+            return;
+
+        CurrentDistance -= retractSpeed * Time.deltaTime;
+        CurrentDistance = Mathf.Max(CurrentDistance, RestingDistance);
+
+        if (CurrentDistance <= RestingDistance)
+            IsRetracting = false;
+    }
 }
