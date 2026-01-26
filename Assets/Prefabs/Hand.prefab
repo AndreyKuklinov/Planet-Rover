@@ -134,8 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Direction>k__BackingField: 0
   rover: {fileID: 0}
-  extendSpeed: 10
-  retractSpeed: 12
+  extendSpeed: 12
+  retractSpeed: 20
 --- !u!114 &6421409979537266196
 MonoBehaviour:
   m_ObjectHideFlags: 0

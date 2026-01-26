@@ -1,46 +1,48 @@
-//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class Rocket : LevelObject
-//{
-//    public event Action RocketCompleted;
-//    public event Action RequiredObjectsChanged;
+public class Rocket : LevelObject
+{
+    //[field: SerializeField] public List<SampleData> RequiredSamples { get; private set; }
 
-//    [SerializeField] RocketData rocketData;
+    //public event Action RocketCompleted;
+    //public event Action RequiredObjectsChanged;
 
-//    public List<LevelObjectData> RequiredObjects = new();
+    //override protected void Start()
+    //{
+    //    RequiredObjectsChanged?.Invoke();
+    //    base.Start();
+    //}
 
-//    override protected void Start()
-//    {
-//        RequiredObjects = new List<LevelObjectData>(rocketData.RequiredObjects);
-//        RequiredObjectsChanged?.Invoke();
-//        base.Start();
-//    }
+    //public override bool CanReceive(LevelObject levelObject)
+    //{
+    //    var sample = levelObject as Sample;
+    //    if (sample == null)
+    //        return false;
+    //    return RequiredSamples.Contains(sample.Data);
+    //}
 
-//    public override bool CanReceive(LevelObject levelObject)
-//        => levelObject != null && RequiredObjects.Contains(levelObject.Data);
+    //public override void Receive(LevelObject levelObject)
+    //{
+    //    if (!CanReceive(levelObject))
+    //        throw new ArgumentException("Can't drop " + levelObject + " on " + this);
 
-//    public override void Receive(LevelObject levelObject)
-//    {
-//        if(!CanReceive(levelObject))
-//            throw new ArgumentException("Can't drop " +  levelObject + " on " + this);
+    //    Destroy(levelObject.gameObject);
+    //    RequiredSamples.Remove(levelObject.Data);
+    //    RequiredObjectsChanged?.Invoke();
+    //    CheckForCompletion();
+    //}
 
-//        Destroy(levelObject.gameObject);
-//        RequiredObjects.Remove(levelObject.Data);
-//        RequiredObjectsChanged?.Invoke();
-//        CheckForCompletion();
-//    }
+    //void CheckForCompletion()
+    //{
+    //    if (RequiredSamples.Count > 0)
+    //        return;
 
-//    void CheckForCompletion()
-//    {
-//        if (RequiredObjects.Count > 0)
-//            return;
+    //    grid.RemoveObject(this);
+    //    RocketCompleted?.Invoke();
 
-//        grid.RemoveObject(this);
-//        RocketCompleted?.Invoke();
-
-//        Destroy(gameObject);
-//    }
-//}
+    //    Destroy(gameObject);
+    //}
+}

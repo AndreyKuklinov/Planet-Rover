@@ -97,4 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a80a815fdfd93478deced1cf06e8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: 1
+  <Data>k__BackingField: {fileID: 11400000, guid: e50022ad632d69347aac8eb8d0829aff, type: 2}
+  spriteRenderer: {fileID: 3297792618599156248}

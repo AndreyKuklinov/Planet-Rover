@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class Sample : LevelObject 
 {
-    public enum SampleType
-    {
-        Red,
-        Green
-    }
+    [field: SerializeField] public SampleData Data { get; private set; }
 
-    [field: SerializeField] public SampleType Type { get; private set; }
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     public override bool CanBeGrabbed
         => true;
+
+    protected override void Start()
+    {
+        spriteRenderer.sprite = Data.Sprite;
+        base.Start();
+    }
 }
