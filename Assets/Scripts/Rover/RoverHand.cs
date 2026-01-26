@@ -80,7 +80,13 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        IsRetracting = true;
+        if(IsHoldingObject && obj.CanReceive(HeldObject))
+        {
+            PlaceHeldOntoObject(obj);
+            return;
+        }
+
+        throw new Exception("Invalid hand interaction encountered");
     }
 
     void SwitchOrGrab(LevelObject obj)
@@ -109,6 +115,15 @@ public class RoverHand : MonoBehaviour
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
+        IsRetracting = true;
+    }
+
+    void PlaceHeldOntoObject(LevelObject obj)
+    {
+        if (!IsHoldingObject)
+            throw new Exception("Nothing to drop");
+
+        obj.Receive(HeldObject);
         IsRetracting = true;
     }
 
