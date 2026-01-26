@@ -42,11 +42,9 @@ public class RoverHand : MonoBehaviour
 
     public void TryDrop()
     {
-        Debug.Log("check 1");
         if (IsExtending || IsRetracting || IsMovingRover || !IsHoldingObject)
             return;
 
-        Debug.Log("check 2");
         var roverCell = levelGrid.WorldToCell(transform.position);
         var nextCell = roverCell + DirectionVector.GetVector2Int(Direction);
         var objectInNextCell = levelGrid.Objects.GetObject(nextCell);
