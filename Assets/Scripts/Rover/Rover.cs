@@ -64,12 +64,6 @@ public class Rover : MonoBehaviour
         if (Vector3.Distance(transform.position, TargetPosition) <= 0.001f)
         {
             IsMoving = false;
-            OnFinishedMoving();
         }
-    }
-
-    void OnFinishedMoving()
-    {
-        TargetHand.TryGrab();
     }
 }

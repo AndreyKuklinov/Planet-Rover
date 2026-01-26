@@ -60,23 +60,28 @@ public class RoverHand : MonoBehaviour
 
         if(obj.CanBeGrabbed)
         {
-            HeldObject = obj;
-            GrabbedObject?.Invoke(HeldObject);
+            Grab(obj);
         }
 
         IsRetracting = true;
     }
 
-    public void TryGrab()
+    private void Grab(LevelObject obj)
     {
-        var cell = levelGrid.WorldToCell(LastGrabbedPos);
-        var obj = levelGrid.Objects.GetObject(cell);
+        if (!obj.CanBeGrabbed)
+            throw new ArgumentException("Trying to grab an impossible object: " + obj);
 
-        if (obj == null || !obj.CanBeGrabbed)
+        if (IsHoldingObject)
+        {
+            var prevObject = HeldObject;
+            HeldObject = obj;
+            GrabbedObject?.Invoke(obj);
+            prevObject.AttachToGrid();
             return;
+        }
 
         HeldObject = obj;
-        GrabbedObject?.Invoke(HeldObject);
+        GrabbedObject?.Invoke(obj);
     }
 
     void Start()
@@ -88,11 +93,6 @@ public class RoverHand : MonoBehaviour
     {
         UpdateExtension();
         UpdateRetraction();
-    }
-
-    void RetractInstantly()
-    {
-        CurrentDistance = 0;
     }
 
     void UpdateExtension()
@@ -118,5 +118,9 @@ public class RoverHand : MonoBehaviour
 
         if (CurrentDistance <= 0)
             IsRetracting = false;
+    }
+    void RetractInstantly()
+    {
+        CurrentDistance = 0;
     }
 }

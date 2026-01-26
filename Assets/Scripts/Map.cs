@@ -8,6 +8,12 @@ public class Map<TPosition, TObject>
     
     public void Add(TObject obj, TPosition pos)
     {
+        if (posToObj.ContainsKey(pos))
+            throw new ArgumentException("Trying to add an object to an occupied position");
+
+        if(objToPos.ContainsKey(obj))
+            throw new ArgumentException("Trying to add an object that already exists");
+
         posToObj[pos] = obj;
         objToPos[obj] = pos;
     }
