@@ -1,31 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelObject : MonoBehaviour 
+public abstract class LevelObject : MonoBehaviour 
 {
-    [field: SerializeField] public LevelObjectData Data { get; private set; }
-
-    [SerializeField] SpriteRenderer spriteRenderer;
-
-    public bool CanHandGoThrough 
-        => Data.CanHandGoThrough;
-    public bool CanBeGrabbed
-        => Data.CanBeGrabbed;
-
-    public virtual bool CanBeDroppedOnThis(LevelObject levelObject)
+    public virtual bool CanHandGoThrough
         => false;
 
-    public virtual void DropOnThis(LevelObject levelObject) { }
+    public virtual bool CanBeGrabbed
+        => false;
+
+    public virtual bool CanReceive(LevelObject levelObject)
+        => false;
+
+    public virtual void Receive(LevelObject levelObject)
+    {
+        throw new NotImplementedException();
+    }
 
     protected LevelGrid grid;
 
     protected virtual void Start()
     {
-        spriteRenderer.sprite = Data.Sprite;
         grid = FindObjectOfType<LevelGrid>();
         AttachToGrid();
     }
+
     public void AttachToGrid()
     {
         if (grid == null)

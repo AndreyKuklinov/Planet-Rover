@@ -67,7 +67,7 @@ public class LevelGrid : MonoBehaviour
             .ToList();
     }
 
-    public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject grabbedObj)
+    public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject heldObj)
     {
         var prev = from;
         var step = DirectionVector.GetVector2Int(dir);
@@ -83,7 +83,7 @@ public class LevelGrid : MonoBehaviour
                 continue;
             }
 
-            if (grabbedObj == null && obj.CanBeGrabbed || obj.CanBeDroppedOnThis(grabbedObj))
+            if (obj.CanBeGrabbed || obj.CanReceive(heldObj))
             {
                 return point;
             }
