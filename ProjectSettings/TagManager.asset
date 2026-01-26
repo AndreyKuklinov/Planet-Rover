@@ -47,3 +47,6 @@ TagManager:
   - name: Level Objects
     uniqueID: 530406101
     locked: 0
+  - name: Rover
+    uniqueID: 701487715
+    locked: 0

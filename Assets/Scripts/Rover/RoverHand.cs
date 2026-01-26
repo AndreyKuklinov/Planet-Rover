@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BetterHand : MonoBehaviour
+public class RoverHand : MonoBehaviour
 {
-    public static event Action<BetterHand, Vector3> SelectedMovementTarget;
+    public static event Action<RoverHand, Vector3> SelectedMovementTarget;
+    public event Action<LevelObject> GrabbedObject;
+
     [field: SerializeField] public Direction Direction { get; private set; }
 
     public LevelObject HeldObject { get; private set; }
@@ -15,7 +17,7 @@ public class BetterHand : MonoBehaviour
     public bool IsRetracting { get; private set; } = false;
     public Vector3 LastGrabbedPos { get; private set; }
 
-    [SerializeField] BetterRover rover;
+    [SerializeField] Rover rover;
     [SerializeField] float extendSpeed;
     [SerializeField] float retractSpeed;
     [SerializeField] float holdingDistance;
@@ -31,8 +33,13 @@ public class BetterHand : MonoBehaviour
     public float RestingDistance
         => IsHoldingObject ? holdingDistance : 0;
 
-    public Vector3 HandPosition
+    public Vector3 ActualHandPosition
         => transform.position + CurrentDistance * DirectionVector.GetVector3(Direction);
+
+    public Vector3 VisualHandPosition
+        => transform.position 
+            + Mathf.Max(CurrentDistance, RestingDistance) 
+            * DirectionVector.GetVector3(Direction);
 
     public void TryExtend()
     {
@@ -42,21 +49,32 @@ public class BetterHand : MonoBehaviour
         IsExtending = true;
     }
 
-    public void TryGrab()
+    public void TryInteract()
     {
         if (!IsExtending || IsRetracting || IsMovingRover)
             return;
 
         IsExtending = false;
-        LastGrabbedPos = HandPosition;
-        SelectedMovementTarget?.Invoke(this, HandPosition);
+        LastGrabbedPos = ActualHandPosition;
+        SelectedMovementTarget?.Invoke(this, ActualHandPosition);
         RetractInstantly();
+    }
+
+    public void TryGrab()
+    {
+        var cell = levelGrid.WorldToCell(LastGrabbedPos);
+        var obj = levelGrid.Objects.GetObject(cell);
+
+        if (obj == null || !obj.CanBeGrabbed)
+            return;
+
+        HeldObject = obj;
+        GrabbedObject?.Invoke(HeldObject);
     }
 
     void Start()
     {
         levelGrid = FindObjectOfType<LevelGrid>();
-        rover.FinishedMoving += OnRoverFinishedMoving;
     }
 
     void Update()
@@ -67,12 +85,7 @@ public class BetterHand : MonoBehaviour
 
     void RetractInstantly()
     {
-        CurrentDistance = RestingDistance;
-    }
-
-    void OnRoverFinishedMoving()
-    {
-        //TODO: pick up object
+        CurrentDistance = 0;
     }
 
     void UpdateExtension()

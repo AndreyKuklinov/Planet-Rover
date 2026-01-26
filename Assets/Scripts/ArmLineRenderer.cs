@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class ArmLineRenderer : MonoBehaviour
 {
-    [SerializeField] LineRenderer lineRenderer;
-    [SerializeField] Rover rover;
-    [SerializeField] RoverArm arm;
+    //[SerializeField] LineRenderer lineRenderer;
+    //[SerializeField] 
 
-    void Update()
-    {
-        if (!arm.IsHandOut)
-        {
-            lineRenderer.enabled = false;
-            return;
-        }
+    //void Update()
+    //{
+    //    if (!arm.IsHandOut)
+    //    {
+    //        lineRenderer.enabled = false;
+    //        return;
+    //    }
 
-        lineRenderer.SetPositions(new[] {
-            rover.transform.position,
-            arm.Hand.SpriteRenderer.transform.position,
-        });
-        lineRenderer.enabled = true;
-    }
+    //    lineRenderer.SetPositions(new[] {
+    //        rover.transform.position,
+    //        arm.Hand.SpriteRenderer.transform.position,
+    //    });
+    //    lineRenderer.enabled = true;
+    //}
 }

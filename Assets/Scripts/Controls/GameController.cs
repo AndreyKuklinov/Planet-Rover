@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     [SerializeField] bool isTestingModeOn = false;
-    [SerializeField] BetterRover rover;
+    [SerializeField] Rover rover;
     [SerializeField] PartyInputManager partyManager;
 
     void Start()
