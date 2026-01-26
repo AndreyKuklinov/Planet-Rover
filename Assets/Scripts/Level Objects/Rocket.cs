@@ -5,44 +5,45 @@ using UnityEngine;
 
 public class Rocket : LevelObject
 {
-    //[field: SerializeField] public List<SampleData> RequiredSamples { get; private set; }
+    [field: SerializeField] public List<SampleData> RequiredSamples { get; private set; }
 
-    //public event Action RocketCompleted;
-    //public event Action RequiredObjectsChanged;
+    public event Action RocketCompleted;
+    public event Action RequiredObjectsChanged;
 
-    //override protected void Start()
-    //{
-    //    RequiredObjectsChanged?.Invoke();
-    //    base.Start();
-    //}
+    override protected void Start()
+    {
+        RequiredObjectsChanged?.Invoke();
+        base.Start();
+    }
 
-    //public override bool CanReceive(LevelObject levelObject)
-    //{
-    //    var sample = levelObject as Sample;
-    //    if (sample == null)
-    //        return false;
-    //    return RequiredSamples.Contains(sample.Data);
-    //}
+    public override bool CanReceive(LevelObject levelObject)
+    {
+        var sample = levelObject as Sample;
+        if (sample == null)
+            return false;
+        return RequiredSamples.Contains(sample.Data);
+    }
 
-    //public override void Receive(LevelObject levelObject)
-    //{
-    //    if (!CanReceive(levelObject))
-    //        throw new ArgumentException("Can't drop " + levelObject + " on " + this);
+    public override void Receive(LevelObject levelObject)
+    {
+        var sample = levelObject as Sample;
+        if (!CanReceive(sample))
+            throw new ArgumentException("Can't drop " + levelObject + " on " + this);
 
-    //    Destroy(levelObject.gameObject);
-    //    RequiredSamples.Remove(levelObject.Data);
-    //    RequiredObjectsChanged?.Invoke();
-    //    CheckForCompletion();
-    //}
+        Destroy(sample.gameObject);
+        RequiredSamples.Remove(sample.Data);
+        RequiredObjectsChanged?.Invoke();
+        CheckForCompletion();
+    }
 
-    //void CheckForCompletion()
-    //{
-    //    if (RequiredSamples.Count > 0)
-    //        return;
+    void CheckForCompletion()
+    {
+        if (RequiredSamples.Count > 0)
+            return;
 
-    //    grid.RemoveObject(this);
-    //    RocketCompleted?.Invoke();
+        grid.RemoveObject(this);
+        RocketCompleted?.Invoke();
 
-    //    Destroy(gameObject);
-    //}
+        Destroy(gameObject);
+    }
 }
