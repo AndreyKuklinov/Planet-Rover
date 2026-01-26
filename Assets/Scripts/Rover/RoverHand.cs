@@ -56,8 +56,22 @@ public class RoverHand : MonoBehaviour
 
         IsExtending = false;
         LastGrabbedPos = ActualHandPosition;
-        SelectedMovementTarget?.Invoke(this, ActualHandPosition);
-        RetractInstantly();
+
+        var cell = levelGrid.WorldToCell(ActualHandPosition);
+        var obj = levelGrid.Objects.GetObject(cell);
+        if (obj == null)
+        {
+            SelectedMovementTarget?.Invoke(this, ActualHandPosition);
+            RetractInstantly();
+            return;
+        }
+
+        if(obj.CanBeGrabbed)
+        {
+
+        }
+
+        IsRetracting = true;
     }
 
     public void TryGrab()
