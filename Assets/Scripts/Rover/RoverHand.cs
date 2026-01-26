@@ -59,6 +59,7 @@ public class RoverHand : MonoBehaviour
 
         var cell = levelGrid.WorldToCell(ActualHandPosition);
         var obj = levelGrid.Objects.GetObject(cell);
+
         if (obj == null)
         {
             SelectedMovementTarget?.Invoke(this, ActualHandPosition);
@@ -68,7 +69,8 @@ public class RoverHand : MonoBehaviour
 
         if(obj.CanBeGrabbed)
         {
-
+            HeldObject = obj;
+            GrabbedObject?.Invoke(HeldObject);
         }
 
         IsRetracting = true;
