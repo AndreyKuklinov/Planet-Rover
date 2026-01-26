@@ -16,7 +16,6 @@ public class PlayerDevice : MonoBehaviour
     public event Action<PlayerDevice> DropTriggered;
 
     public HashSet<Direction> AllowedDirections;
-    //private GameController gameController;
 
     void OnUp(InputValue value)
     {
@@ -45,9 +44,6 @@ public class PlayerDevice : MonoBehaviour
 
     void OnInput(InputValue value, Direction direction)
     {
-        //if(gameController == null)
-        //    gameController = FindObjectOfType<GameController>();
-
         DirectionTriggered?.Invoke(value, direction, this);
     }
 }
