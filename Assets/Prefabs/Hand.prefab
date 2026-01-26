@@ -136,7 +136,6 @@ MonoBehaviour:
   rover: {fileID: 0}
   extendSpeed: 10
   retractSpeed: 12
-  holdingDistance: 0.5
 --- !u!114 &6421409979537266196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +153,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 8397864754370603764}
   objectHolder: {fileID: 2459121359799727033}
   visibleDistance: 0.5
+  holdingDistance: 0.5
 --- !u!120 &8397864754370603764
 LineRenderer:
   serializedVersion: 2

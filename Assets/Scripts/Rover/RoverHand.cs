@@ -20,7 +20,6 @@ public class RoverHand : MonoBehaviour
     [SerializeField] Rover rover;
     [SerializeField] float extendSpeed;
     [SerializeField] float retractSpeed;
-    [SerializeField] float holdingDistance;
 
     private LevelGrid levelGrid;
 
@@ -30,16 +29,8 @@ public class RoverHand : MonoBehaviour
     public bool IsMovingRover
         => rover.IsMoving && rover.TargetHand == this;
 
-    public float RestingDistance
-        => IsHoldingObject ? holdingDistance : 0;
-
-    public Vector3 ActualHandPosition
+    public Vector3 HandPosition
         => transform.position + CurrentDistance * DirectionVector.GetVector3(Direction);
-
-    public Vector3 VisualHandPosition
-        => transform.position 
-            + Mathf.Max(CurrentDistance, RestingDistance) 
-            * DirectionVector.GetVector3(Direction);
 
     public void TryExtend()
     {
@@ -55,14 +46,14 @@ public class RoverHand : MonoBehaviour
             return;
 
         IsExtending = false;
-        LastGrabbedPos = ActualHandPosition;
+        LastGrabbedPos = HandPosition;
 
-        var cell = levelGrid.WorldToCell(ActualHandPosition);
+        var cell = levelGrid.WorldToCell(HandPosition);
         var obj = levelGrid.Objects.GetObject(cell);
 
         if (obj == null)
         {
-            SelectedMovementTarget?.Invoke(this, ActualHandPosition);
+            SelectedMovementTarget?.Invoke(this, HandPosition);
             RetractInstantly();
             return;
         }
@@ -124,9 +115,8 @@ public class RoverHand : MonoBehaviour
             return;
 
         CurrentDistance -= retractSpeed * Time.deltaTime;
-        CurrentDistance = Mathf.Max(CurrentDistance, RestingDistance);
 
-        if (CurrentDistance <= RestingDistance)
+        if (CurrentDistance <= 0)
             IsRetracting = false;
     }
 }

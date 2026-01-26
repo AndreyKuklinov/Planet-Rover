@@ -9,6 +9,15 @@ public class HandRenderer : MonoBehaviour
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform objectHolder;
     [SerializeField] float visibleDistance;
+    [SerializeField] float holdingDistance;
+
+    Vector3 TargetPosition
+        => hand.transform.position
+            + Mathf.Max(hand.CurrentDistance, HandRestingDistance)
+            * DirectionVector.GetVector3(hand.Direction);
+
+    float HandRestingDistance
+        => hand.IsHoldingObject ? holdingDistance : 0;
 
     void Start()
     {
@@ -34,7 +43,7 @@ public class HandRenderer : MonoBehaviour
         if (hand.IsMovingRover)
             spriteRenderer.transform.position = hand.LastGrabbedPos;
         else
-            spriteRenderer.transform.position = hand.VisualHandPosition;
+            spriteRenderer.transform.position = TargetPosition;
     }
 
     void UpdateLine()
