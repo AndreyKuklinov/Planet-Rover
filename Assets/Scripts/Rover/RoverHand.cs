@@ -60,13 +60,13 @@ public class RoverHand : MonoBehaviour
 
         if(obj.CanBeGrabbed)
         {
-            Grab(obj);
+            SwitchOrGrab(obj);
         }
 
         IsRetracting = true;
     }
 
-    private void Grab(LevelObject obj)
+    void SwitchOrGrab(LevelObject obj)
     {
         if (!obj.CanBeGrabbed)
             throw new ArgumentException("Trying to grab an impossible object: " + obj);
@@ -74,12 +74,16 @@ public class RoverHand : MonoBehaviour
         if (IsHoldingObject)
         {
             var prevObject = HeldObject;
-            HeldObject = obj;
-            GrabbedObject?.Invoke(obj);
+            Grab(obj);
             prevObject.AttachToGrid();
             return;
         }
 
+        Grab(obj);
+    }
+
+    void Grab(LevelObject obj)
+    {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
     }
