@@ -40,6 +40,25 @@ public class RoverHand : MonoBehaviour
         IsExtending = true;
     }
 
+    public void TryDrop()
+    {
+        Debug.Log("check 1");
+        if (IsExtending || IsRetracting || IsMovingRover || !IsHoldingObject)
+            return;
+
+        Debug.Log("check 2");
+        var roverCell = levelGrid.WorldToCell(transform.position);
+        var nextCell = roverCell + DirectionVector.GetVector2Int(Direction);
+        var objectInNextCell = levelGrid.Objects.GetObject(nextCell);
+        if (objectInNextCell != null)
+            return;
+
+        var nextCellPos = levelGrid.CellToWorld(nextCell);
+        HeldObject.transform.position = nextCellPos;
+        HeldObject.AttachToGrid();
+        HeldObject = null;
+    }
+
     public void TryInteract()
     {
         if (!IsExtending || IsRetracting || IsMovingRover)
@@ -53,14 +72,14 @@ public class RoverHand : MonoBehaviour
 
         if (obj == null)
         {
-            SelectedMovementTarget?.Invoke(this, HandPosition);
-            RetractInstantly();
+            MoveToHand();
             return;
         }
 
         if(obj.CanBeGrabbed)
         {
             SwitchOrGrab(obj);
+            return;
         }
 
         IsRetracting = true;
@@ -82,10 +101,17 @@ public class RoverHand : MonoBehaviour
         Grab(obj);
     }
 
+    void MoveToHand()
+    {
+        SelectedMovementTarget?.Invoke(this, HandPosition);
+        RetractInstantly();
+    }
+
     void Grab(LevelObject obj)
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
+        IsRetracting = true;
     }
 
     void Start()

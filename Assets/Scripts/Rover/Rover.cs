@@ -25,6 +25,11 @@ public class Rover : MonoBehaviour
         hands[(int)direction].TryInteract();
     }
 
+    public void TryDrop(Direction direction)
+    {
+        hands[(int)direction].TryDrop();
+    }
+
     void Start()
     {
         levelGrid = FindObjectOfType<LevelGrid>();

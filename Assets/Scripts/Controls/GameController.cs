@@ -12,6 +12,15 @@ public class GameController : MonoBehaviour
     void Start()
     {
         partyManager.DirectionTriggered += OnDirectionTriggered;
+        partyManager.DropTriggered += OnDropTriggered;
+    }
+
+    private void OnDropTriggered(PlayerDevice obj)
+    {
+        foreach(var dir in obj.AllowedDirections)
+        {
+
+        }
     }
 
     void OnDirectionTriggered(InputValue value, Direction direction, PlayerDevice player)
