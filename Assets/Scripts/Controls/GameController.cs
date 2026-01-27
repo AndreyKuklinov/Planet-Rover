@@ -20,8 +20,6 @@ public class GameController : MonoBehaviour
         if (!player.AllowedDirections.Contains(direction) && !isTestingModeOn)
             return;
 
-        Debug.Log(interaction.ToString());
-
         switch (interaction)
         {
             case InputInteraction.Hold:
