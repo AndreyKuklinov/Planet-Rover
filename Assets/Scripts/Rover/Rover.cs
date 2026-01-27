@@ -14,10 +14,17 @@ public class Rover : MonoBehaviour
     [SerializeField] float movementSpeed;
 
     private LevelGrid levelGrid;
+    private RoverHand lastPressedHand;
 
     public void OnPress(Direction direction)
     {
-        hands[(int)direction].TryExtend();
+        var hand = hands[(int)direction];
+
+        if (lastPressedHand != null && lastPressedHand != hand && lastPressedHand.IsHoldingObject)
+            lastPressedHand.PassObject(hand);
+
+        hand.TryExtend();
+        lastPressedHand = hand;
     }
 
     public void OnRelease(Direction direction)

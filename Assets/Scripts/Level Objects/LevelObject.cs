@@ -40,6 +40,8 @@ public abstract class LevelObject : MonoBehaviour
     {
         transform.SetParent(target.transform);
         transform.position = target.position;
-        grid.RemoveObject(this);
+
+        if(grid.Objects.Contains(this))
+            grid.RemoveObject(this);
     }
 }

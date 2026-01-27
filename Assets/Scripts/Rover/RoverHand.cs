@@ -88,6 +88,16 @@ public class RoverHand : MonoBehaviour
         HandState = HandState.Retracting;
     }
 
+    public void PassObject(RoverHand toHand)
+    {
+        if (toHand == this)
+            throw new ArgumentException("Hand trying to pass an object to itself");
+
+        toHand.HeldObject = HeldObject;
+        toHand.GrabbedObject?.Invoke(HeldObject);
+        HeldObject = null;
+    }
+
     void SwitchOrGrab(LevelObject obj)
     {
         if (!obj.CanBeGrabbed)
@@ -104,17 +114,17 @@ public class RoverHand : MonoBehaviour
         Grab(obj);
     }
 
-    void MoveToHand()
-    {
-        SelectedMovementTarget?.Invoke(this, HandPosition);
-        RetractInstantly();
-    }
-
     void Grab(LevelObject obj)
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
         HandState = HandState.Retracting;
+    }
+
+    void MoveToHand()
+    {
+        SelectedMovementTarget?.Invoke(this, HandPosition);
+        RetractInstantly();
     }
 
     void PlaceHeldOntoObject(LevelObject obj)
