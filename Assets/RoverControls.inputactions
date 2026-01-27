@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Up",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "7981db75-c206-49bb-86e2-c6d17101d23c",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Down",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "1bf619d5-4960-4dd3-88b3-aa0cf822c39e",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -25,7 +25,7 @@
                 },
                 {
                     "name": "Left",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "ce2f0b12-2e0a-4f2c-a493-ea93648ef962",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -34,21 +34,12 @@
                 },
                 {
                     "name": "Right",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "4258efda-feac-4f79-a31f-a177a958b949",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Drop",
-                    "type": "Button",
-                    "id": "0f3a8639-775a-4ca0-89aa-d821e921ffb1",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -313,17 +304,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Right",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e2341087-19e7-47f7-a51f-7a2bb90b86f0",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

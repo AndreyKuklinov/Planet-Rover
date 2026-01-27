@@ -15,17 +15,17 @@ public class Rover : MonoBehaviour
 
     private LevelGrid levelGrid;
 
-    public void TryExtend(Direction direction)
+    public void OnPress(Direction direction)
     {
         hands[(int)direction].TryExtend();
     }
 
-    public void TryGrab(Direction direction)
+    public void OnRelease(Direction direction)
     {
         hands[(int)direction].TryInteract();
     }
 
-    public void TryDrop(Direction direction)
+    public void OnDoubleTap(Direction direction)
     {
         hands[(int)direction].TryDrop();
     }

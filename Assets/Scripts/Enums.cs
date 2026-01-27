@@ -10,12 +10,18 @@ public enum Direction
     Right = 3,
 }
 
-public enum HandBehaviour
+public enum InputInteraction
 {
-    GoThrough,
-    HoverOver,
-    StopBefore,
-    Retract
+    Hold,
+    Release,
+    DoubleTap
+}
+
+public enum HandState
+{
+    None,
+    Extending,
+    Retracting
 }
 
 public static class DirectionVector

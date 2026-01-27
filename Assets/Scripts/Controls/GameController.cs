@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,28 +13,26 @@ public class GameController : MonoBehaviour
     void Start()
     {
         partyManager.DirectionTriggered += OnDirectionTriggered;
-        partyManager.DropTriggered += OnDropTriggered;
     }
 
-    private void OnDropTriggered(PlayerDevice obj)
-    {
-        foreach(var dir in obj.AllowedDirections)
-            rover.TryDrop(dir);
-    }
-
-    void OnDirectionTriggered(InputValue value, Direction direction, PlayerDevice player)
+    void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
     {
         if (!player.AllowedDirections.Contains(direction) && !isTestingModeOn)
-        {
             return;
-        }
-        if (value.isPressed)
+
+        Debug.Log(interaction.ToString());
+
+        switch (interaction)
         {
-            rover.TryExtend(direction);
-        }
-        else
-        {
-            rover.TryGrab(direction);
+            case InputInteraction.Hold:
+                rover.OnPress(direction);
+                break;
+            case InputInteraction.Release:
+                rover.OnRelease(direction);
+                break;
+            case InputInteraction.DoubleTap:
+                rover.OnDoubleTap(direction);
+                break;
         }
     }
 }

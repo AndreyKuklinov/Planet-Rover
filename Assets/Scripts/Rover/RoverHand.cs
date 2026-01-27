@@ -13,8 +13,7 @@ public class RoverHand : MonoBehaviour
 
     public LevelObject HeldObject { get; private set; }
     public float CurrentDistance { get; private set; } = 0;
-    public bool IsExtending { get; private set; } = false;
-    public bool IsRetracting { get; private set; } = false;
+    public HandState HandState { get; private set; }
     public Vector3 LastGrabbedPos { get; private set; }
 
     [SerializeField] Rover rover;
@@ -34,20 +33,21 @@ public class RoverHand : MonoBehaviour
 
     public void TryExtend()
     {
-        if (IsExtending || IsRetracting || IsMovingRover)
+        if (HandState != HandState.None || IsMovingRover)
             return;
 
-        IsExtending = true;
+        HandState = HandState.Extending;
     }
 
     public void TryDrop()
     {
-        if (IsExtending || IsRetracting || IsMovingRover || !IsHoldingObject)
+        if (HandState == HandState.Retracting || IsMovingRover || !IsHoldingObject)
             return;
 
         var roverCell = levelGrid.WorldToCell(transform.position);
         var nextCell = roverCell + DirectionVector.GetVector2Int(Direction);
         var objectInNextCell = levelGrid.Objects.GetObject(nextCell);
+
         if (objectInNextCell != null)
             return;
 
@@ -59,10 +59,9 @@ public class RoverHand : MonoBehaviour
 
     public void TryInteract()
     {
-        if (!IsExtending || IsRetracting || IsMovingRover)
+        if (HandState == HandState.Retracting || IsMovingRover)
             return;
 
-        IsExtending = false;
         LastGrabbedPos = HandPosition;
 
         var cell = levelGrid.WorldToCell(HandPosition);
@@ -75,7 +74,7 @@ public class RoverHand : MonoBehaviour
         }
 
         if(obj.CanBeGrabbed)
-        {
+        {            
             SwitchOrGrab(obj);
             return;
         }
@@ -86,7 +85,7 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        throw new Exception("Invalid hand interaction encountered");
+        HandState = HandState.Retracting;
     }
 
     void SwitchOrGrab(LevelObject obj)
@@ -115,7 +114,7 @@ public class RoverHand : MonoBehaviour
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
-        IsRetracting = true;
+        HandState = HandState.Retracting;
     }
 
     void PlaceHeldOntoObject(LevelObject obj)
@@ -124,7 +123,7 @@ public class RoverHand : MonoBehaviour
             throw new Exception("Nothing to drop");
 
         obj.Receive(HeldObject);
-        IsRetracting = true;
+        HandState = HandState.Retracting;
     }
 
     void Start()
@@ -140,7 +139,7 @@ public class RoverHand : MonoBehaviour
 
     void UpdateExtension()
     {
-        if (!IsExtending)
+        if (HandState != HandState.Extending)
             return;
 
         CurrentDistance += extendSpeed * Time.deltaTime;
@@ -154,16 +153,17 @@ public class RoverHand : MonoBehaviour
 
     void UpdateRetraction()
     {
-        if (!IsRetracting)
+        if (HandState != HandState.Retracting)
             return;
 
         CurrentDistance -= retractSpeed * Time.deltaTime;
 
         if (CurrentDistance <= 0)
-            IsRetracting = false;
+            HandState = HandState.None;
     }
     void RetractInstantly()
     {
+        HandState = HandState.None;
         CurrentDistance = 0;
     }
 }

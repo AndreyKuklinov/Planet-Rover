@@ -1,49 +1,73 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayerDevice : MonoBehaviour
 {
     public delegate void DirectionTriggeredHandler(
-        InputValue inputValue, 
-        Direction direction, 
+        Direction direction,
+        InputInteraction interaction,
         PlayerDevice playerDevice
     );
-    public event DirectionTriggeredHandler DirectionTriggered;
-    public event Action<PlayerDevice> DropTriggered;
 
+    public event DirectionTriggeredHandler DirectionTriggered;
     public HashSet<Direction> AllowedDirections;
 
-    void OnUp(InputValue value)
+    [SerializeField] PlayerInput playerInput;
+    [SerializeField] float doubleTapTime;
+
+    Dictionary<Direction, float> directionTapTimes = new();
+
+    void Start()
     {
-        OnInput(value, Direction.Up);
+        playerInput.onActionTriggered += OnActionTriggered;
     }
 
-    void OnLeft(InputValue value)
+    void OnActionTriggered(InputAction.CallbackContext ctx)
     {
-        OnInput(value, Direction.Left);
+        if (!ctx.performed && !ctx.canceled)
+            return;
+
+        switch (ctx.action.name)
+        {
+            case "Up":
+                HandleDirection(ctx, Direction.Up);
+                break;
+            case "Down":
+                HandleDirection(ctx, Direction.Down);
+                break;
+            case "Left":
+                HandleDirection(ctx, Direction.Left);
+                break;
+            case "Right":
+                HandleDirection(ctx, Direction.Right);
+                break;
+        }
     }
 
-    void OnDown(InputValue value)
+    void HandleDirection(InputAction.CallbackContext ctx, Direction direction)
     {
-        OnInput(value, Direction.Down);
-    }
+        if(ctx.canceled)
+        {
+            DirectionTriggered?.Invoke(direction, InputInteraction.Release, this);
+            return;
+        }
 
-    void OnRight(InputValue value)
-    {
-        OnInput(value, Direction.Right);
-    }
+        if (!ctx.performed)
+            return;
 
-    void OnDrop()
-    {
-        DropTriggered?.Invoke(this);
-    }
+        var timeSinceLastTap = Time.time - directionTapTimes.GetValueOrDefault(direction);
+        directionTapTimes[direction] = Time.time;
 
-    void OnInput(InputValue value, Direction direction)
-    {
-        DirectionTriggered?.Invoke(value, direction, this);
+        if (timeSinceLastTap <= doubleTapTime)
+        {
+            DirectionTriggered?.Invoke(direction, InputInteraction.DoubleTap, this);
+            return;
+        }
+
+        DirectionTriggered?.Invoke(direction, InputInteraction.Hold, this);
     }
 }
