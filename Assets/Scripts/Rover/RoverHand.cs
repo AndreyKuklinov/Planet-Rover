@@ -151,7 +151,7 @@ public class RoverHand : MonoBehaviour
 
         CurrentDistance = Mathf.Min(CurrentDistance, maxDist);
 
-        if (CurrentDistance >= maxDist && isAutoRetractEnabled)
+        if (isAutoRetractEnabled && CurrentDistance >= maxDist)
             TryInteract();
     }
 
