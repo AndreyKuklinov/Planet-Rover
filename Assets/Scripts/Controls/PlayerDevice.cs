@@ -16,6 +16,7 @@ public class PlayerDevice : MonoBehaviour
 
     public event DirectionTriggeredHandler DirectionTriggered;
     public event Action<PlayerDevice> DropTriggered;
+    public event Action<PlayerDevice> DeviceLost;
 
     public HashSet<Direction> AllowedDirections;
 
@@ -48,7 +49,7 @@ public class PlayerDevice : MonoBehaviour
 
     public void OnDeviceLost(PlayerInput _playerInput)
     {
-        Debug.Log("DEVICE LOST");
+        DeviceLost?.Invoke(this);
     }
 
     void HandleDirection(InputAction.CallbackContext ctx, Direction direction)

@@ -57,6 +57,14 @@ public class PartyInputManager : MonoBehaviour
         ConfigurePlayers();
         device.DirectionTriggered += OnDirectionTriggered;
         device.DropTriggered += OnDropTriggered;
+        device.DeviceLost += OnDeviceLost;
+    }
+
+    private void OnDeviceLost(PlayerDevice player)
+    {
+        players.Remove(player);
+        Destroy(player.gameObject);
+        ConfigurePlayers();
     }
 
     private void OnDropTriggered(PlayerDevice obj)
@@ -72,8 +80,6 @@ public class PartyInputManager : MonoBehaviour
     void OnPlayerLeft(PlayerInput playerInput)
     {
         Debug.Log("player left");
-        players.Remove(playerInput.GetComponent<PlayerDevice>());
-        ConfigurePlayers();
     }
 
     void ConfigurePlayers()
