@@ -13,6 +13,15 @@ public class GameController : MonoBehaviour
     void Start()
     {
         partyManager.DirectionTriggered += OnDirectionTriggered;
+        partyManager.DropTriggered += OnDropTriggered;
+    }
+
+    private void OnDropTriggered(PlayerDevice obj)
+    {
+        foreach(var dir in obj.AllowedDirections)
+        {
+            rover.OnDrop(dir);
+        }
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
@@ -27,9 +36,6 @@ public class GameController : MonoBehaviour
                 break;
             case InputInteraction.Release:
                 rover.OnRelease(direction);
-                break;
-            case InputInteraction.DoubleTap:
-                rover.OnDoubleTap(direction);
                 break;
         }
     }

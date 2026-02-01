@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class PartyInputManager : MonoBehaviour
 {
     public event PlayerDevice.DirectionTriggeredHandler DirectionTriggered;
+    public event Action<PlayerDevice> DropTriggered;
 
     private readonly List<PlayerDevice> players = new();
 
@@ -55,6 +56,12 @@ public class PartyInputManager : MonoBehaviour
         players.Add(device);
         ConfigurePlayers();
         device.DirectionTriggered += OnDirectionTriggered;
+        device.DropTriggered += OnDropTriggered;
+    }
+
+    private void OnDropTriggered(PlayerDevice obj)
+    {
+        DropTriggered?.Invoke(obj);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice playerDevice)

@@ -25,7 +25,7 @@ public class Rover : MonoBehaviour
         hands[(int)direction].TryInteract();
     }
 
-    public void OnDoubleTap(Direction direction)
+    public void OnDrop(Direction direction)
     {
         hands[(int)direction].TryDrop();
     }

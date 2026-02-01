@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -14,12 +15,11 @@ public class PlayerDevice : MonoBehaviour
     );
 
     public event DirectionTriggeredHandler DirectionTriggered;
+    public event Action<PlayerDevice> DropTriggered;
+
     public HashSet<Direction> AllowedDirections;
 
     [SerializeField] PlayerInput playerInput;
-    [SerializeField] float doubleTapTime;
-
-    Dictionary<Direction, float> directionTapTimes = new();
 
     void Start()
     {
@@ -45,6 +45,9 @@ public class PlayerDevice : MonoBehaviour
             case "Right":
                 HandleDirection(ctx, Direction.Right);
                 break;
+            case "Drop":
+                DropTriggered?.Invoke(this);
+                break;
         }
     }
 
@@ -53,18 +56,6 @@ public class PlayerDevice : MonoBehaviour
         if(ctx.canceled)
         {
             DirectionTriggered?.Invoke(direction, InputInteraction.Release, this);
-            return;
-        }
-
-        if (!ctx.performed)
-            return;
-
-        var timeSinceLastTap = Time.time - directionTapTimes.GetValueOrDefault(direction);
-        directionTapTimes[direction] = Time.time;
-
-        if (timeSinceLastTap <= doubleTapTime)
-        {
-            DirectionTriggered?.Invoke(direction, InputInteraction.DoubleTap, this);
             return;
         }
 

@@ -13,8 +13,7 @@ public enum Direction
 public enum InputInteraction
 {
     Hold,
-    Release,
-    DoubleTap
+    Release
 }
 
 public enum HandState
