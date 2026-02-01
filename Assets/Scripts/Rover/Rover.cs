@@ -12,6 +12,7 @@ public class Rover : MonoBehaviour
 
     [SerializeField] RoverHand[] hands;
     [SerializeField] float movementSpeed;
+    [SerializeField] bool isRetractionVoluntary;
 
     private LevelGrid levelGrid;
 
@@ -22,7 +23,8 @@ public class Rover : MonoBehaviour
 
     public void OnRelease(Direction direction)
     {
-        hands[(int)direction].TryInteract();
+        if(isRetractionVoluntary)
+            hands[(int)direction].TryInteract();
     }
 
     public void OnDrop(Direction direction)

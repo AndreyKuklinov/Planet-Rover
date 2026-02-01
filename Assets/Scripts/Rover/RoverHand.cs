@@ -19,6 +19,7 @@ public class RoverHand : MonoBehaviour
     [SerializeField] Rover rover;
     [SerializeField] float extendSpeed;
     [SerializeField] float retractSpeed;
+    [SerializeField] bool isAutoRetractEnabled;
 
     private LevelGrid levelGrid;
 
@@ -149,6 +150,9 @@ public class RoverHand : MonoBehaviour
         var maxDist = (levelGrid.CellToWorld(stoppingCell) - transform.position).magnitude;
 
         CurrentDistance = Mathf.Min(CurrentDistance, maxDist);
+
+        if (CurrentDistance >= maxDist && isAutoRetractEnabled)
+            TryInteract();
     }
 
     void UpdateRetraction()

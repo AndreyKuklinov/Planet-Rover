@@ -107,6 +107,7 @@ MonoBehaviour:
   - {fileID: 7819043880856657048}
   - {fileID: 2430797285342976882}
   movementSpeed: 20
+  isRetractionVoluntary: 1
 --- !u!1001 &60334990100414853
 PrefabInstance:
   m_ObjectHideFlags: 0
