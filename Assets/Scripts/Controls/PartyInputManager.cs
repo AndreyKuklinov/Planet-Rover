@@ -71,6 +71,7 @@ public class PartyInputManager : MonoBehaviour
 
     void OnPlayerLeft(PlayerInput playerInput)
     {
+        Debug.Log("player left");
         players.Remove(playerInput.GetComponent<PlayerDevice>());
         ConfigurePlayers();
     }

@@ -21,34 +21,34 @@ public class PlayerDevice : MonoBehaviour
 
     [SerializeField] PlayerInput playerInput;
 
-    void Start()
+    public void OnUp(InputAction.CallbackContext ctx)
     {
-        playerInput.onActionTriggered += OnActionTriggered;
+        HandleDirection(ctx, Direction.Up);
     }
 
-    void OnActionTriggered(InputAction.CallbackContext ctx)
+    public void OnLeft(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed && !ctx.canceled)
-            return;
+        HandleDirection(ctx, Direction.Left);
+    }
 
-        switch (ctx.action.name)
-        {
-            case "Up":
-                HandleDirection(ctx, Direction.Up);
-                break;
-            case "Down":
-                HandleDirection(ctx, Direction.Down);
-                break;
-            case "Left":
-                HandleDirection(ctx, Direction.Left);
-                break;
-            case "Right":
-                HandleDirection(ctx, Direction.Right);
-                break;
-            case "Drop":
-                DropTriggered?.Invoke(this);
-                break;
-        }
+    public void OnRight(InputAction.CallbackContext ctx)
+    {
+        HandleDirection(ctx, Direction.Right);
+    }
+
+    public void OnDown(InputAction.CallbackContext ctx)
+    {
+        HandleDirection(ctx, Direction.Down);
+    }
+
+    public void OnDrop(InputAction.CallbackContext ctx)
+    {
+        DropTriggered?.Invoke(this);
+    }
+
+    public void OnDeviceLost(PlayerInput _playerInput)
+    {
+        Debug.Log("DEVICE LOST");
     }
 
     void HandleDirection(InputAction.CallbackContext ctx, Direction direction)
