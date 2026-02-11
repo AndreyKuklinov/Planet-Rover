@@ -47,32 +47,6 @@ public class LevelGrid : MonoBehaviour
     public bool IsWithinBounds(Vector2Int cell)
         => bounds.IsWithinBounds(cell);
 
-    public static IEnumerable<Vector2Int> PointsOnLine(Vector2Int from, Vector2Int to)
-    {
-        if (from.x != to.x && from.y != to.y)
-            throw new ArgumentException("Only horizontal or vertical lines supported.");
-
-        var step = new Vector2Int(
-            Mathf.Clamp(to.x - from.x, -1, 1),
-            Mathf.Clamp(to.y - from.y, -1, 1)
-        );
-
-        for (var p = from; ; p += step)
-        {
-            yield return p;
-            if (p == to)
-                yield break;
-        }
-    }
-
-    public List<LevelObject> GetObjectsOnLine(Vector2Int pos1, Vector2Int pos2)
-    {
-        return PointsOnLine(pos1, pos2)
-            .Select(p => Objects.GetObject(p))
-            .Where(o => o != null)
-            .ToList();
-    }
-
     public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject heldObj)
     {
         var prev = from;
