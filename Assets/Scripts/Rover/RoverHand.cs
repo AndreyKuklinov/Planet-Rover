@@ -86,7 +86,7 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        HandState = HandState.Retracting;
+        StartRetracting();
     }
 
     void SwitchOrGrab(LevelObject obj)
@@ -115,7 +115,7 @@ public class RoverHand : MonoBehaviour
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
-        HandState = HandState.Retracting;
+        StartRetracting();
     }
 
     void PlaceHeldOntoObject(LevelObject obj)
@@ -124,7 +124,7 @@ public class RoverHand : MonoBehaviour
             throw new Exception("Nothing to drop");
 
         obj.Receive(HeldObject);
-        HandState = HandState.Retracting;
+        StartRetracting();
     }
 
     void Start()
@@ -169,5 +169,10 @@ public class RoverHand : MonoBehaviour
     {
         HandState = HandState.None;
         CurrentDistance = 0;
+    }
+
+    void StartRetracting()
+    {
+        HandState = HandState.Retracting;
     }
 }
