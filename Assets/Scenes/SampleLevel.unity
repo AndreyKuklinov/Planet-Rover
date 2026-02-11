@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -339,6 +340,21 @@ Transform:
   - {fileID: 771462491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c405a3e6865caf54abc99723509fc239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
+  bounds: {fileID: 1915828271}
+  extraPadding: 0.1
 --- !u!114 &533509348 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3398468450716815448, guid: 5a27825b442fc894fa290916ab0510f1, type: 3}
@@ -1097,7 +1113,7 @@ GameObject:
   - component: {fileID: 1816129775}
   m_Layer: 0
   m_Name: TopRight
-  m_TagString: EditorOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1356,7 +1372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottomLeftMarker: {fileID: 1970437409}
   topRightMarker: {fileID: 1816129773}
-  grid: {fileID: 1142659338}
 --- !u!4 &1928728105 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2923958814578110793, guid: ef35e2d0ecb337b4a901d77fe07e9acb, type: 3}
@@ -1489,7 +1504,7 @@ GameObject:
   - component: {fileID: 1970437411}
   m_Layer: 0
   m_Name: BottomLeft
-  m_TagString: EditorOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

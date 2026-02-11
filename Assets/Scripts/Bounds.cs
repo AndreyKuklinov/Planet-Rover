@@ -13,6 +13,12 @@ public class Bounds : MonoBehaviour
     public Vector2 MinCoords
         => bottomLeftMarker.transform.position;
 
+    public Vector2 Size
+        => MaxCoords - MinCoords;
+
+    public Vector2 Center
+        => (MinCoords + MaxCoords) / 2f;
+
     public bool IsWithinBounds(Vector2 cell)
         => cell.x <= MaxCoords.x
         && cell.y <= MaxCoords.y
