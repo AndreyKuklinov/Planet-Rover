@@ -49,7 +49,7 @@ public class RoverHand : MonoBehaviour
         var nextCell = roverCell + DirectionVector.GetVector2Int(Direction);
         var objectInNextCell = levelGrid.Objects.GetObject(nextCell);
 
-        if (objectInNextCell != null)
+        if (objectInNextCell != null || !levelGrid.IsWithinBounds(nextCell))
             return;
 
         var nextCellPos = levelGrid.CellToWorld(nextCell);

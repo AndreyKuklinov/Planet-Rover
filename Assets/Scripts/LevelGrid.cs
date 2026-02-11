@@ -13,6 +13,10 @@ public class LevelGrid : MonoBehaviour
     public void PlaceObject(LevelObject obj)
     {
         var cell = WorldToCell(obj.transform.position);
+
+        if (!IsWithinBounds(cell))
+            throw new InvalidOperationException("Trying to place an object outside of bounds: " + cell);
+
         obj.transform.position = CellToWorld(cell);
         Objects.Add(obj, new Vector2(cell.x, cell.y));
     }
@@ -39,6 +43,9 @@ public class LevelGrid : MonoBehaviour
         var pos = grid.GetCellCenterWorld(new Vector3Int(position.x, position.y, 0));
         return pos;
     }
+
+    public bool IsWithinBounds(Vector2Int cell)
+        => bounds.IsWithinBounds(cell);
 
     public static IEnumerable<Vector2Int> PointsOnLine(Vector2Int from, Vector2Int to)
     {
@@ -92,7 +99,4 @@ public class LevelGrid : MonoBehaviour
 
         return prev;
     }
-
-    bool IsWithinBounds(Vector2Int square)
-        => bounds.IsWithinBounds(square);
 }
