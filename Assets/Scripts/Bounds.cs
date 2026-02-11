@@ -6,23 +6,16 @@ public class Bounds : MonoBehaviour
 {
     [SerializeField] Transform bottomLeftMarker;
     [SerializeField] Transform topRightMarker;
-    [SerializeField] Grid grid;
 
-    public Vector2Int MaxCoords
-        => GetCell(topRightMarker.transform.position);
+    public Vector2 MaxCoords
+        => topRightMarker.transform.position;
 
-    public Vector2Int MinCoords
-        => GetCell(bottomLeftMarker.transform.position);
+    public Vector2 MinCoords
+        => bottomLeftMarker.transform.position;
 
-    public bool IsWithinBounds(Vector2Int cell)
+    public bool IsWithinBounds(Vector2 cell)
         => cell.x <= MaxCoords.x
         && cell.y <= MaxCoords.y
         && cell.x >= MinCoords.x
         && cell.y >= MinCoords.y;
-
-    Vector2Int GetCell(Vector2 pos)
-    {
-        var cell = grid.WorldToCell(pos);
-        return new Vector2Int(cell.x, cell.y);
-    }
 }

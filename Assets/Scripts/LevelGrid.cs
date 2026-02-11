@@ -45,7 +45,7 @@ public class LevelGrid : MonoBehaviour
     }
 
     public bool IsWithinBounds(Vector2Int cell)
-        => bounds.IsWithinBounds(cell);
+        => bounds.IsWithinBounds(CellToWorld(cell));
 
     public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject heldObj)
     {
