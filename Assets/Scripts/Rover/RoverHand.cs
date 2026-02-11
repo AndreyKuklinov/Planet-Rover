@@ -149,8 +149,6 @@ public class RoverHand : MonoBehaviour
         var stoppingCell = levelGrid.GetStoppingSquare(cell, Direction, HeldObject);
         var maxDist = (levelGrid.CellToWorld(stoppingCell) - transform.position).magnitude;
 
-        Debug.Log(levelGrid.WorldToCell(HandPosition));
-
         CurrentDistance = Mathf.Min(CurrentDistance, maxDist);
 
         if (isAutoRetractEnabled && CurrentDistance >= maxDist)
