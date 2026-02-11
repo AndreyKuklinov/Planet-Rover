@@ -70,6 +70,9 @@ public class RoverHand : MonoBehaviour
 
         if (obj == null)
         {
+            if (DropIfHandOverAdjacent())
+                return;
+
             MoveToHand();
             return;
         }
@@ -86,7 +89,24 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        HandState = HandState.Retracting;
+        StartRetracting();
+    }
+
+    bool DropIfHandOverAdjacent()
+    {
+        if (!IsHoldingObject)
+            return false;
+
+        var roverCell = levelGrid.WorldToCell(transform.position);
+        var cell = levelGrid.WorldToCell(HandPosition);
+        var dist = (cell - roverCell).magnitude;
+
+        if (dist > 1)
+            return false;
+
+        TryDrop();
+        StartRetracting();
+        return true;
     }
 
     void SwitchOrGrab(LevelObject obj)
@@ -115,7 +135,7 @@ public class RoverHand : MonoBehaviour
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
-        HandState = HandState.Retracting;
+        StartRetracting();
     }
 
     void PlaceHeldOntoObject(LevelObject obj)
@@ -124,7 +144,7 @@ public class RoverHand : MonoBehaviour
             throw new Exception("Nothing to drop");
 
         obj.Receive(HeldObject);
-        HandState = HandState.Retracting;
+        StartRetracting();
     }
 
     void Start()
@@ -169,5 +189,10 @@ public class RoverHand : MonoBehaviour
     {
         HandState = HandState.None;
         CurrentDistance = 0;
+    }
+
+    void StartRetracting()
+    {
+        HandState = HandState.Retracting;
     }
 }
