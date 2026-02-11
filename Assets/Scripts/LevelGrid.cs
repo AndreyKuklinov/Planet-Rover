@@ -6,10 +6,9 @@ using UnityEngine;
 public class LevelGrid : MonoBehaviour
 {
     [SerializeField] Grid grid;
+    [SerializeField] Bounds bounds;
 
     public readonly Map<Vector2, LevelObject> Objects = new();
-    public Vector2Int MinBounds = new(-99, -99);
-    public Vector2Int MaxBounds = new(99, 99);
 
     public void PlaceObject(LevelObject obj)
     {
@@ -91,9 +90,9 @@ public class LevelGrid : MonoBehaviour
             return prev;
         }
 
-        return point;
+        return prev;
     }
 
     bool IsWithinBounds(Vector2Int square)
-        => square.x > MinBounds.x && square.y > MinBounds.y && square.x < MaxBounds.x && square.y < MaxBounds.y;
+        => bounds.IsWithinBounds(square);
 }
