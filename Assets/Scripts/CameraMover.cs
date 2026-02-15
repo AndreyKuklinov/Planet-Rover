@@ -5,13 +5,17 @@ using UnityEngine;
 public class CameraMover : MonoBehaviour
 {
     [SerializeField] Camera cam;
-    [SerializeField] Bounds bounds;
     [SerializeField] float extraPadding;
 
     const float CELL_PADDING = 0.5f;
 
     void Update()
     {
+        var bounds = LevelGrid.CurrentLevelBounds;
+
+        if (bounds == null)
+            return;
+
         var aspect = (float)Screen.width / Screen.height;
         var sizeFromHeight = (bounds.Size.y) * 0.5f;
         var sizeFromWidth = (bounds.Size.x) * 0.5f / aspect;

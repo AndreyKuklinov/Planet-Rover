@@ -108,7 +108,6 @@ MonoBehaviour:
   - {fileID: 7819043880856657048}
   - {fileID: 2430797285342976882}
   levelObject: {fileID: 7713294550922192179}
-  movementSpeed: 20
   isRetractionVoluntary: 1
 --- !u!114 &7713294550922192179
 MonoBehaviour:
@@ -122,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052a28caf56e2184e96621e26bdebf8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 20
 --- !u!1001 &60334990100414853
 PrefabInstance:
   m_ObjectHideFlags: 0

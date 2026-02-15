@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class LevelGrid : MonoBehaviour
 {
+    public static Bounds CurrentLevelBounds { get; private set; }
+
     [SerializeField] Grid grid;
     [SerializeField] Bounds bounds;
 
     public readonly Map<Vector2Int, LevelObject> Objects = new();
+
+    void Start()
+    {
+        CurrentLevelBounds = bounds;
+    }
 
     public void PlaceObject(LevelObject obj)
     {

@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     [SerializeField] bool isTestingModeOn = false;
-    [SerializeField] Rover rover;
     [SerializeField] PartyInputManager partyManager;
+    [SerializeField] GameManager gameManager;
 
     void Start()
     {
@@ -16,23 +16,35 @@ public class GameController : MonoBehaviour
         partyManager.DropTriggered += OnDropTriggered;
     }
 
-    private void OnDropTriggered(PlayerDevice obj)
+    void OnDropTriggered(PlayerDevice obj)
     {
-        rover.OnDrop(obj.AllowedDirections);
+        if (Rover.Instance == null)
+            return;
+
+        if (gameManager.IsGameOver)
+            return;
+
+        Rover.Instance.OnDrop(obj.AllowedDirections);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
     {
+        if (Rover.Instance == null)
+            return;
+
+        if (gameManager.IsGameOver)
+            return;
+
         if (!player.AllowedDirections.Contains(direction) && !isTestingModeOn)
             return;
 
         switch (interaction)
         {
             case InputInteraction.Hold:
-                rover.OnPress(direction);
+                Rover.Instance.OnPress(direction);
                 break;
             case InputInteraction.Release:
-                rover.OnRelease(direction);
+                Rover.Instance.OnRelease(direction);
                 break;
         }
     }

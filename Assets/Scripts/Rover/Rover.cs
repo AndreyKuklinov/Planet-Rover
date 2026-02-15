@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Rover : MonoBehaviour
 {
+    public static Rover Instance { get; private set; }
     public RoverHand TargetHand { get; private set; }
 
     [SerializeField] RoverHand[] hands;
@@ -36,6 +37,7 @@ public class Rover : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         levelGrid = FindObjectOfType<LevelGrid>();
         RoverHand.SelectedMovementTarget += OnSelectedMovementTarget;
     }
@@ -43,7 +45,12 @@ public class Rover : MonoBehaviour
     void OnSelectedMovementTarget(RoverHand hand, Vector3 target)
     {
         TargetHand = hand;
-        var targetPos = levelGrid.SnapToGrid(target);
-        levelObject.MoveToPosition(targetPos);
+        var cell = levelGrid.WorldToCell(target);
+        var pos = levelGrid.CellToWorld(cell);
+
+        if (!levelGrid.IsWithinBounds(cell))
+            return;
+
+        levelObject.MoveToPosition(pos);
     }
 }
