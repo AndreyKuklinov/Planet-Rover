@@ -7,13 +7,16 @@ public class Rocket : LevelObject
 {
     [field: SerializeField] public List<SampleData> RequiredSamples { get; private set; }
 
-    public event Action RocketCompleted;
+    public static event Action<Rocket> RocketCompleted;
+    public static event Action<Rocket> RocketSpawned;
+    public static event Action<SampleData> SampleDelivered;
     public event Action RequiredObjectsChanged;
 
     override protected void Start()
     {
         RequiredObjectsChanged?.Invoke();
         base.Start();
+        RocketSpawned?.Invoke(this);
     }
 
     public override bool CanReceive(LevelObject levelObject)
@@ -32,6 +35,7 @@ public class Rocket : LevelObject
 
         sample.Remove();
         RequiredSamples.Remove(sample.Data);
+        SampleDelivered?.Invoke(sample.Data);
         RequiredObjectsChanged?.Invoke();
         CheckForCompletion();
     }
@@ -42,7 +46,7 @@ public class Rocket : LevelObject
             return;
 
         grid.RemoveObject(this);
-        RocketCompleted?.Invoke();
+        RocketCompleted?.Invoke(this);
 
         Destroy(gameObject);
     }

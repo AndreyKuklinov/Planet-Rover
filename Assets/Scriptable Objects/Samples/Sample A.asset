@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Sample A
   m_EditorClassIdentifier: 
   <Sprite>k__BackingField: {fileID: 500427040, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}
+  <Value>k__BackingField: 1

@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [field: SerializeField] public int TargetScore { get; private set; }
+
     [SerializeField] float gameDuration;
-    [SerializeField] float timeBoostPerLevel;
+    [SerializeField] float timeBoostMultiplier;
     [SerializeField] bool isTimeRunning;
 
     public bool IsGameOver { get; private set; }
-
-    float secondsUntilGameover;
+    public int Score { get; private set; }
+    public float SecondsLeft { get; private set; }
 
     void Start()
     {
-        secondsUntilGameover = gameDuration;
+        SecondsLeft = gameDuration;
+        Rocket.SampleDelivered += OnSampleDelivered;
+        Level.LevelCompleted += OnLevelCompleted;
     }
 
     void Update()
@@ -22,9 +26,9 @@ public class GameManager : MonoBehaviour
         TickDown();
     }
 
-    void CompleteLevel()
+    void StartNextLevel()
     {
-        secondsUntilGameover += timeBoostPerLevel;
+        
     }
 
     void TickDown()
@@ -32,11 +36,22 @@ public class GameManager : MonoBehaviour
         if (!isTimeRunning)
             return;
 
-        secondsUntilGameover -= Time.deltaTime;
-        if (secondsUntilGameover <= 0)
+        SecondsLeft -= Time.deltaTime;
+        if (SecondsLeft <= 0)
         {
             IsGameOver = true;
             Time.timeScale = 0f;
         }
+    }
+
+    private void OnLevelCompleted()
+    {
+        StartNextLevel();
+    }
+
+    private void OnSampleDelivered(SampleData data)
+    {
+        Score += data.Value;
+        SecondsLeft += timeBoostMultiplier * data.Value;
     }
 }
