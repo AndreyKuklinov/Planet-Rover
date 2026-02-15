@@ -6,15 +6,16 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Rover : MonoBehaviour
 {
-    public bool IsMoving { get; private set; }
-    public Vector3 TargetPosition { get; private set; }
     public RoverHand TargetHand { get; private set; }
 
     [SerializeField] RoverHand[] hands;
-    [SerializeField] float movementSpeed;
+    [SerializeField] LevelObject levelObject;
     [SerializeField] bool isRetractionVoluntary;
 
     private LevelGrid levelGrid;
+
+    public bool IsMoving
+        => levelObject.IsMoving;
 
     public void OnPress(Direction direction)
     {
@@ -27,9 +28,10 @@ public class Rover : MonoBehaviour
             hands[(int)direction].TryInteract();
     }
 
-    public void OnDrop(Direction direction)
+    public void OnDrop(IEnumerable<Direction> direction)
     {
-        hands[(int)direction].TryDrop();
+        foreach(var dir in direction)
+            hands[(int)dir].TryDrop();
     }
 
     void Start()
@@ -38,39 +40,10 @@ public class Rover : MonoBehaviour
         RoverHand.SelectedMovementTarget += OnSelectedMovementTarget;
     }
 
-    void Update()
-    {
-        MoveToTarget();
-        CheckIfReachedTarget();
-    }
-
     void OnSelectedMovementTarget(RoverHand hand, Vector3 target)
     {
         TargetHand = hand;
-        TargetPosition = levelGrid.SnapToGrid(target);
-        IsMoving = true;
-    }
-
-    void MoveToTarget()
-    {
-        if (!IsMoving)
-            return;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            TargetPosition,
-            movementSpeed * Time.deltaTime
-        );
-    }
-
-    void CheckIfReachedTarget()
-    {
-        if (!IsMoving)
-            return;
-
-        if (Vector3.Distance(transform.position, TargetPosition) <= 0.001f)
-        {
-            IsMoving = false;
-        }
+        var targetPos = levelGrid.SnapToGrid(target);
+        levelObject.MoveToPosition(targetPos);
     }
 }

@@ -1,11 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class LevelObject : MonoBehaviour 
 {
+    [SerializeField] float movementSpeed;
     Vector2Int startingCell;
+    Vector2 movementDestination;
+
+    public bool IsMoving { get; private set; }
 
     public virtual bool CanHandGoThrough
         => false;
@@ -46,6 +51,15 @@ public abstract class LevelObject : MonoBehaviour
         grid.RemoveObject(this);
     }
 
+    public void MoveToPosition(Vector2 destination)
+    {
+        if(!IsMoving)
+            grid.RemoveObject(this);
+
+        movementDestination = destination;
+        IsMoving = true;
+    }
+
     public void Remove()
     {
         Destroy(gameObject);
@@ -62,5 +76,35 @@ public abstract class LevelObject : MonoBehaviour
 
         transform.position = grid.CellToWorld(startingCell);
         AttachToGrid();
+    }
+
+    void Update()
+    {
+        MoveToTarget();
+        CheckIfReachedTarget();
+    }
+
+    void MoveToTarget()
+    {
+        if (!IsMoving)
+            return;
+
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            movementDestination,
+            movementSpeed * Time.deltaTime
+        );
+    }
+
+    void CheckIfReachedTarget()
+    {
+        if (!IsMoving)
+            return;
+
+        if (Vector3.Distance(transform.position, movementDestination) <= 0.001f)
+        {
+            IsMoving = false;
+            AttachToGrid();
+        }
     }
 }

@@ -18,10 +18,7 @@ public class GameController : MonoBehaviour
 
     private void OnDropTriggered(PlayerDevice obj)
     {
-        foreach(var dir in obj.AllowedDirections)
-        {
-            rover.OnDrop(dir);
-        }
+        rover.OnDrop(obj.AllowedDirections);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)

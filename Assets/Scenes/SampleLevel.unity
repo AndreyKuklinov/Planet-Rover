@@ -1747,6 +1747,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rover
       objectReference: {fileID: 0}
+    - target: {fileID: 7713294550922192179, guid: 5a27825b442fc894fa290916ab0510f1, type: 3}
+      propertyPath: movementSpeed
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
