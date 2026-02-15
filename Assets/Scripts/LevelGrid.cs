@@ -8,7 +8,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] Grid grid;
     [SerializeField] Bounds bounds;
 
-    public readonly Map<Vector2, LevelObject> Objects = new();
+    public readonly Map<Vector2Int, LevelObject> Objects = new();
 
     public void PlaceObject(LevelObject obj)
     {
@@ -18,7 +18,7 @@ public class LevelGrid : MonoBehaviour
             throw new InvalidOperationException("Trying to place an object outside of bounds: " + cell);
 
         obj.transform.position = CellToWorld(cell);
-        Objects.Add(obj, new Vector2(cell.x, cell.y));
+        Objects.Add(obj, cell);
     }
 
     public void RemoveObject(LevelObject obj)

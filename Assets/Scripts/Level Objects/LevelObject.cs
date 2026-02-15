@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class LevelObject : MonoBehaviour 
 {
+    Vector2Int startingCell;
+
     public virtual bool CanHandGoThrough
         => false;
 
@@ -25,6 +27,7 @@ public abstract class LevelObject : MonoBehaviour
     {
         grid = FindObjectOfType<LevelGrid>();
         AttachToGrid();
+        startingCell = grid.Objects.GetPosition(this);
     }
 
     public void AttachToGrid()
@@ -41,5 +44,23 @@ public abstract class LevelObject : MonoBehaviour
         transform.SetParent(target.transform);
         transform.position = target.position;
         grid.RemoveObject(this);
+    }
+
+    public void Remove()
+    {
+        Destroy(gameObject);
+    }
+
+    public void ReturnToSpawn()
+    {
+        var occupyingObject = grid.Objects.GetObject(startingCell);
+        if (occupyingObject != null)
+        {
+            grid.RemoveObject(occupyingObject);
+            occupyingObject.ReturnToSpawn();
+        }
+
+        transform.position = grid.CellToWorld(startingCell);
+        AttachToGrid();
     }
 }

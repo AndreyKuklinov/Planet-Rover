@@ -124,6 +124,7 @@ public class RoverHand : MonoBehaviour
             throw new Exception("Nothing to drop");
 
         obj.Receive(HeldObject);
+        HeldObject = null;
         StartRetracting();
     }
 

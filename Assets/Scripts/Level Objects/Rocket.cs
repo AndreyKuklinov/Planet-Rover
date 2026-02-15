@@ -30,7 +30,7 @@ public class Rocket : LevelObject
         if (!CanReceive(sample))
             throw new ArgumentException("Can't drop " + levelObject + " on " + this);
 
-        Destroy(sample.gameObject);
+        sample.Remove();
         RequiredSamples.Remove(sample.Data);
         RequiredObjectsChanged?.Invoke();
         CheckForCompletion();
