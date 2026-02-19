@@ -384,7 +384,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TargetScore>k__BackingField: 3
-  levelNames: []
+  levelNames:
+  - Level 1
   gameDuration: 10
   timeBoostMultiplier: 2
   isTimeRunning: 0

@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1e874a3bbad1145a65609df3bcf948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Bounds>k__BackingField: {fileID: 457057324648709789}
   grid: {fileID: 2969804809576781005}
-  bounds: {fileID: 457057324648709789}
 --- !u!156049354 &2969804809576781005
 Grid:
   m_ObjectHideFlags: 0

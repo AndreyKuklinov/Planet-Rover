@@ -18,18 +18,18 @@ public class GameController : MonoBehaviour
 
     void OnDropTriggered(PlayerDevice obj)
     {
-        if (Rover.Instance == null)
+        if (Rover.Current == null)
             return;
 
         if (gameManager.IsGameOver)
             return;
 
-        Rover.Instance.OnDrop(obj.AllowedDirections);
+        Rover.Current.OnDrop(obj.AllowedDirections);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
     {
-        if (Rover.Instance == null)
+        if (Rover.Current == null)
             return;
 
         if (gameManager.IsGameOver)
@@ -41,10 +41,10 @@ public class GameController : MonoBehaviour
         switch (interaction)
         {
             case InputInteraction.Hold:
-                Rover.Instance.OnPress(direction);
+                Rover.Current.OnPress(direction);
                 break;
             case InputInteraction.Release:
-                Rover.Instance.OnRelease(direction);
+                Rover.Current.OnRelease(direction);
                 break;
         }
     }

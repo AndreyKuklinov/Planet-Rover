@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class LevelGrid : MonoBehaviour
 {
-    public static Bounds CurrentLevelBounds { get; private set; }
+    public static LevelGrid Current;
+
+    [field: SerializeField] public Bounds Bounds { get; private set; }
 
     [SerializeField] Grid grid;
-    [SerializeField] Bounds bounds;
 
     public readonly Map<Vector2Int, LevelObject> Objects = new();
 
-    void Start()
+    void Awake()
     {
-        CurrentLevelBounds = bounds;
+        Current = this;
     }
 
     public void PlaceObject(LevelObject obj)
@@ -52,7 +53,7 @@ public class LevelGrid : MonoBehaviour
     }
 
     public bool IsWithinBounds(Vector2Int cell)
-        => bounds.IsWithinBounds(CellToWorld(cell));
+        => Bounds.IsWithinBounds(CellToWorld(cell));
 
     public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject heldObj)
     {

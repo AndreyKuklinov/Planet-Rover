@@ -12,7 +12,7 @@ public class Level : MonoBehaviour
 
     HashSet<Rocket> rockets = new HashSet<Rocket>();
 
-    void Start()
+    void Awake()
     {
         Rocket.RocketSpawned += OnRocketSpawned;
         Rocket.RocketCompleted += OnRocketCompleted;
@@ -27,6 +27,8 @@ public class Level : MonoBehaviour
 
     private void OnRocketSpawned(Rocket obj)
     {
+        Debug.Log("what");
         rockets.Add(obj);
+        Debug.Log(rockets.Count);
     }
 }

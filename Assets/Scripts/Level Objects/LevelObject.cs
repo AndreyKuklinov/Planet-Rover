@@ -30,7 +30,7 @@ public abstract class LevelObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        grid = FindObjectOfType<LevelGrid>();
+        grid = LevelGrid.Current;
         AttachToGrid();
         startingCell = grid.Objects.GetPosition(this);
     }
