@@ -18,6 +18,12 @@ public class Level : MonoBehaviour
         Rocket.RocketCompleted += OnRocketCompleted;
     }
 
+    void OnDestroy()
+    {
+        Rocket.RocketCompleted -= OnRocketCompleted;
+        Rocket.RocketSpawned -= OnRocketSpawned;
+    }
+
     private void OnRocketCompleted(Rocket obj)
     {
         rockets.Remove(obj);

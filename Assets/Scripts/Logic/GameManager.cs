@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        Debug.Log("Level completed!");
         StartNextLevel();
     }
 
