@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
 
     void OnDropTriggered(PlayerDevice obj)
     {
-        if (CanControl)
+        if (!CanControl)
             return;
 
         rover.OnDrop(obj.AllowedDirections);

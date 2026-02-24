@@ -40,6 +40,11 @@ public class Rover : MonoBehaviour
         RoverHand.SelectedMovementTarget += OnSelectedMovementTarget;
     }
 
+    void OnDestroy()
+    {
+        RoverHand.SelectedMovementTarget -= OnSelectedMovementTarget;
+    }
+
     void OnSelectedMovementTarget(RoverHand hand, Vector3 target)
     {
         TargetHand = hand;
@@ -50,5 +55,5 @@ public class Rover : MonoBehaviour
             return;
 
         levelObject.MoveToPosition(pos);
-    }
+    }   
 }
