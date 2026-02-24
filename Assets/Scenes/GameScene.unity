@@ -387,12 +387,9 @@ MonoBehaviour:
   <IsTimeRunning>k__BackingField: 0
   levelNames:
   - Level 0
-  - Level 1
-  - Level 0
   gameDuration: 10
   timeBoostMultiplier: 2
-  shouldTimeStartWithNextLevel: 0
-  startingLevel: Level 0
+  shouldTimeStartRunning: 1
 --- !u!1 &2106290860
 GameObject:
   m_ObjectHideFlags: 0

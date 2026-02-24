@@ -12,22 +12,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] string[] levelNames; 
     [SerializeField] float gameDuration;
     [SerializeField] float timeBoostMultiplier;
-    [SerializeField] bool shouldTimeStartWithNextLevel = true;
-    [SerializeField] string startingLevel;
+    [SerializeField] bool shouldTimeStartRunning = true;
 
     public bool IsGameOver { get; private set; }
     public int Score { get; private set; }
     public float SecondsLeft { get; private set; }
 
     private Queue<string> levelQueue = new Queue<string>();
-    private string currentLevel;
+    private string currentLevel = null;
 
     void Start()
     {
         SecondsLeft = gameDuration;
         Rocket.SampleDelivered += OnSampleDelivered;
         Level.LevelCompleted += OnLevelCompleted;
-        LoadLevel(startingLevel);
+        StartNextLevel();
     }
 
     void Update()
@@ -35,20 +34,13 @@ public class GameManager : MonoBehaviour
         TickDown();
     }
 
-    public void StartGame()
-    {
-        StartNextLevel();
-    }
-
     void StartNextLevel()
     {
         if (levelQueue.Count == 0)
             CreateLevelQueue();
 
-        if (shouldTimeStartWithNextLevel)
-            IsTimeRunning = true;
-
-        SceneManager.UnloadSceneAsync(currentLevel);
+        if(currentLevel != null)
+            SceneManager.UnloadSceneAsync(currentLevel);
 
         var nextLevel = levelQueue.Count > 0 ? levelQueue.Dequeue() : currentLevel;
         LoadLevel(nextLevel);
@@ -75,7 +67,8 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
-        Debug.Log("Level completed!");
+        if (shouldTimeStartRunning)
+            IsTimeRunning = true;
         StartNextLevel();
     }
 
