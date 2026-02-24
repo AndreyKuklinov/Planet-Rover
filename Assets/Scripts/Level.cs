@@ -27,8 +27,6 @@ public class Level : MonoBehaviour
 
     private void OnRocketSpawned(Rocket obj)
     {
-        Debug.Log("what");
         rockets.Add(obj);
-        Debug.Log(rockets.Count);
     }
 }

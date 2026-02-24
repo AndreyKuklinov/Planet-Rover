@@ -7,12 +7,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [field: SerializeField] public int TargetScore { get; private set; }
+    [field: SerializeField] public bool IsTimeRunning { get; private set; } = false;
 
     [SerializeField] string[] levelNames; 
     [SerializeField] float gameDuration;
     [SerializeField] float timeBoostMultiplier;
-    [SerializeField] bool isTimeRunning = false;
-    [SerializeField] bool isTestingMode;
+    [SerializeField] bool shouldTimeStartWithNextLevel = true;
     [SerializeField] string startingLevel;
 
     public bool IsGameOver { get; private set; }
@@ -37,9 +37,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if(!isTestingMode)
-            isTimeRunning = true;
-
         StartNextLevel();
     }
 
@@ -47,6 +44,9 @@ public class GameManager : MonoBehaviour
     {
         if (levelQueue.Count == 0)
             CreateLevelQueue();
+
+        if (shouldTimeStartWithNextLevel)
+            IsTimeRunning = true;
 
         SceneManager.UnloadSceneAsync(currentLevel);
 
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     void TickDown()
     {
-        if (!isTimeRunning)
+        if (!IsTimeRunning)
             return;
 
         SecondsLeft -= Time.deltaTime;
@@ -81,7 +81,8 @@ public class GameManager : MonoBehaviour
     private void OnSampleDelivered(SampleData data)
     {
         Score += data.Value;
-        SecondsLeft += timeBoostMultiplier * data.Value;
+        if(IsTimeRunning)
+            SecondsLeft += timeBoostMultiplier * data.Value;
     }
 
     private void CreateLevelQueue()

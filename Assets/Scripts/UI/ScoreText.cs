@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ public class ScoreText : MonoBehaviour
 
     void Update()
     {
-        textMesh.text = gm.Score + " (" + (int)(gm.SecondsLeft) + ")";
+        var t = gm.Score.ToString();
+        if (gm.IsTimeRunning)
+            t += " (" + (int)(gm.SecondsLeft) + ")";
+        textMesh.text = t;
     }
 }
