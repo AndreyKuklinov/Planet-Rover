@@ -5,18 +5,11 @@ using UnityEngine;
 
 public class LevelGrid : MonoBehaviour
 {
-    public static LevelGrid Current;
-
     [field: SerializeField] public Bounds Bounds { get; private set; }
 
     [SerializeField] Grid grid;
 
     public readonly Map<Vector2Int, LevelObject> Objects = new();
-
-    void Awake()
-    {
-        Current = this;
-    }
 
     public void PlaceObject(LevelObject obj)
     {
@@ -80,5 +73,17 @@ public class LevelGrid : MonoBehaviour
         }
 
         return prev;
+    }
+
+    void Awake()
+    {
+        AttachAllObjects();
+    }
+
+    void AttachAllObjects()
+    {
+        var levelObjects = GetComponentsInChildren<LevelObject>(true);
+        foreach (var obj in levelObjects)
+            obj.AttachToGrid(this);
     }
 }

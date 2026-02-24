@@ -45,7 +45,7 @@ public class Rocket : LevelObject
         if (RequiredSamples.Count > 0)
             return;
 
-        grid.RemoveObject(this);
+        LevelGrid.RemoveObject(this);
         RocketCompleted?.Invoke(this);
 
         Destroy(gameObject);

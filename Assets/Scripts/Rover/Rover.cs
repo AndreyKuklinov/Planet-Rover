@@ -6,14 +6,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Rover : MonoBehaviour
 {
-    public static Rover Current { get; private set; }
     public RoverHand TargetHand { get; private set; }
 
     [SerializeField] RoverHand[] hands;
     [SerializeField] LevelObject levelObject;
     [SerializeField] bool isRetractionVoluntary;
 
-    private LevelGrid levelGrid;
+    public LevelGrid LevelGrid
+        => levelObject.LevelGrid;
 
     public bool IsMoving
         => levelObject.IsMoving;
@@ -37,18 +37,16 @@ public class Rover : MonoBehaviour
 
     void Start()
     {
-        Current = this;
-        levelGrid = LevelGrid.Current;
         RoverHand.SelectedMovementTarget += OnSelectedMovementTarget;
     }
 
     void OnSelectedMovementTarget(RoverHand hand, Vector3 target)
     {
         TargetHand = hand;
-        var cell = levelGrid.WorldToCell(target);
-        var pos = levelGrid.CellToWorld(cell);
+        var cell = LevelGrid.WorldToCell(target);
+        var pos = LevelGrid.CellToWorld(cell);
 
-        if (!levelGrid.IsWithinBounds(cell))
+        if (!LevelGrid.IsWithinBounds(cell))
             return;
 
         levelObject.MoveToPosition(pos);

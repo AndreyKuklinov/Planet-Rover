@@ -26,35 +26,33 @@ public abstract class LevelObject : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    protected LevelGrid grid;
+    public LevelGrid LevelGrid { get; private set; }
 
-    protected virtual void Start()
+    public void AttachToGrid(LevelGrid grid = null)
     {
-        grid = LevelGrid.Current;
-        AttachToGrid();
-        startingCell = grid.Objects.GetPosition(this);
-    }
+        if (grid != null)
+            LevelGrid = grid;
+        else if (LevelGrid == null)
+            throw new ArgumentException("Level objects need a level grid when first created");
 
-    public void AttachToGrid()
-    {
-        if (grid == null)
-            return;
+        transform.SetParent(LevelGrid.transform);
+        LevelGrid.PlaceObject(this);
 
-        transform.SetParent(grid.transform);
-        grid.PlaceObject(this);
+        if(startingCell == null)
+            startingCell = LevelGrid.Objects.GetPosition(this);
     }
     
     public void AttachToObject(Transform target)
     {
         transform.SetParent(target.transform);
         transform.position = target.position;
-        grid.RemoveObject(this);
+        LevelGrid.RemoveObject(this);
     }
 
     public void MoveToPosition(Vector2 destination)
     {
         if(!IsMoving)
-            grid.RemoveObject(this);
+            LevelGrid.RemoveObject(this);
 
         movementDestination = destination;
         IsMoving = true;
@@ -67,16 +65,18 @@ public abstract class LevelObject : MonoBehaviour
 
     public void ReturnToSpawn()
     {
-        var occupyingObject = grid.Objects.GetObject(startingCell);
+        var occupyingObject = LevelGrid.Objects.GetObject(startingCell);
         if (occupyingObject != null)
         {
-            grid.RemoveObject(occupyingObject);
+            LevelGrid.RemoveObject(occupyingObject);
             occupyingObject.ReturnToSpawn();
         }
 
-        transform.position = grid.CellToWorld(startingCell);
+        transform.position = LevelGrid.CellToWorld(startingCell);
         AttachToGrid();
     }
+
+    protected virtual void Start() { }
 
     void Update()
     {

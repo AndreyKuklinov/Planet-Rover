@@ -9,6 +9,10 @@ public class GameController : MonoBehaviour
     [SerializeField] bool isTestingModeOn = false;
     [SerializeField] PartyInputManager partyManager;
     [SerializeField] GameManager gameManager;
+    [SerializeField] Rover rover;
+
+    public bool CanControl
+        => TryFindRover() && !gameManager.IsGameOver;
 
     void Start()
     {
@@ -18,21 +22,15 @@ public class GameController : MonoBehaviour
 
     void OnDropTriggered(PlayerDevice obj)
     {
-        if (Rover.Current == null)
+        if (CanControl)
             return;
 
-        if (gameManager.IsGameOver)
-            return;
-
-        Rover.Current.OnDrop(obj.AllowedDirections);
+        rover.OnDrop(obj.AllowedDirections);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
     {
-        if (Rover.Current == null)
-            return;
-
-        if (gameManager.IsGameOver)
+        if (!CanControl)
             return;
 
         if (!player.AllowedDirections.Contains(direction) && !isTestingModeOn)
@@ -41,11 +39,24 @@ public class GameController : MonoBehaviour
         switch (interaction)
         {
             case InputInteraction.Hold:
-                Rover.Current.OnPress(direction);
+                rover.OnPress(direction);
                 break;
             case InputInteraction.Release:
-                Rover.Current.OnRelease(direction);
+                rover.OnRelease(direction);
                 break;
         }
+    }
+
+    bool TryFindRover()
+    {
+        if (rover != null)
+            return true;
+
+        rover = FindObjectOfType<Rover>();
+
+        if (rover == null)
+            return false;
+
+        return true;
     }
 }
