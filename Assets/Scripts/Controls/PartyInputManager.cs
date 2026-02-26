@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PartyInputManager : MonoBehaviour
 {
+    public static PartyInputManager Instance { get; private set; }
+
     public event PlayerDevice.DirectionTriggeredHandler DirectionTriggered;
     public event Action<PlayerDevice> DropTriggered;
 
@@ -50,9 +53,19 @@ public class PartyInputManager : MonoBehaviour
         },
     };
 
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+
+        else
+            Destroy(gameObject);
+    }
+
     void OnPlayerJoined(PlayerInput playerInput)
     {
         var device = playerInput.GetComponent<PlayerDevice>();
+        device.transform.SetParent(transform);
         players.Add(device);
         ConfigurePlayers();
         device.DirectionTriggered += OnDirectionTriggered;

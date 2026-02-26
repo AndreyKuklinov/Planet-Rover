@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
@@ -19,14 +20,12 @@ public class GameManager : MonoBehaviour
     public float SecondsLeft { get; private set; }
 
     private Queue<string> levelQueue = new Queue<string>();
-    private string currentLevel = null;
 
     void Start()
     {
         SecondsLeft = gameDuration;
         Rocket.SampleDelivered += OnSampleDelivered;
         Level.LevelCompleted += OnLevelCompleted;
-        StartNextLevel();
     }
 
     void Update()
@@ -39,17 +38,13 @@ public class GameManager : MonoBehaviour
         if (levelQueue.Count == 0)
             CreateLevelQueue();
 
-        if(currentLevel != null)
-            SceneManager.UnloadSceneAsync(currentLevel);
-
-        var nextLevel = levelQueue.Count > 0 ? levelQueue.Dequeue() : currentLevel;
+        var nextLevel = levelQueue.Count > 0 ? levelQueue.Dequeue() : SceneManager.GetActiveScene().name;
         LoadLevel(nextLevel);
     }
 
     void LoadLevel(string levelName)
     {
-        SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
-        currentLevel = levelName;
+        SceneManager.LoadScene(levelName);
     }
 
     void TickDown()
