@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7753432456414693633, guid: 0b654b7ff9201874da13cc3c6044b6d3, type: 3}
+      propertyPath: m_text
+      value: score text
+      objectReference: {fileID: 0}
     - target: {fileID: 9037545656350118788, guid: 0b654b7ff9201874da13cc3c6044b6d3, type: 3}
       propertyPath: m_Name
       value: PersistentObjects
