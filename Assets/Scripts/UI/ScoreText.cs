@@ -11,7 +11,11 @@ public class ScoreText : MonoBehaviour
 
     void Update()
     {
-        var t = gm.Score.ToString();
+        var t = "";
+
+        for (var i = 0; i < gm.Stars; i++)
+            t += "*";
+
         if (gm.IsTimeRunning)
             t += " (" + (int)(gm.SecondsLeft) + ")";
         textMesh.text = t;

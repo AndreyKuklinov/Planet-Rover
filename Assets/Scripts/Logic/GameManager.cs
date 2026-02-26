@@ -7,16 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [field: SerializeField] public int TargetScore { get; private set; }
+    [field: SerializeField] public int TargetStars { get; private set; } = 3;
     [field: SerializeField] public bool IsTimeRunning { get; private set; } = false;
 
-    [SerializeField] string[] levelNames; 
+    [SerializeField] string[] levelNames;
+    [SerializeField] int[] starThresholds;
     [SerializeField] float gameDuration;
     [SerializeField] float timeBoostMultiplier;
     [SerializeField] bool shouldTimeStartRunning = true;
 
     public bool IsGameOver { get; private set; }
+    public bool IsGameWon { get; private set; }
     public int Score { get; private set; }
+    public int Stars { get; private set; }
     public float SecondsLeft { get; private set; }
 
     private Queue<string> levelQueue = new Queue<string>();
@@ -54,17 +57,17 @@ public class GameManager : MonoBehaviour
 
         SecondsLeft -= Time.deltaTime;
         if (SecondsLeft <= 0)
-        {
-            IsGameOver = true;
-            Time.timeScale = 0f;
-        }
+            LoseGame();
     }
 
     private void OnLevelCompleted()
     {
         if (shouldTimeStartRunning)
             IsTimeRunning = true;
-        StartNextLevel();
+        AwardStars();
+
+        if(!IsGameOver && !IsGameWon)
+            StartNextLevel();
     }
 
     private void OnSampleDelivered(SampleData data)
@@ -77,5 +80,31 @@ public class GameManager : MonoBehaviour
     private void CreateLevelQueue()
     {
         levelQueue = new Queue<string>(levelNames);
+    }
+
+    private void LoseGame()
+    {
+        IsGameOver = true;
+        Time.timeScale = 0f;
+    }
+
+    private void WinGame()
+    {
+        IsGameWon = true;
+        IsTimeRunning = false;
+    }
+
+    private void AwardStars()
+    {
+        var stars = 0;
+        foreach(var threshold in starThresholds)
+        {
+            if(Score >= threshold)
+                stars++;
+        }
+        Stars = stars;
+
+        if (Stars >= TargetStars)
+            WinGame();
     }
 }
