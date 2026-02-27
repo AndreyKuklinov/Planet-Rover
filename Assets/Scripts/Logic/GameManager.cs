@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private void CreateLevelQueue()
     {
-        levelQueue = new Queue<string>(levelNames);
+        levelQueue = new Queue<string>(levelNames.OrderBy(x => UnityEngine.Random.value));
     }
 
     private void LoseGame()

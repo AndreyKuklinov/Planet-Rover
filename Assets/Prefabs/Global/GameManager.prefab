@@ -48,6 +48,7 @@ MonoBehaviour:
   <IsTimeRunning>k__BackingField: 0
   levelNames:
   - Level 1
+  - Level 0
   starThresholds: 010000000200000003000000
   gameDuration: 10
   timeBoostMultiplier: 2
