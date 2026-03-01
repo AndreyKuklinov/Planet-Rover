@@ -9,13 +9,21 @@ public class Level : MonoBehaviour
     public static event Action LevelCompleted;
 
     [SerializeField] LevelGrid grid;
+    [SerializeField] Swapper swapper;
 
-    HashSet<Rocket> rockets = new HashSet<Rocket>();
+    readonly HashSet<Rocket> rockets = new();
 
     void Awake()
     {
         Rocket.RocketSpawned += OnRocketSpawned;
         Rocket.RocketCompleted += OnRocketCompleted;
+        InitLevel();
+    }
+
+    void InitLevel()
+    {
+        swapper?.ExecuteSwap();
+        grid.AttachAllObjects();
     }
 
     void OnDestroy()

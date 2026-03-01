@@ -11,6 +11,13 @@ public class LevelGrid : MonoBehaviour
 
     public readonly Map<Vector2Int, LevelObject> Objects = new();
 
+    public void AttachAllObjects()
+    {
+        var levelObjects = GetComponentsInChildren<LevelObject>(true);
+        foreach (var obj in levelObjects)
+            obj.AttachToGrid(this);
+    }
+
     public void PlaceObject(LevelObject obj)
     {
         var cell = WorldToCell(obj.transform.position);
@@ -73,17 +80,5 @@ public class LevelGrid : MonoBehaviour
         }
 
         return prev;
-    }
-
-    void Awake()
-    {
-        AttachAllObjects();
-    }
-
-    void AttachAllObjects()
-    {
-        var levelObjects = GetComponentsInChildren<LevelObject>(true);
-        foreach (var obj in levelObjects)
-            obj.AttachToGrid(this);
     }
 }
