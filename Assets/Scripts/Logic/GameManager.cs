@@ -73,9 +73,11 @@ public class GameManager : MonoBehaviour
 
     private void OnSampleDelivered(SampleData data)
     {
+        if (!IsTimeRunning)
+            return;
+
         Score += data.Value;
-        if(IsTimeRunning)
-            SecondsLeft += timeBoostMultiplier * data.Value;
+        SecondsLeft += timeBoostMultiplier * data.Value;
     }
 
     private void CreateLevelQueue()
