@@ -10,6 +10,8 @@ public abstract class LevelObject : MonoBehaviour
     Vector2Int startingCell;
     Vector2 movementDestination;
 
+    [SerializeField] protected SpriteRenderer spriteRenderer;
+
     public bool IsMoving { get; private set; }
 
     public virtual bool CanHandGoThrough
@@ -40,6 +42,8 @@ public abstract class LevelObject : MonoBehaviour
 
         if(startingCell == null)
             startingCell = LevelGrid.Objects.GetPosition(this);
+
+        spriteRenderer.sortingOrder = 0;
     }
     
     public void AttachToObject(Transform target)
@@ -47,6 +51,7 @@ public abstract class LevelObject : MonoBehaviour
         transform.SetParent(target.transform);
         transform.position = target.position;
         LevelGrid.RemoveObject(this);
+        spriteRenderer.sortingOrder = 1;
     }
 
     public void MoveToPosition(Vector2 destination)
@@ -76,7 +81,7 @@ public abstract class LevelObject : MonoBehaviour
         AttachToGrid();
     }
 
-    protected virtual void Start() { }
+    protected virtual void Start() {}
 
     void Update()
     {

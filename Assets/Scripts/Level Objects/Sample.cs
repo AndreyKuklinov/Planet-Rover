@@ -7,8 +7,6 @@ public class Sample : LevelObject
 {
     [field: SerializeField] public SampleData Data { get; private set; }
 
-    [SerializeField] SpriteRenderer spriteRenderer;
-
     public override bool CanBeGrabbed
         => true;
 
