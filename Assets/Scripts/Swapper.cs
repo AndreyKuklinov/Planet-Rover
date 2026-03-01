@@ -6,7 +6,7 @@ public class Swapper : MonoBehaviour
 {
     [SerializeField] private LevelGrid levelGrid;
 
-    public void ExecuteSwap()
+    public void SwapAllObjects()
     {
         var markersByIndex = FindObjectsOfType<SwapMarker>()
             .GroupBy(m => m.Index)

@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
 
     void InitLevel()
     {
-        swapper?.ExecuteSwap();
+        swapper?.SwapAllObjects();
         grid.AttachAllObjects();
     }
 
