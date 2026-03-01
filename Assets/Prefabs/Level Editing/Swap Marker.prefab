@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3940008828488382954}
   - component: {fileID: 421938938956711206}
+  - component: {fileID: 5457023762652729119}
   m_Layer: 0
   m_Name: Swap Marker
   m_TagString: Untagged
@@ -261,6 +262,18 @@ MonoBehaviour:
   <Index>k__BackingField: 0
   textMesh: {fileID: 5900478403650201607}
   image: {fileID: 3210649564706876925}
+--- !u!114 &5457023762652729119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168271609703293485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acd00532458a994caf3175be952b6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7409678323984297652
 GameObject:
   m_ObjectHideFlags: 0
