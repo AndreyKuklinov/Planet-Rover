@@ -170,6 +170,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5715770751097533898, guid: 0b654b7ff9201874da13cc3c6044b6d3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7581715197346655443, guid: 0b654b7ff9201874da13cc3c6044b6d3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7753432456414693633, guid: 0b654b7ff9201874da13cc3c6044b6d3, type: 3}
       propertyPath: m_text
       value: score text
