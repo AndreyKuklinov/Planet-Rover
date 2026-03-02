@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
 
         if(!IsGameOver && !IsGameWon)
             StartNextLevel();
+
+        if(IsGameWon)
+            IsTimeRunning = false;
     }
 
     private void OnSampleDelivered(SampleData data)
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
 
         Score += data.Value;
         SecondsLeft += timeBoostMultiplier * data.Value;
+        AwardStars();
     }
 
     private void CreateLevelQueue()
@@ -88,13 +92,13 @@ public class GameManager : MonoBehaviour
     private void LoseGame()
     {
         IsGameOver = true;
+        IsTimeRunning = false;
         Time.timeScale = 0f;
     }
 
     private void WinGame()
     {
         IsGameWon = true;
-        IsTimeRunning = false;
     }
 
     private void AwardStars()

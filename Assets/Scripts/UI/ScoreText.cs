@@ -11,13 +11,29 @@ public class ScoreText : MonoBehaviour
 
     void Update()
     {
+        textMesh.text = GetText();
+    }
+
+    string GetText()
+    {
         var t = "";
 
-        for (var i = 0; i < gm.Stars; i++)
-            t += "*";
+        if (!gm.IsTimeRunning && !gm.IsGameWon && !gm.IsGameOver)
+            return t;
+
+        t += gm.Score.ToString();
 
         if (gm.IsTimeRunning)
-            t += " (" + (int)(gm.SecondsLeft) + ")";
-        textMesh.text = t;
+        {
+            t += " [" + (int)(gm.SecondsLeft) + "]";
+            return t;
+        }
+
+        t += " [";
+        for (var i = 0; i < gm.Stars; i++)
+            t += "*";
+        t += "]";
+
+        return t;
     }
 }
