@@ -299,8 +299,9 @@ MonoBehaviour:
   <IsTimeRunning>k__BackingField: 0
   levelNames:
   - 1-1
-  starThresholds: 010000000200000003000000
-  gameDuration: 10
+  - 2-1
+  starThresholds: 03000000070000000c000000
+  gameDuration: 30
   timeBoostMultiplier: 2
   shouldTimeStartRunning: 1
 --- !u!1 &9037545656350118788
