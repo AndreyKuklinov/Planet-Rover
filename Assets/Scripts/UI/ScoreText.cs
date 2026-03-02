@@ -12,6 +12,9 @@ public class ScoreText : MonoBehaviour
     void Update()
     {
         textMesh.text = GetText();
+
+        if (gm.IsGameWon && !gm.IsTimeRunning)
+            textMesh.color = Color.yellow;
     }
 
     string GetText()
