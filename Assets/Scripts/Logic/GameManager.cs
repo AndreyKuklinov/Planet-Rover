@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
-        if (shouldTimeStartRunning)
+        if (shouldTimeStartRunning && !IsGameOver && !IsGameWon)
             IsTimeRunning = true;
         AwardStars();
 
@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = true;
         IsTimeRunning = false;
-        Time.timeScale = 0f;
     }
 
     private void WinGame()

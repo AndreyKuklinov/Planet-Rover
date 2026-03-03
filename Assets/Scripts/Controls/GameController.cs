@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField] Rover rover;
 
     public bool CanControl
-        => TryFindRover() && !gameManager.IsGameOver;
+        => TryFindRover();
 
     void Start()
     {
