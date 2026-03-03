@@ -151,6 +151,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 960b59ed-e511-4f1f-bc40-3189fad444da
     m_ActionName: Hands/Drop[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8626962247180124928}
+        m_TargetAssemblyTypeName: PlayerDevice, Assembly-CSharp
+        m_MethodName: OnQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f75ce89e-57ae-4971-90d4-43104f6f801d
+    m_ActionName: Hands/Quit[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Hands

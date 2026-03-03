@@ -302,7 +302,7 @@ MonoBehaviour:
   - 2-1
   - 2-2
   - 3-2
-  starThresholds: 03000000070000000c000000
+  starThresholds: 0a0000001400000019000000
   gameDuration: 30
   timeBoostMultiplier: 2
   shouldTimeStartRunning: 1

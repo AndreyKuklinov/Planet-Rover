@@ -52,6 +52,12 @@ public class PlayerDevice : MonoBehaviour
         DeviceLost?.Invoke(this);
     }
 
+    public void OnQuit()
+    {
+        Debug.Log("Quitting...");
+        Application.Quit();
+    }
+
     void HandleDirection(InputAction.CallbackContext ctx, Direction direction)
     {
         if(ctx.canceled)
