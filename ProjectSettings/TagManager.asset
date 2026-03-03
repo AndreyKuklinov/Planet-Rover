@@ -53,6 +53,9 @@ TagManager:
   - name: Rover
     uniqueID: 701487715
     locked: 0
+  - name: UI
+    uniqueID: 602981701
+    locked: 0
   - name: Editor
     uniqueID: 42939731
     locked: 0
