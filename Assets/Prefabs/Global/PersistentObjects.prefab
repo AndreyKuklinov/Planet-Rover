@@ -297,7 +297,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TargetStars>k__BackingField: 3
   <IsTimeRunning>k__BackingField: 0
-  levelNames: []
+  levelNames:
+  - 1-1
+  - 2-1
   starThresholds: 03000000070000000c000000
   gameDuration: 30
   timeBoostMultiplier: 2
