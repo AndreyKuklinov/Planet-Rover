@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float gameDuration;
     [SerializeField] float timeBoostMultiplier;
     [SerializeField] bool shouldTimeStartRunning = true;
+    [SerializeField] bool isLoopEnabled = false;
 
     public bool IsGameOver { get; private set; }
     public bool IsGameWon { get; private set; }
@@ -42,7 +43,9 @@ public class GameManager : MonoBehaviour
         if (levelQueue.Count == 0)
             CreateLevelQueue();
 
-        var nextLevel = levelQueue.Count > 0 ? levelQueue.Dequeue() : SceneManager.GetActiveScene().name;
+        var nextLevel = levelQueue.Count > 0 && !isLoopEnabled 
+            ? levelQueue.Dequeue() 
+            : SceneManager.GetActiveScene().name;
         LoadLevel(nextLevel);
     }
 
@@ -58,7 +61,13 @@ public class GameManager : MonoBehaviour
 
         SecondsLeft -= Time.deltaTime;
         if (SecondsLeft <= 0)
-            LoseGame();
+        {
+            if (Stars >= TargetStars)
+                WinGame();
+            else
+                LoseGame();
+        }
+            
     }
 
     private void OnLevelCompleted()
@@ -99,6 +108,7 @@ public class GameManager : MonoBehaviour
     private void WinGame()
     {
         IsGameWon = true;
+        IsTimeRunning = false;
     }
 
     private void AwardStars()
@@ -110,8 +120,5 @@ public class GameManager : MonoBehaviour
                 stars++;
         }
         Stars = stars;
-
-        if (Stars >= TargetStars)
-            WinGame();
     }
 }

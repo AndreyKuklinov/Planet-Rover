@@ -300,10 +300,12 @@ MonoBehaviour:
   levelNames:
   - 1-1
   - 2-1
+  - 2-2
   starThresholds: 03000000070000000c000000
   gameDuration: 30
   timeBoostMultiplier: 2
   shouldTimeStartRunning: 1
+  isLoopEnabled: 0
 --- !u!1 &9037545656350118788
 GameObject:
   m_ObjectHideFlags: 0
