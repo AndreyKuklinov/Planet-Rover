@@ -23,6 +23,24 @@ public enum HandState
     Retracting
 }
 
+public enum Signal
+{
+    Red,
+    Green,
+    Blue,
+}
+
+public static class SignalColor
+{
+    public static Color GetColor(Signal signal) => signal switch
+    {
+        Signal.Blue => Color.blue,
+        Signal.Red => Color.red,
+        Signal.Green => Color.green,
+        _ => throw new ArgumentException(signal.ToString() + " has no signal color"),
+    };
+}
+
 public static class DirectionVector
 {
     public static Vector3 GetVector3(Direction direction) => direction switch

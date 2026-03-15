@@ -121,11 +121,10 @@ public class RoverHand : MonoBehaviour
 
     void PlaceHeldOntoObject(LevelObject obj)
     {
-        if (!IsHoldingObject)
-            throw new Exception("Nothing to drop");
+        if (!obj.CanReceive(HeldObject))
+            throw new ArgumentException("Invalid object to place");
 
         obj.Receive(HeldObject);
-        HeldObject = null;
         StartRetracting();
     }
 

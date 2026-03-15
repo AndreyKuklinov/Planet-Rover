@@ -140,6 +140,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3398468450716815448}
     - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: extendSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: <Direction>k__BackingField
       value: 3
       objectReference: {fileID: 0}
@@ -224,6 +228,10 @@ PrefabInstance:
       propertyPath: rover
       value: 
       objectReference: {fileID: 3398468450716815448}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: extendSpeed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: <Direction>k__BackingField
       value: 1
@@ -310,6 +318,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3398468450716815448}
     - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: extendSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: <Direction>k__BackingField
       value: 2
       objectReference: {fileID: 0}
@@ -394,6 +406,10 @@ PrefabInstance:
       propertyPath: rover
       value: 
       objectReference: {fileID: 3398468450716815448}
+    - target: {fileID: 2408782698507950839, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
+      propertyPath: extendSpeed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3374833328247058556, guid: b100a2f8876a76743b9fe649c339bcfb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

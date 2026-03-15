@@ -68,18 +68,18 @@ public abstract class LevelObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void ReturnToSpawn()
-    {
-        var occupyingObject = LevelGrid.Objects.GetObject(startingCell);
-        if (occupyingObject != null)
-        {
-            LevelGrid.RemoveObject(occupyingObject);
-            occupyingObject.ReturnToSpawn();
-        }
+    //public void ReturnToSpawn()
+    //{
+    //    var occupyingObject = LevelGrid.Objects.GetObject(startingCell);
+    //    if (occupyingObject != null)
+    //    {
+    //        LevelGrid.RemoveObject(occupyingObject);
+    //        occupyingObject.ReturnToSpawn();
+    //    }
 
-        transform.position = LevelGrid.CellToWorld(startingCell);
-        AttachToGrid();
-    }
+    //    transform.position = LevelGrid.CellToWorld(startingCell);
+    //    AttachToGrid();
+    //}
 
     protected virtual void Start() {}
 
