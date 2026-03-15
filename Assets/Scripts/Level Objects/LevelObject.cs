@@ -82,6 +82,7 @@ public abstract class LevelObject : MonoBehaviour
     //}
 
     protected virtual void Start() {}
+    protected virtual void OnDestroy() { }
 
     void Update()
     {

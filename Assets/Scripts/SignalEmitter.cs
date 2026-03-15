@@ -5,13 +5,25 @@ using UnityEngine;
 
 public class SignalEmitter : MonoBehaviour
 {
-    public event Action<Signal[]> SignalsChanged;
+    public static event Action<SignalEmitter> EmitterSpawned;
+    public static event Action<SignalEmitter> EmitterDestroyed;
+    public static event Action<Signal[]> SignalsChanged;
 
-    public Signal[] CurrentSignals { get; private set; }
+    public Signal[] ActiveSignals { get; private set; } = new Signal[0];
 
     public void SetSignals(params Signal[] signals)
     {
-        CurrentSignals = signals;
+        ActiveSignals = signals;
         SignalsChanged?.Invoke(signals);
+    }
+
+    void Start()
+    {
+        EmitterSpawned?.Invoke(this);
+    }
+
+    private void OnDestroy()
+    {
+        EmitterDestroyed?.Invoke(this);
     }
 }
