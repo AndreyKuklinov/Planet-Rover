@@ -81,7 +81,7 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        if(IsHoldingObject && obj.CanReceive(HeldObject))
+        if(obj.CanReceive(HeldObject))
         {
             PlaceHeldOntoObject(obj);
             return;

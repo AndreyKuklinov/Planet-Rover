@@ -9,7 +9,7 @@ public class SignalEmitter : MonoBehaviour
 
     public Signal[] CurrentSignals { get; private set; }
 
-    public void ChangeSignals(params Signal[] signals)
+    public void SetSignals(params Signal[] signals)
     {
         CurrentSignals = signals;
         SignalsChanged?.Invoke(signals);
