@@ -7,7 +7,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public static event Action LevelCompleted;
-    public static event Action<HashSet<Signal>> SignalsChanged;
+    public static event Action<Signal> SignalChanged;
 
     [SerializeField] LevelGrid grid;
     [SerializeField] Swapper swapper;
@@ -20,7 +20,7 @@ public class Level : MonoBehaviour
         Rocket.RocketSpawned += OnRocketSpawned;
         Rocket.RocketCompleted += OnRocketCompleted;
         SignalEmitter.EmitterSpawned += OnEmitterSpawned;
-        SignalEmitter.SignalsChanged += OnSignalsChanged;
+        SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
         InitLevel();
     }
@@ -32,22 +32,12 @@ public class Level : MonoBehaviour
         grid.AttachAllObjects();
     }
 
-    void CollectSignals()
-    {
-        var activeSignals = emitters
-            .SelectMany(emitter => emitter.ActiveSignals)
-            .ToHashSet();
-
-        SignalsChanged?.Invoke(activeSignals);
-        Debug.Log("Signals changed: " + string.Join(", ", activeSignals));
-    }
-
     void OnDestroy()
     {
         Rocket.RocketCompleted -= OnRocketCompleted;
         Rocket.RocketSpawned -= OnRocketSpawned;
         SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
-        SignalEmitter.SignalsChanged -= OnSignalsChanged;
+        SignalEmitter.SignalEmitted -= OnSignalChanged;
         SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
     }
 
@@ -63,9 +53,9 @@ public class Level : MonoBehaviour
         rockets.Add(obj);
     }
 
-    private void OnSignalsChanged(Signal[] _obj)
+    private void OnSignalChanged(Signal _obj)
     {
-        CollectSignals();
+        SignalChanged?.Invoke(_obj);
     }
 
     private void OnEmitterSpawned(SignalEmitter obj)

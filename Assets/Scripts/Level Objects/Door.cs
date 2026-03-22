@@ -15,19 +15,19 @@ public class Door : LevelObject
 
     protected override void Start()
     {
-        Level.SignalsChanged += OnSignalsChanged;
+        Level.SignalChanged += OnSignalChanged;
         base.Start();
     }
 
     protected override void OnDestroy()
     {
-        Level.SignalsChanged -= OnSignalsChanged;
+        Level.SignalChanged -= OnSignalChanged;
         base.OnDestroy();
     }
 
-    private void OnSignalsChanged(HashSet<Signal> obj)
+    private void OnSignalChanged(Signal obj)
     {
-        isOpen = obj.Contains(signal);
+        isOpen = obj == signal;
         spriteRenderer.sprite = isOpen ? openSprite : closedSprite;
     }
 
