@@ -41,4 +41,14 @@ public class LevelButton : LevelObject
 
         emitter.SetSignals();
     }
+
+    private void OnValidate()
+    {
+        UpdateColor();
+    }
+
+    private void UpdateColor()
+    {
+        spriteRenderer.color = SignalColor.GetColor(signal);
+    }
 }

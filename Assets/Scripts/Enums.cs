@@ -25,20 +25,30 @@ public enum HandState
 
 public enum Signal
 {
-    Red,
-    Green,
+    Purple,
     Blue,
+    Green,
+    Yellow,
+    Orange,
+    Pink,
+    Brown
 }
 
 public static class SignalColor
 {
-    public static Color GetColor(Signal signal) => signal switch
+    readonly static Color[] colors = new Color[]
     {
-        Signal.Blue => Color.blue,
-        Signal.Red => Color.red,
-        Signal.Green => Color.green,
-        _ => throw new ArgumentException(signal.ToString() + " has no signal color"),
+        ColorExtensions.FromHex("#9656a2"),
+        ColorExtensions.FromHex("#369acc"),
+        ColorExtensions.FromHex("#95cf92"),
+        ColorExtensions.FromHex("#f8e16f"),
+        ColorExtensions.FromHex("#f4895f"),
+        ColorExtensions.FromHex("#de324c"),
+        ColorExtensions.FromHex("#6c584c")
     };
+
+    public static Color GetColor(Signal signal)
+        => colors[(int)signal];
 }
 
 public static class DirectionVector
