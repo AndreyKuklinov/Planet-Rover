@@ -10,7 +10,7 @@ public class ButtonEmitter : LevelObject
 
     public override bool CanReceive(LevelObject levelObject)
     {
-        return levelObject == null;
+        return true;
     }
 
     public override void Receive(LevelObject levelObject)
