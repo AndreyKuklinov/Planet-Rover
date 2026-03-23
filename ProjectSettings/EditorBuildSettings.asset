@@ -26,4 +26,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Emitters/Key-Key.unity
     guid: ef45d57f45838244e988dd4a4c478529
+  - enabled: 1
+    path: Assets/Scenes/Levels/Emitters/Timer-Key.unity
+    guid: 1f9e78ae2c2054a45aa997f1ff047069
+  - enabled: 1
+    path: Assets/Scenes/Levels/Emitters/Timer-Timer.unity
+    guid: 665ef8c518440804ab909de4e61a84de
+  - enabled: 1
+    path: Assets/Scenes/Levels/Emitters/Timer-Button.unity
+    guid: 96d8c7761d49f26428e151681a7aae0e
+  - enabled: 1
+    path: Assets/Scenes/Levels/Emitters/Button-Key.unity
+    guid: ac9ba38024000154eb75311a723f2281
   m_configObjects: {}

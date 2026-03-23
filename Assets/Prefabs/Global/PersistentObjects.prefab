@@ -302,6 +302,12 @@ MonoBehaviour:
   - 2-1
   - 2-2
   - 3-2
+  - Key-Key
+  - Button-Button
+  - Timer-Timer
+  - Timer-Key
+  - Timer-Button
+  - Button-Key
   starThresholds: 0a0000001400000019000000
   gameDuration: 30
   timeBoostMultiplier: 2
