@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,23 @@ public class Door : LevelObject
 
     public override bool CanHandGoThrough
         => isOpen;
+
+    public override bool CanReceive(LevelObject levelObject)
+    {
+        var key = levelObject as DoorKey;
+        if (key == null)
+            return false;
+        return key.Signal == signal;
+    }
+
+    public override void Receive(LevelObject levelObject)
+    {
+        if (!CanReceive(levelObject))
+            throw new ArgumentException("Can't drop " + levelObject + " on " + this);
+
+        isOpen = true;
+        UpdateSprite();
+    }
 
     protected override void Start()
     {
@@ -28,7 +46,7 @@ public class Door : LevelObject
     private void OnSignalChanged(Signal obj)
     {
         isOpen = obj == signal;
-        spriteRenderer.sprite = isOpen ? openSprite : closedSprite;
+        UpdateSprite();
     }
 
     private void OnValidate()
@@ -38,6 +56,14 @@ public class Door : LevelObject
 
     private void UpdateColor()
     {
+        if (spriteRenderer == null)
+            return;
+
         spriteRenderer.color = SignalColor.GetColor(signal);
+    }
+
+    private void UpdateSprite()
+    {
+        spriteRenderer.sprite = isOpen ? openSprite : closedSprite;
     }
 }
