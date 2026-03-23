@@ -172,15 +172,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.6039216
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.21176471
       objectReference: {fileID: 0}
     - target: {fileID: 8926348560427703860, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Name
@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8984891233660900200, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: signal
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -279,7 +279,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -944232000837223404, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: signal
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -323,15 +323,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.6039216
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.21176471
       objectReference: {fileID: 0}
     - target: {fileID: 8926348560427703860, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Name
@@ -465,9 +465,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.r
+      value: 0.21176471
+      objectReference: {fileID: 0}
     - target: {fileID: 8926348560427703860, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Name
       value: Door (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984891233660900200, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: signal
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -551,7 +567,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -944232000837223404, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: signal
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -595,15 +611,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.29803923
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 0.19607843
       objectReference: {fileID: 0}
     - target: {fileID: 3297792618599156248, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.87058824
       objectReference: {fileID: 0}
     - target: {fileID: 8926348560427703860, guid: 02f544723afecfa45b3cdb0e0c91a0de, type: 3}
       propertyPath: m_Name
@@ -724,9 +740,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.r
+      value: 0.21176471
+      objectReference: {fileID: 0}
     - target: {fileID: 8926348560427703860, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Name
       value: Door (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984891233660900200, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: signal
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -848,9 +880,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297792618599156248, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: m_Color.r
+      value: 0.21176471
+      objectReference: {fileID: 0}
     - target: {fileID: 8926348560427703860, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984891233660900200, guid: 29a1fa9a7e5ef7545be4207d5507df93, type: 3}
+      propertyPath: signal
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

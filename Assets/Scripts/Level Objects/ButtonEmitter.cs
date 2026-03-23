@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelButton : LevelObject
+public class ButtonEmitter : LevelObject
 {
     [SerializeField] SignalEmitter emitter;
     [SerializeField] Signal signal;

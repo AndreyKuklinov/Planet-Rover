@@ -30,7 +30,7 @@ public enum Signal
     Green,
     Yellow,
     Orange,
-    Pink,
+    Red,
     Brown
 }
 
