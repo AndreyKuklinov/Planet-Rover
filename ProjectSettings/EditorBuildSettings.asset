@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/3-2.unity
     guid: 4fc5d47af49e6c7479cbf803a7b1f4c9
+  - enabled: 1
+    path: Assets/Scenes/Levels/Emitters/Button-Button.unity
+    guid: 3a435c8cfe5707249abd5504511dc4ab
+  - enabled: 1
+    path: Assets/Scenes/Levels/Emitters/Key-Key.unity
+    guid: ef45d57f45838244e988dd4a4c478529
   m_configObjects: {}

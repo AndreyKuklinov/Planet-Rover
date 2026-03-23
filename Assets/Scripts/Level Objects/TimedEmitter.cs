@@ -65,8 +65,8 @@ public class TimedEmitter : LevelObject
 
         progressBar.fillAmount = 1f;
         emitter.Emit(signals[signalIndex]);
-        ChangeSignal();
         yield return new WaitForSeconds(pauseDuration);
+        ChangeSignal();
         StartTimer();
     }
 

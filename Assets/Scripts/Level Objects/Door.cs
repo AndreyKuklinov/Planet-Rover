@@ -8,8 +8,7 @@ public class Door : LevelObject
     [SerializeField] Signal signal;
     [SerializeField] Sprite openSprite;
     [SerializeField] Sprite closedSprite;
-
-    private bool isOpen;
+    [SerializeField] bool isOpen;
 
     public override bool CanHandGoThrough
         => isOpen;
@@ -51,7 +50,15 @@ public class Door : LevelObject
 
     private void OnValidate()
     {
-        UpdateColor();
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.delayCall += () =>
+        {
+            if (this == null) return;
+
+            UpdateColor();
+            UpdateSprite();
+        };
+    #endif
     }
 
     private void UpdateColor()
@@ -64,6 +71,9 @@ public class Door : LevelObject
 
     private void UpdateSprite()
     {
+        if (spriteRenderer == null)
+            return;
+
         spriteRenderer.sprite = isOpen ? openSprite : closedSprite;
     }
 }
