@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] bool isLoopEnabled = false;
-
     public GameState GameState { get; private set; } = GameState.None;
     public LevelSet LevelSet { get; private set; }
     public int Score { get; private set; }
@@ -20,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(LevelSet levelSet)
     {
-        this.LevelSet = levelSet;
+        LevelSet = levelSet;
         GameState = GameState.Running;
         if(levelSet.IsTimeLimited)
             SecondsLeft = levelSet.GameDuration;
@@ -32,6 +30,7 @@ public class GameManager : MonoBehaviour
         Rocket.SampleDelivered += OnSampleDelivered;
         Level.LevelCompleted += OnLevelCompleted;
         Level.LevelStarted += OnLevelStarted;
+        LevelSelector.LevelSetSelected += OneLevelSetSelected;
     }
 
     private void OnDestroy()
@@ -39,6 +38,7 @@ public class GameManager : MonoBehaviour
         Rocket.SampleDelivered -= OnSampleDelivered;
         Level.LevelCompleted -= OnLevelCompleted;
         Level.LevelStarted -= OnLevelStarted;
+        LevelSelector.LevelSetSelected -= OneLevelSetSelected;
     }
 
     void Update()
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         if (levelQueue.Count == 0)
             levelQueue = CreateLevelQueue();
 
-        var nextLevel = levelQueue.Count > 0 && !isLoopEnabled 
+        var nextLevel = levelQueue.Count > 0
             ? levelQueue.Dequeue() 
             : SceneManager.GetActiveScene().name;
         LoadLevel(nextLevel);
@@ -81,6 +81,11 @@ public class GameManager : MonoBehaviour
     {
         if(GameState == GameState.Running)
             StartNextLevel();
+    }
+
+    private void OneLevelSetSelected(LevelSet obj)
+    {
+        StartGame(obj);
     }
 
     private void OnSampleDelivered(SampleData data)
