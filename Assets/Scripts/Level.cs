@@ -6,8 +6,11 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public static event Action<Level> LevelStarted;
     public static event Action LevelCompleted;
     public static event Action<Signal> SignalChanged;
+
+    [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
 
     [SerializeField] LevelGrid grid;
     [SerializeField] Swapper swapper;
@@ -23,6 +26,8 @@ public class Level : MonoBehaviour
         SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
         InitLevel();
+
+        LevelStarted?.Invoke(this);
     }
 
     void InitLevel()

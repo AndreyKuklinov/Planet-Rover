@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] string[] levelNames;
     [SerializeField] int[] starThresholds;
-    [SerializeField] float gameDuration;
-    [SerializeField] float timeBoostMultiplier;
+    [field: SerializeField] public float GameDuration { get; private set; } = 30;
     [SerializeField] bool shouldTimeStartRunning = true;
     [SerializeField] bool isLoopEnabled = false;
 
@@ -24,12 +23,21 @@ public class GameManager : MonoBehaviour
     public float SecondsLeft { get; private set; }
 
     private Queue<string> levelQueue = new Queue<string>();
+    private Level currentLevel;
 
     void Start()
     {
-        SecondsLeft = gameDuration;
+        SecondsLeft = GameDuration;
         Rocket.SampleDelivered += OnSampleDelivered;
         Level.LevelCompleted += OnLevelCompleted;
+        Level.LevelStarted += OnLevelStarted;
+    }
+
+    private void OnDestroy()
+    {
+        Rocket.SampleDelivered -= OnSampleDelivered;
+        Level.LevelCompleted -= OnLevelCompleted;
+        Level.LevelStarted -= OnLevelStarted;
     }
 
     void Update()
@@ -69,6 +77,11 @@ public class GameManager : MonoBehaviour
             
     }
 
+    private void OnLevelStarted(Level obj)
+    {
+        currentLevel = obj;
+    }
+
     private void OnLevelCompleted()
     {
         if (shouldTimeStartRunning && !IsGameOver && !IsGameWon)
@@ -87,8 +100,11 @@ public class GameManager : MonoBehaviour
         if (!IsTimeRunning)
             return;
 
+        if (currentLevel == null)
+            throw new InvalidOperationException("Trying to deliver a sample, while the level hasn't loaded");
+
         Score += data.Value;
-        SecondsLeft += timeBoostMultiplier * data.Value;
+        SecondsLeft += currentLevel.TimeBoostMultiplier * data.Value;
         AwardStars();
     }
 
@@ -101,12 +117,14 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = true;
         IsTimeRunning = false;
+        Time.timeScale = 0;
     }
 
     private void WinGame()
     {
         IsGameWon = true;
         IsTimeRunning = false;
+        Time.timeScale = 0;
     }
 
     private void AwardStars()
