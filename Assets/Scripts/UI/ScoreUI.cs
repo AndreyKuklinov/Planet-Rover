@@ -11,12 +11,20 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] Transform starsContainer;
     [SerializeField] Image starPrefab;
     [SerializeField] Image powerImage;
+    [SerializeField] Transform ui;
     [SerializeField] GameManager gm;
 
     private List<Image> stars = new List<Image>();
 
+    bool isVisible
+        => gm.LevelSet != null && !gm.LevelSet.IsTutorial;
+
     void Update()
     {
+        ui.gameObject.SetActive(isVisible);
+        if (!isVisible)
+            return;
+
         textMesh.text = GetScoreText();
         UpdateStars();
         UpdatePower();
@@ -44,7 +52,7 @@ public class ScoreUI : MonoBehaviour
 
     void UpdatePower()
     {
-        var value = gm.SecondsLeft / gm.GameDuration;
+        var value = gm.SecondsLeft / gm.LevelSet.GameDuration;
         powerImage.fillAmount = value;
     }
 }

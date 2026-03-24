@@ -7,17 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [field: SerializeField] public int TargetStars { get; private set; } = 3;
-    [field: SerializeField] public bool IsTimeRunning { get; private set; } = false;
-
-    [SerializeField] string[] levelNames;
-    [SerializeField] int[] starThresholds;
-    [field: SerializeField] public float GameDuration { get; private set; } = 30;
-    [SerializeField] bool shouldTimeStartRunning = true;
     [SerializeField] bool isLoopEnabled = false;
 
-    public bool IsGameOver { get; private set; }
-    public bool IsGameWon { get; private set; }
+    public GameState GameState { get; private set; } = GameState.None;
+    public LevelSet LevelSet { get; private set; }
     public int Score { get; private set; }
     public int Stars { get; private set; }
     public float SecondsLeft { get; private set; }
@@ -25,9 +18,17 @@ public class GameManager : MonoBehaviour
     private Queue<string> levelQueue = new Queue<string>();
     private Level currentLevel;
 
+    public void StartGame(LevelSet levelSet)
+    {
+        this.LevelSet = levelSet;
+        GameState = GameState.Running;
+        if(levelSet.IsTimeLimited)
+            SecondsLeft = levelSet.GameDuration;
+        StartNextLevel();
+    }
+
     void Start()
     {
-        SecondsLeft = GameDuration;
         Rocket.SampleDelivered += OnSampleDelivered;
         Level.LevelCompleted += OnLevelCompleted;
         Level.LevelStarted += OnLevelStarted;
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     void StartNextLevel()
     {
         if (levelQueue.Count == 0)
-            CreateLevelQueue();
+            levelQueue = CreateLevelQueue();
 
         var nextLevel = levelQueue.Count > 0 && !isLoopEnabled 
             ? levelQueue.Dequeue() 
@@ -63,18 +64,12 @@ public class GameManager : MonoBehaviour
 
     void TickDown()
     {
-        if (!IsTimeRunning)
+        if (GameState != GameState.Running || !LevelSet.IsTimeLimited)
             return;
 
         SecondsLeft -= Time.deltaTime;
         if (SecondsLeft <= 0)
-        {
-            if (Stars >= TargetStars)
-                WinGame();
-            else
-                LoseGame();
-        }
-            
+            EndGame(Stars >= LevelSet.StarThresholds.Length);  
     }
 
     private void OnLevelStarted(Level obj)
@@ -84,57 +79,51 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
-        if (shouldTimeStartRunning && !IsGameOver && !IsGameWon)
-            IsTimeRunning = true;
-        AwardStars();
-
-        if(!IsGameOver && !IsGameWon)
+        if(GameState == GameState.Running)
             StartNextLevel();
-
-        if(IsGameWon)
-            IsTimeRunning = false;
     }
 
     private void OnSampleDelivered(SampleData data)
     {
-        if (!IsTimeRunning)
+        if (GameState != GameState.Running)
             return;
 
         if (currentLevel == null)
-            throw new InvalidOperationException("Trying to deliver a sample, while the level hasn't loaded");
+            throw new InvalidOperationException("Trying to deliver a sample, while currentLevel is null");
 
         Score += data.Value;
         SecondsLeft += currentLevel.TimeBoostMultiplier * data.Value;
         AwardStars();
     }
 
-    private void CreateLevelQueue()
+    private Queue<string> CreateLevelQueue()
     {
-        levelQueue = new Queue<string>(levelNames.OrderBy(x => UnityEngine.Random.value));
+        var levels = LevelSet.IsOrderRandom 
+            ? LevelSet.LevelNames.OrderBy(x => UnityEngine.Random.value).ToArray()
+            : LevelSet.LevelNames;
+        
+        return new Queue<string>(levels);
     }
 
-    private void LoseGame()
+    private void EndGame(bool victory)
     {
-        IsGameOver = true;
-        IsTimeRunning = false;
-        Time.timeScale = 0;
-    }
+        GameState = victory ? GameState.Won : GameState.Lost;
 
-    private void WinGame()
-    {
-        IsGameWon = true;
-        IsTimeRunning = false;
+        // TESTING
         Time.timeScale = 0;
     }
 
     private void AwardStars()
     {
         var stars = 0;
-        foreach(var threshold in starThresholds)
+        foreach(var threshold in LevelSet.StarThresholds)
         {
             if(Score >= threshold)
                 stars++;
         }
         Stars = stars;
+
+        if (LevelSet.EndGameWhenWon && Stars > LevelSet.StarThresholds.Length)
+            EndGame(true);
     }
 }

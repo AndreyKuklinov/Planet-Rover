@@ -34,6 +34,14 @@ public enum Signal
     Brown
 }
 
+public enum GameState
+{
+    None,
+    Running,
+    Lost,
+    Won
+}
+
 public static class SignalColor
 {
     readonly static Color[] colors = new Color[]
