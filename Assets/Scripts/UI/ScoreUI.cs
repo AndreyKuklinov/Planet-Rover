@@ -53,6 +53,6 @@ public class ScoreUI : MonoBehaviour
     void UpdatePower()
     {
         var value = gm.SecondsLeft / gm.LevelSet.GameDuration;
-        powerImage.fillAmount = value;
+        powerImage.fillAmount = Mathf.Clamp(value, 0, 1);
     }
 }
