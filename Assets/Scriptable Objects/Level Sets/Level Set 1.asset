@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level Set 1
   m_EditorClassIdentifier: 
   IsTutorial: 0
-  GameDuration: 30
+  GameDuration: 5
   StarThresholds: 010000000200000003000000
   LevelNames:
   - 1-1
