@@ -7,6 +7,13 @@ public class LevelSelector : LevelObject
 {
     public static event Action<LevelSet> LevelSetSelected;
     [SerializeField] LevelSet levelSet;
+    [SerializeField] StarContainer starContainer;
+
+    protected override void Start()
+    {
+        starContainer.SetStars(PlayerPrefs.GetInt(levelSet.PrefsString));
+        base.Start();
+    }
 
     public override bool CanReceive(LevelObject levelObject)
     {

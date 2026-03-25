@@ -8,16 +8,13 @@ using UnityEngine.UI;
 public class ScoreUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textMesh;
-    [SerializeField] Transform starsContainer;
-    [SerializeField] Image starPrefab;
+    [SerializeField] StarContainer starContainer;
     [SerializeField] Image powerImage;
     [SerializeField] Transform ui;
     [SerializeField] GameManager gm;
 
-    private List<Image> stars = new List<Image>();
-
     bool isVisible
-        => gm.LevelSet != null && !gm.LevelSet.IsTutorial;
+        => gm.IsTimeRunning || gm.IsGameOver;
 
     void Update()
     {
@@ -32,27 +29,35 @@ public class ScoreUI : MonoBehaviour
 
     string GetScoreText()
     {
-        return gm.Score.ToString();
+        return gm.Score.ToString() + GetTargetScore();
     }
 
     void UpdateStars()
     {
-        foreach(var star in stars)
-        {
-            Destroy(star.gameObject);
-        }
-
-        stars = new List<Image>();
-        for(var i = 0; i < gm.Stars; i++)
-        {
-            var star = Instantiate(starPrefab, starsContainer);
-            stars.Add(star);
-        }
+        starContainer.SetStars(gm.Stars);
     }
 
     void UpdatePower()
     {
         var value = gm.SecondsLeft / gm.LevelSet.GameDuration;
         powerImage.fillAmount = Mathf.Clamp(value, 0, 1);
+    }
+
+    string GetTargetScore()
+    {
+        int? target = null;
+        foreach(var star in gm.LevelSet.StarThresholds)
+        {
+            if(gm.Stars < star)
+            {
+                target = star;
+                break;
+            }
+        }
+
+        if(target == null)
+            return "";
+
+        return "/" + target.Value;
     }
 }

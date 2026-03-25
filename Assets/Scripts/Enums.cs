@@ -36,7 +36,7 @@ public enum Signal
 
 public enum GameState
 {
-    None,
+    Lobby,
     Running,
     Lost,
     Won

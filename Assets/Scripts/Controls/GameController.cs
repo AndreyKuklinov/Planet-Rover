@@ -25,12 +25,16 @@ public class GameController : MonoBehaviour
         if (!CanControl)
             return;
 
-        rover.OnDrop(obj.AllowedDirections);
+        if(gameManager.IsGameOver)
+            gameManager.GoToLobby();
+
+        else
+            rover.OnDrop(obj.AllowedDirections);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
     {
-        if (!CanControl)
+        if (!CanControl || gameManager.IsGameOver)
             return;
 
         if (!player.AllowedDirections.Contains(direction) && !isTestingModeOn)

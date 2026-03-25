@@ -7,22 +7,42 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameState GameState { get; private set; } = GameState.None;
+    public static event Action GameEnded;
+
+    GameState gameState = GameState.Lobby;
     public LevelSet LevelSet { get; private set; }
     public int Score { get; private set; }
     public int Stars { get; private set; }
     public float SecondsLeft { get; private set; }
 
+    public bool IsGameOver
+        => gameState == GameState.Won || gameState == GameState.Lost;
+
+    public bool IsTimeRunning
+        => gameState == GameState.Running && LevelSet != null && LevelSet.IsTimeLimited;
+
     private Queue<string> levelQueue = new Queue<string>();
     private Level currentLevel;
+    private string lobbySceneName;
 
     public void StartGame(LevelSet levelSet)
     {
         LevelSet = levelSet;
-        GameState = GameState.Running;
+        gameState = GameState.Running;
         if(levelSet.IsTimeLimited)
             SecondsLeft = levelSet.GameDuration;
+        // TODO: This is a nightmare, fix later
+        lobbySceneName = SceneManager.GetActiveScene().name;
         StartNextLevel();
+    }
+
+    public void GoToLobby()
+    {
+        if (lobbySceneName == null)
+            throw new InvalidOperationException("Lobby scene name not found");
+
+        ResetGame();
+        LoadLevel(lobbySceneName);
     }
 
     void Start()
@@ -64,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     void TickDown()
     {
-        if (GameState != GameState.Running || !LevelSet.IsTimeLimited)
+        if (!IsTimeRunning)
             return;
 
         SecondsLeft -= Time.deltaTime;
@@ -79,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
-        if(GameState == GameState.Running)
+        if(gameState == GameState.Running)
             StartNextLevel();
     }
 
@@ -90,7 +110,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSampleDelivered(SampleData data)
     {
-        if (GameState != GameState.Running)
+        if (gameState != GameState.Running)
             return;
 
         if (currentLevel == null)
@@ -112,10 +132,15 @@ public class GameManager : MonoBehaviour
 
     private void EndGame(bool victory)
     {
-        GameState = victory ? GameState.Won : GameState.Lost;
+        gameState = victory ? GameState.Won : GameState.Lost;
+        GameEnded?.Invoke();
+    }
 
-        // TESTING
-        Time.timeScale = 0;
+    private void ResetGame()
+    {
+        gameState = GameState.Lobby;
+        Score = 0;
+        Stars = 0;
     }
 
     private void AwardStars()
@@ -127,8 +152,21 @@ public class GameManager : MonoBehaviour
                 stars++;
         }
         Stars = stars;
+        UpdateHighScore();
 
-        if (LevelSet.EndGameWhenWon && Stars > LevelSet.StarThresholds.Length)
+        if (LevelSet.GoToLobbyWhenWon && Stars >= LevelSet.StarThresholds.Length)
+        {
             EndGame(true);
+            GoToLobby();
+        }
+    }
+
+    private void UpdateHighScore()
+    {
+        var s = LevelSet.PrefsString;
+        var highScore = PlayerPrefs.GetInt(s);
+
+        if(Stars > highScore)
+            PlayerPrefs.SetInt(s, Stars);
     }
 }

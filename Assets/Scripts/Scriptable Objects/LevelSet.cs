@@ -13,12 +13,15 @@ public class LevelSet : ScriptableObject
     [field: SerializeField] public int[] StarThresholds = new int[3];
     [field: SerializeField] public string[] LevelNames;
 
+    public string PrefsString
+        => name + "_stars";
+
     public bool IsOrderRandom
         => !IsTutorial;
 
     public bool IsTimeLimited
         => !IsTutorial;
 
-    public bool EndGameWhenWon
+    public bool GoToLobbyWhenWon
         => IsTutorial;
 }
