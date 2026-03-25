@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public bool IsTimeRunning
         => gameState == GameState.Running && LevelSet != null && LevelSet.IsTimeLimited;
 
-    private Queue<string> levelQueue = new Queue<string>();
+    private Queue<string> levelQueue;
     private Level currentLevel;
     private string lobbySceneName;
 
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
             SecondsLeft = levelSet.GameDuration;
         // TODO: This is a nightmare, fix later
         lobbySceneName = SceneManager.GetActiveScene().name;
+        levelQueue = new Queue<string>();
         StartNextLevel();
     }
 
