@@ -6195,6 +6195,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6189103499663274428, guid: 35c4a9eaaa9c0be41819995ba22063bf, type: 3}
+      propertyPath: <TimeBoostMultiplier>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8071827058240963513, guid: 35c4a9eaaa9c0be41819995ba22063bf, type: 3}
       propertyPath: m_IsActive
       value: 1

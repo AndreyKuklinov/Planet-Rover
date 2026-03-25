@@ -48,7 +48,7 @@ public class ScoreUI : MonoBehaviour
         int? target = null;
         foreach(var star in gm.LevelSet.StarThresholds)
         {
-            if(gm.Stars < star)
+            if(gm.Score < star)
             {
                 target = star;
                 break;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 
 public class GameManager : MonoBehaviour
 {
@@ -133,11 +134,13 @@ public class GameManager : MonoBehaviour
     private void EndGame(bool victory)
     {
         gameState = victory ? GameState.Won : GameState.Lost;
+        Time.timeScale = 0;
         GameEnded?.Invoke();
     }
 
     private void ResetGame()
     {
+        Time.timeScale = 1;
         gameState = GameState.Lobby;
         Score = 0;
         Stars = 0;
