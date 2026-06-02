@@ -15,7 +15,7 @@ MonoBehaviour:
   IsTutorial: 1
   GameDuration: 30
   StarThresholds: 030000000300000003000000
-  LevelNames:
-  - Tutorial-2-1
-  - Tutorial-2-2
-  - Tutorial-2-3
+  <Levels>k__BackingField:
+  - {fileID: 8442764804626069286, guid: c5c61574bdee9f54786ef1052e12f393, type: 3}
+  - {fileID: 761472417798529822, guid: dd8b949465c91f34c8c934da8c6d61a7, type: 3}
+  - {fileID: 4967391586487321899, guid: 2af697d77e13c29409cce6f24fde54a9, type: 3}

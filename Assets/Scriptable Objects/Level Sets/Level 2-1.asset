@@ -15,10 +15,10 @@ MonoBehaviour:
   IsTutorial: 0
   GameDuration: 60
   StarThresholds: 040000000800000010000000
-  LevelNames:
-  - Button-Button
-  - Key-Key
-  - Timer-Key
-  - Timer-Timer
-  - Timer-Button
-  - Button-Key
+  <Levels>k__BackingField:
+  - {fileID: 4123435872853642156, guid: f64fb428faaf4a049a0d6fac172ff87c, type: 3}
+  - {fileID: 8242360148702790166, guid: aeb14f4fabeac8e4baec68cc9ffb7b62, type: 3}
+  - {fileID: 5760765247540969304, guid: ff99953a95a125d42a6ae88c2c24f42b, type: 3}
+  - {fileID: 5973461070106061344, guid: 68d0c048392903e42829339aa1838af1, type: 3}
+  - {fileID: 3064624467026845947, guid: edb16b20aa4196749b4627df754d4464, type: 3}
+  - {fileID: 6686166768400414620, guid: b3afe43ca729d3d44a29fa72c84784c2, type: 3}
