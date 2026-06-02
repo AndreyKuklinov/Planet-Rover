@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class TimedEmitter : LevelObject
 {
+    const bool RESET_WHEN_OTHER_EMITTER_TRIGGERS = true;
+
     [SerializeField] SignalEmitter emitter;
     [SerializeField] Signal[] signals;
     [SerializeField] float signalInterval;
     [SerializeField] float pauseDuration;
-    [SerializeField] bool disableWhenOthersEmit;
     [SerializeField] Image progressBar;
 
     private Coroutine timer;
@@ -31,7 +32,7 @@ public class TimedEmitter : LevelObject
 
     private void OnSignalChanged(Signal obj)
     {
-        if (!disableWhenOthersEmit || progressBar.fillAmount == 1)
+        if (!RESET_WHEN_OTHER_EMITTER_TRIGGERS || progressBar.fillAmount == 1)
             return;
         StartTimer();
     }
