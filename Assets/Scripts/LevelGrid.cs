@@ -11,6 +11,11 @@ public class LevelGrid : MonoBehaviour
 
     public readonly Map<Vector2Int, LevelObject> Objects = new();
 
+    void Start()
+    {
+        LevelObject.Destroyed += OnLevelObjectDestroyed;
+    }
+
     public void AttachAllObjects()
     {
         var levelObjects = GetComponentsInChildren<LevelObject>(true);
@@ -80,5 +85,13 @@ public class LevelGrid : MonoBehaviour
         }
 
         return prev;
+    }
+
+    private void OnLevelObjectDestroyed(LevelObject obj)
+    {
+        if(Objects.Contains(obj))
+        {
+            Objects.Remove(obj);
+        }
     }
 }

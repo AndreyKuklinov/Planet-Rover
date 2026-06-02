@@ -26,8 +26,12 @@ public class Door : LevelObject
         if (!CanReceive(levelObject))
             throw new ArgumentException("Can't drop " + levelObject + " on " + this);
 
-        isOpen = true;
-        UpdateSprite();
+        if(levelObject is DoorKey)
+        {
+            Destroy(gameObject);
+            Destroy(levelObject.gameObject);
+            return;
+        }    
     }
 
     protected override void Start()

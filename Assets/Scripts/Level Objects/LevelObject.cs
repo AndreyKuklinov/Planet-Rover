@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class LevelObject : MonoBehaviour 
 {
+    public static event Action<LevelObject> Destroyed;
+
     [SerializeField] float movementSpeed;
     Vector2Int startingCell;
     Vector2 movementDestination;
@@ -63,11 +65,6 @@ public abstract class LevelObject : MonoBehaviour
         IsMoving = true;
     }
 
-    public void Remove()
-    {
-        Destroy(gameObject);
-    }
-
     //public void ReturnToSpawn()
     //{
     //    var occupyingObject = LevelGrid.Objects.GetObject(startingCell);
@@ -82,7 +79,10 @@ public abstract class LevelObject : MonoBehaviour
     //}
 
     protected virtual void Start() {}
-    protected virtual void OnDestroy() { }
+    protected virtual void OnDestroy() 
+    {
+        Destroyed?.Invoke(this);
+    }
 
     void Update()
     {
