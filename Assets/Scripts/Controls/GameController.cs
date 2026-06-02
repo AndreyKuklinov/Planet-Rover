@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
             return;
 
         if(gameManager.IsGameOver)
-            gameManager.GoToLobby();
+            gameManager.LoadLobby();
 
         else
             rover.OnDrop(obj.AllowedDirections);

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static event Action GameEnded;
 
+    [SerializeField] Level lobbyLevelPrefab;
+
     GameState gameState = GameState.Lobby;
     public LevelSet LevelSet { get; private set; }
     public int Score { get; private set; }
@@ -22,9 +24,8 @@ public class GameManager : MonoBehaviour
     public bool IsTimeRunning
         => gameState == GameState.Running && LevelSet != null && LevelSet.IsTimeLimited;
 
-    private Queue<string> levelQueue;
+    private Queue<Level> levelQueue;
     private Level currentLevel;
-    private string lobbySceneName;
 
     public void StartGame(LevelSet levelSet)
     {
@@ -32,19 +33,18 @@ public class GameManager : MonoBehaviour
         gameState = GameState.Running;
         if(levelSet.IsTimeLimited)
             SecondsLeft = levelSet.GameDuration;
-        // TODO: This is a nightmare, fix later
-        lobbySceneName = SceneManager.GetActiveScene().name;
-        levelQueue = new Queue<string>();
+        levelQueue = new Queue<Level>();
+        Destroy(currentLevel.gameObject);
         StartNextLevel();
     }
 
-    public void GoToLobby()
+    public void LoadLobby()
     {
-        if (lobbySceneName == null)
-            throw new InvalidOperationException("Lobby scene name not found");
+        if (lobbyLevelPrefab == null)
+            throw new InvalidOperationException("Lobby level not found");
 
         ResetGame();
-        LoadLevel(lobbySceneName);
+        LoadLevel(lobbyLevelPrefab);
     }
 
     void Start()
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         Level.LevelCompleted += OnLevelCompleted;
         Level.LevelStarted += OnLevelStarted;
         LevelSelector.LevelSetSelected += OneLevelSetSelected;
+        LoadLobby();
     }
 
     private void OnDestroy()
@@ -74,14 +75,18 @@ public class GameManager : MonoBehaviour
             levelQueue = CreateLevelQueue();
 
         var nextLevel = levelQueue.Count > 0
-            ? levelQueue.Dequeue() 
-            : SceneManager.GetActiveScene().name;
+            ? levelQueue.Dequeue()
+            : currentLevel;
         LoadLevel(nextLevel);
     }
 
-    void LoadLevel(string levelName)
+    void LoadLevel(Level level)
     {
-        SceneManager.LoadScene(levelName);
+        if(currentLevel != null)
+            Destroy(currentLevel.gameObject);
+
+        var newLevel = Instantiate(level, transform);
+        currentLevel = newLevel;
     }
 
     void TickDown()
@@ -123,13 +128,13 @@ public class GameManager : MonoBehaviour
         AwardStars();
     }
 
-    private Queue<string> CreateLevelQueue()
+    private Queue<Level> CreateLevelQueue()
     {
         var levels = LevelSet.IsOrderRandom 
-            ? LevelSet.LevelNames.OrderBy(x => UnityEngine.Random.value).ToArray()
-            : LevelSet.LevelNames;
+            ? LevelSet.Levels.OrderBy(x => UnityEngine.Random.value).ToArray()
+            : LevelSet.Levels;
         
-        return new Queue<string>(levels);
+        return new Queue<Level>(levels);
     }
 
     private void EndGame(bool victory)
@@ -161,7 +166,7 @@ public class GameManager : MonoBehaviour
         if (LevelSet.GoToLobbyWhenWon && Stars >= LevelSet.StarThresholds.Length)
         {
             EndGame(true);
-            GoToLobby();
+            LoadLobby();
         }
     }
 
