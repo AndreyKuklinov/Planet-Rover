@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Room lobbyLevelPrefab;
 
     GameState gameState = GameState.Lobby;
-    public LevelSet LevelSet { get; private set; }
+    public LevelData LevelSet { get; private set; }
     public int Score { get; private set; }
     public int Stars { get; private set; }
     public float SecondsLeft { get; private set; }
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private Queue<Room> levelQueue;
     private Room currentLevel;
 
-    public void StartGame(LevelSet levelSet)
+    public void StartGame(LevelData levelSet)
     {
         LevelSet = levelSet;
         gameState = GameState.Running;
@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Rocket.SampleDelivered += OnSampleDelivered;
-        Room.LevelCompleted += OnLevelCompleted;
-        Room.LevelStarted += OnLevelStarted;
+        Room.RoomCompleted += OnLevelCompleted;
+        Room.RoomStarted += OnLevelStarted;
         LevelSelector.LevelSetSelected += OneLevelSetSelected;
         LoadLobby();
     }
@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         Rocket.SampleDelivered -= OnSampleDelivered;
-        Room.LevelCompleted -= OnLevelCompleted;
-        Room.LevelStarted -= OnLevelStarted;
+        Room.RoomCompleted -= OnLevelCompleted;
+        Room.RoomStarted -= OnLevelStarted;
         LevelSelector.LevelSetSelected -= OneLevelSetSelected;
     }
 
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             StartNextLevel();
     }
 
-    private void OneLevelSetSelected(LevelSet obj)
+    private void OneLevelSetSelected(LevelData obj)
     {
         StartGame(obj);
     }

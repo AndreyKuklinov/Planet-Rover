@@ -8,7 +8,6 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] bool isTestingModeOn = false;
     [SerializeField] PartyInputManager partyManager;
-    [SerializeField] GameManager gameManager;
     [SerializeField] Rover rover;
 
     public bool CanControl
@@ -25,16 +24,13 @@ public class GameController : MonoBehaviour
         if (!CanControl)
             return;
 
-        if(gameManager.IsGameOver)
-            gameManager.LoadLobby();
-
         else
             rover.OnDrop(obj.AllowedDirections);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)
     {
-        if (!CanControl || gameManager.IsGameOver)
+        if (!CanControl)
             return;
 
         if (!player.AllowedDirections.Contains(direction) && !isTestingModeOn)

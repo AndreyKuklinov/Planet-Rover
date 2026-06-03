@@ -20,7 +20,11 @@ public class RoomGrid : MonoBehaviour
     {
         var levelObjects = GetComponentsInChildren<LevelObject>(true);
         foreach (var obj in levelObjects)
+        {
+            //if (!obj.isActiveAndEnabled)
+            //    continue;
             obj.AttachToGrid(this);
+        }
     }
 
     public void PlaceObject(LevelObject obj)

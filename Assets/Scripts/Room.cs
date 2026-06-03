@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public static event Action<Room> LevelStarted;
-    public static event Action LevelCompleted;
+    public static event Action<Room> RoomStarted;
+    public static event Action RoomCompleted;
     public static event Action<Signal> SignalChanged;
 
     [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
@@ -27,7 +27,7 @@ public class Room : MonoBehaviour
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
         InitLevel();
 
-        LevelStarted?.Invoke(this);
+        RoomStarted?.Invoke(this);
     }
 
     void InitLevel()
@@ -50,7 +50,7 @@ public class Room : MonoBehaviour
     {
         rockets.Remove(obj);
         if (rockets.Count == 0)
-            LevelCompleted?.Invoke();
+            RoomCompleted?.Invoke();
     }
 
     private void OnRocketSpawned(Rocket obj)

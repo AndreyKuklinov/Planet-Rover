@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class LevelSelector : LevelObject
 {
-    public static event Action<LevelSet> LevelSetSelected;
-    [SerializeField] LevelSet levelSet;
+    public static event Action<LevelData> LevelSetSelected;
+    [SerializeField] LevelData levelSet;
     [SerializeField] StarContainer starContainer;
 
     protected override void Start()
