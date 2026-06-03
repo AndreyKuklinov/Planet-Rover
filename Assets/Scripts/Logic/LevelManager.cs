@@ -53,9 +53,19 @@ public class LevelManager : MonoBehaviour
 
     private void EndLevel()
     {
+        UpdateScore();
         LevelCompleted?.Invoke();
         CurrentLevel = null;
         timer.StopTime();
+    }
+
+    private void UpdateScore()
+    {
+        var s = CurrentLevel.PrefsString;
+        var score = PlayerPrefs.GetInt(s);
+
+        if (Stars > score)
+            PlayerPrefs.SetInt(s, Stars);
     }
 
     private void OnRoomCompleted()
