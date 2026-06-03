@@ -25,8 +25,11 @@ public class Room : MonoBehaviour
         SignalEmitter.EmitterSpawned += OnEmitterSpawned;
         SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
-        InitLevel();
+    }
 
+    void Start()
+    {
+        InitLevel();
         RoomStarted?.Invoke(this);
     }
 
