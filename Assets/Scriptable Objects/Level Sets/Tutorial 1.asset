@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Tutorial 1
   m_EditorClassIdentifier: 
   <IsTutorial>k__BackingField: 1
+  roomCountToComplete: 6
   <GameDuration>k__BackingField: 0
   StarThresholds: 
   <Levels>k__BackingField:
   - {fileID: 5041067382886977468, guid: 5716fb9413e148f4fb5e66e3e20f40c3, type: 3}
   - {fileID: 387222364367761520, guid: 13aca365fd2f59144bc93094922e56de, type: 3}
   - {fileID: 7509932997804529552, guid: 33cc38604c17d194aa5768210e6d808d, type: 3}
-  <RoomCountToComplete>k__BackingField: 3

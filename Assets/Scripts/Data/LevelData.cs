@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,16 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     [field: SerializeField] public bool IsTutorial { get; private set; } = false;
-    [field: SerializeField] public int GameDuration { get; private set; } = 30;
-    [field: SerializeField] public int[] StarThresholds = new int[3];
-    [field: SerializeField] public Room[] Levels { get; private set;  }
+    [SerializeField, HideIf("IsTutorial")] private int roomCountToComplete;
 
-    [field: SerializeField] public int RoomCountToComplete { get; private set; }
+
+    // TODO: REMOVE
+    [field: SerializeField, HideInInspector] public int GameDuration { get; private set; } = 30;
+    
+    [field: SerializeField, HideInInspector] public int[] StarThresholds = new int[3];
+
+
+    [field: SerializeField] public Room[] Levels { get; private set;  }
 
     public string PrefsString
         => name + "_stars";
@@ -23,4 +29,7 @@ public class LevelData : ScriptableObject
 
     public bool GoToLobbyWhenWon
         => IsTutorial;
+
+    public int RoomCountToComplete
+        => IsTutorial ? Levels.Length : roomCountToComplete;
 }
