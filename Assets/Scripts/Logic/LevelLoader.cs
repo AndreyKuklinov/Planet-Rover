@@ -7,8 +7,11 @@ public class LevelLoader : MonoBehaviour
 {
     [SerializeField] RoomLoader roomLoader;
 
+    public RoomData CurrentRoomData { get; private set; }
+
     private LevelData currentLevel;
-    private Queue<Room> roomQueue;
+    private Queue<RoomData> roomQueue;
+    
 
     public void SetLevelData(LevelData levelData)
     {
@@ -21,15 +24,16 @@ public class LevelLoader : MonoBehaviour
         if (roomQueue.Count == 0)
             roomQueue = CreateRoomQueue();
 
-        roomLoader.LoadRoom(roomQueue.Dequeue());
+        CurrentRoomData = roomQueue.Dequeue();
+        roomLoader.LoadRoom(CurrentRoomData.Room);
     }
 
-    private Queue<Room> CreateRoomQueue()
+    private Queue<RoomData> CreateRoomQueue()
     {
-        var levels = currentLevel.IsOrderRandom
-            ? currentLevel.Levels.OrderBy(x => Random.value).ToArray()
-            : currentLevel.Levels;
+        var rooms = currentLevel.IsOrderRandom
+            ? currentLevel.Rooms.OrderBy(x => Random.value).ToArray()
+            : currentLevel.Rooms;
 
-        return new Queue<Room>(levels);
+        return new Queue<RoomData>(rooms);
     }
 }

@@ -18,6 +18,13 @@ public class Timer : MonoBehaviour
         TimeRemaining = duration;
     }
 
+    public void StopTime()
+    {
+        IsTimeRunning = false;
+        TimeRemaining = 0;
+        Duration = 0;
+    }
+
     void Update()
     {
         if (!IsTimeRunning)

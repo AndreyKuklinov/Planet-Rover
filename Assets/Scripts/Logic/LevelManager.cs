@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -39,24 +40,43 @@ public class LevelManager : MonoBehaviour
     private void StartNextRoom()
     {
         levelLoader.LoadNextRoom();
-        //if (CurrentLevel.IsTimeLimited)
-        //    timer.StartTime(CurrentRoom)
+        StartRoomTimer();
+    }
+
+    private void StartRoomTimer()
+    {
+        if (!CurrentLevel.IsTimeLimited)
+            return;
+
+        timer.StartTime(levelLoader.CurrentRoomData.BaseTimeLimit);
+    }
+
+    private void EndLevel()
+    {
+        LevelCompleted?.Invoke();
+        CurrentLevel = null;
+        timer.StopTime();
     }
 
     private void OnRoomCompleted()
     {
         CompletedRoomCount++;
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
-            levelLoader.LoadNextRoom();
+            StartNextRoom();
         else
-        {
-            LevelCompleted?.Invoke();
-            CurrentLevel = null;
-        }
+            EndLevel();
     }
 
     private void OnTimeOut()
     {
-        throw new NotImplementedException();
+        Stars--;
+        Debug.Log(Stars);
+        if(Stars > 0)
+        {
+            StartRoomTimer();
+            return;
+        }
+
+        EndLevel();
     }
 }

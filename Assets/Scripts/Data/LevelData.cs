@@ -16,7 +16,7 @@ public class LevelData : ScriptableObject
     [field: SerializeField, HideInInspector] public int[] StarThresholds = new int[3];
 
 
-    [field: SerializeField] public Room[] Levels { get; private set;  }
+    [field: SerializeField] public RoomData[] Rooms { get; private set;  }
 
     public string PrefsString
         => name + "_stars";
@@ -31,5 +31,5 @@ public class LevelData : ScriptableObject
         => IsTutorial;
 
     public int RoomCountToComplete
-        => IsTutorial ? Levels.Length : roomCountToComplete;
+        => IsTutorial ? Rooms.Length : roomCountToComplete;
 }
