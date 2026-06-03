@@ -36,13 +36,13 @@ public class Door : LevelObject
 
     protected override void Start()
     {
-        Level.SignalChanged += OnSignalChanged;
+        Room.SignalChanged += OnSignalChanged;
         base.Start();
     }
 
     protected override void OnDestroy()
     {
-        Level.SignalChanged -= OnSignalChanged;
+        Room.SignalChanged -= OnSignalChanged;
         base.OnDestroy();
     }
 

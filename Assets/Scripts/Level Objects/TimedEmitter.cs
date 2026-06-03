@@ -20,13 +20,13 @@ public class TimedEmitter : LevelObject
     protected override void Start()
     {
         StartTimer();
-        Level.SignalChanged += OnSignalChanged;
+        Room.SignalChanged += OnSignalChanged;
         base.Start();
     }
 
     protected override void OnDestroy()
     {
-        Level.SignalChanged -= OnSignalChanged;
+        Room.SignalChanged -= OnSignalChanged;
         base.OnDestroy();
     }
 

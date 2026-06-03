@@ -11,7 +11,7 @@ public class LevelSet : ScriptableObject
     //[field: SerializeField] public bool EndGameWhenWon = false;
     [field: SerializeField] public int GameDuration = 30;
     [field: SerializeField] public int[] StarThresholds = new int[3];
-    [field: SerializeField] public Level[] Levels { get; private set;  }
+    [field: SerializeField] public Room[] Levels { get; private set;  }
 
     public string PrefsString
         => name + "_stars";

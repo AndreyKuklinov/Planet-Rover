@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Swapper : MonoBehaviour
 {
-    [SerializeField] private LevelGrid levelGrid;
+    [SerializeField] private RoomGrid levelGrid;
 
     public void SwapAllObjects()
     {

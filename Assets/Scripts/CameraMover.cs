@@ -14,7 +14,7 @@ public class CameraMover : MonoBehaviour
         // TESTING
         // TODO: OPTIMIZE THIS INSANITY
 
-        var bounds = FindObjectOfType<LevelGrid>()?.Bounds;
+        var bounds = FindObjectOfType<RoomGrid>()?.Bounds;
 
         if (bounds == null)
             return;

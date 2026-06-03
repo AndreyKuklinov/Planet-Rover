@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LevelGrid : MonoBehaviour
+public class RoomGrid : MonoBehaviour
 {
     [field: SerializeField] public Bounds Bounds { get; private set; }
 

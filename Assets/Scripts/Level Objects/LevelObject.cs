@@ -30,9 +30,9 @@ public abstract class LevelObject : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    public LevelGrid LevelGrid { get; private set; }
+    public RoomGrid LevelGrid { get; private set; }
 
-    public void AttachToGrid(LevelGrid grid = null)
+    public void AttachToGrid(RoomGrid grid = null)
     {
         if (grid != null)
             LevelGrid = grid;

@@ -12,7 +12,7 @@ public class Rover : MonoBehaviour
     [SerializeField] LevelObject levelObject;
     [SerializeField] bool isRetractionVoluntary;
 
-    public LevelGrid LevelGrid
+    public RoomGrid LevelGrid
         => levelObject.LevelGrid;
 
     public bool IsMoving

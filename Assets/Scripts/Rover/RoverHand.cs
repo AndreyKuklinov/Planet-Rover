@@ -21,7 +21,7 @@ public class RoverHand : MonoBehaviour
     [SerializeField] float retractSpeed;
     [SerializeField] bool isAutoRetractEnabled;
 
-    public LevelGrid LevelGrid
+    public RoomGrid LevelGrid
         => rover.LevelGrid;
 
     public bool IsHoldingObject

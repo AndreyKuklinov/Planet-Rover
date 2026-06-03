@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static event Action GameEnded;
 
-    [SerializeField] Level lobbyLevelPrefab;
+    [SerializeField] Room lobbyLevelPrefab;
 
     GameState gameState = GameState.Lobby;
     public LevelSet LevelSet { get; private set; }
@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     public bool IsTimeRunning
         => gameState == GameState.Running && LevelSet != null && LevelSet.IsTimeLimited;
 
-    private Queue<Level> levelQueue;
-    private Level currentLevel;
+    private Queue<Room> levelQueue;
+    private Room currentLevel;
 
     public void StartGame(LevelSet levelSet)
     {
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         gameState = GameState.Running;
         if(levelSet.IsTimeLimited)
             SecondsLeft = levelSet.GameDuration;
-        levelQueue = new Queue<Level>();
+        levelQueue = new Queue<Room>();
         Destroy(currentLevel.gameObject);
         StartNextLevel();
     }
@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Rocket.SampleDelivered += OnSampleDelivered;
-        Level.LevelCompleted += OnLevelCompleted;
-        Level.LevelStarted += OnLevelStarted;
+        Room.LevelCompleted += OnLevelCompleted;
+        Room.LevelStarted += OnLevelStarted;
         LevelSelector.LevelSetSelected += OneLevelSetSelected;
         LoadLobby();
     }
@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         Rocket.SampleDelivered -= OnSampleDelivered;
-        Level.LevelCompleted -= OnLevelCompleted;
-        Level.LevelStarted -= OnLevelStarted;
+        Room.LevelCompleted -= OnLevelCompleted;
+        Room.LevelStarted -= OnLevelStarted;
         LevelSelector.LevelSetSelected -= OneLevelSetSelected;
     }
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         LoadLevel(nextLevel);
     }
 
-    void LoadLevel(Level level)
+    void LoadLevel(Room level)
     {
         if(currentLevel != null)
             Destroy(currentLevel.gameObject);
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
             EndGame(Stars >= LevelSet.StarThresholds.Length);  
     }
 
-    private void OnLevelStarted(Level obj)
+    private void OnLevelStarted(Room obj)
     {
         currentLevel = obj;
     }
@@ -128,13 +128,13 @@ public class GameManager : MonoBehaviour
         AwardStars();
     }
 
-    private Queue<Level> CreateLevelQueue()
+    private Queue<Room> CreateLevelQueue()
     {
         var levels = LevelSet.IsOrderRandom 
             ? LevelSet.Levels.OrderBy(x => UnityEngine.Random.value).ToArray()
             : LevelSet.Levels;
         
-        return new Queue<Level>(levels);
+        return new Queue<Room>(levels);
     }
 
     private void EndGame(bool victory)

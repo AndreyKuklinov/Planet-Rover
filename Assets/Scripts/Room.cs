@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Level : MonoBehaviour
+public class Room : MonoBehaviour
 {
-    public static event Action<Level> LevelStarted;
+    public static event Action<Room> LevelStarted;
     public static event Action LevelCompleted;
     public static event Action<Signal> SignalChanged;
 
     [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
 
-    [SerializeField] LevelGrid grid;
+    [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
 
     readonly HashSet<Rocket> rockets = new();
