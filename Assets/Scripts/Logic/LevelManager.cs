@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     void OnEnable()
     {
         Room.RoomCompleted += OnRoomCompleted;
+        timer.TimeOut += OnTimeOut;
     }
 
     void OnDisable()
@@ -32,7 +33,14 @@ public class LevelManager : MonoBehaviour
         Stars = MAX_STARS;
         CompletedRoomCount = 0;
         levelLoader.SetLevelData(levelData);
+        StartNextRoom();
+    }
+
+    private void StartNextRoom()
+    {
         levelLoader.LoadNextRoom();
+        //if (CurrentLevel.IsTimeLimited)
+        //    timer.StartTime(CurrentRoom)
     }
 
     private void OnRoomCompleted()
@@ -41,6 +49,14 @@ public class LevelManager : MonoBehaviour
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
             levelLoader.LoadNextRoom();
         else
+        {
             LevelCompleted?.Invoke();
+            CurrentLevel = null;
+        }
+    }
+
+    private void OnTimeOut()
+    {
+        throw new NotImplementedException();
     }
 }
