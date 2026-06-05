@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3297792618599156248}
   - component: {fileID: -944232000837223404}
   - component: {fileID: 1496360582888041627}
+  - component: {fileID: 5392389359845395743}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -98,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622f67d975ef79941be5e5fa68145b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 0}
+  <Data>k__BackingField: {fileID: 11400000, guid: 47e373703b46e1544bf856f280cd31f4, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
   emitter: {fileID: 1496360582888041627}
   signal: 0
@@ -114,3 +115,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0edb13e734962af43ac8f746d771c310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5392389359845395743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926348560427703860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc066f250afad94aa5f338ab9e18d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3297792618599156248}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RocketIcons : MonoBehaviour
 {
-    [SerializeField] GridObjectCollector collector;
+    [SerializeField] DeliverableCollector collector;
     [SerializeField] Image iconPrefab;
 
     private List<Image> icons = new();
@@ -26,7 +26,7 @@ public class RocketIcons : MonoBehaviour
         foreach (var sample in collector.RequiredObjects)
         {
             var icon = Instantiate(iconPrefab, transform);
-            icon.sprite = sample.Sprite;
+            icon.sprite = sample.Icon;
             icons.Add(icon);
         }
     }

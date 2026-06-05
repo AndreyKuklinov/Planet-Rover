@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Level Data")]
+[CreateAssetMenu(menuName = "Objects/Level Data")]
 public class LevelData : ScriptableObject
 {
     [field: SerializeField] public bool IsTutorial { get; private set; } = false;

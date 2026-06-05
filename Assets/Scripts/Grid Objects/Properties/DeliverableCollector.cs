@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
-public class GridObjectCollector : MonoBehaviour, IGrabbableReceiver
+public class DeliverableCollector : MonoBehaviour, IGrabbableReceiver
 {
     public event Action RequiredObjectsChanged;
     public event Action AllObjectsCollected;
 
-    [field: SerializeField] public List<GridObjectData> RequiredObjects { get; private set; }
+    [field: SerializeField] public List<DeliverableData> RequiredObjects { get; private set; }
 
     void Start()
     {
@@ -17,15 +17,20 @@ public class GridObjectCollector : MonoBehaviour, IGrabbableReceiver
     }
 
     public bool CanReceive(IGrabbable grabbedObject)
-        => RequiredObjects.Contains(grabbedObject?.GridObject.Data);
+    {
+        return grabbedObject != null
+            && grabbedObject.GridObject.TryGetComponent<Deliverable>(out var deliverable)
+            && RequiredObjects.Contains(deliverable.DeliverableData);
+    }
 
     public IGrabbable Receive(IGrabbable grabbedObject)
     {
-        Destroy(grabbedObject.GridObject.gameObject);
-        RequiredObjects.Remove(grabbedObject.GridObject.Data);
+        var deliverable = grabbedObject.GridObject.GetComponent<Deliverable>();
+        RequiredObjects.Remove(deliverable.DeliverableData);
         RequiredObjectsChanged?.Invoke();
         CheckForCompletion();
 
+        Destroy(grabbedObject.GridObject.gameObject);
         return null;
     }
 

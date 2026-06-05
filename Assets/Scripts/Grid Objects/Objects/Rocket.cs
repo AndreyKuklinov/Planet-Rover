@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Rocket : GridObject
 {
-    [SerializeField] GridObjectCollector gridObjectCollector;
+    [SerializeField] DeliverableCollector gridObjectCollector;
     [SerializeField] Objective objective;
 
     void Start()

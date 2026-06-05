@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2923958814578110793}
   - component: {fileID: 3297792618599156248}
-  - component: {fileID: 9006592477194857855}
   - component: {fileID: 7321424722306189273}
+  - component: {fileID: 9006592477194857855}
+  - component: {fileID: 8198504359305208650}
   m_Layer: 0
   m_Name: Sample B
   m_TagString: Untagged
@@ -86,6 +87,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7321424722306189273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926348560427703860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708cb62677552554faebe3084d85a0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9006592477194857855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridObject: {fileID: 7321424722306189273}
---- !u!114 &7321424722306189273
+--- !u!114 &8198504359305208650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8926348560427703860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708cb62677552554faebe3084d85a0a3, type: 3}
+  m_Script: {fileID: 11500000, guid: cfc027e62b7b6ff469e1a29e8cb5db91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: e50022ad632d69347aac8eb8d0829aff, type: 2}
+  <DeliverableData>k__BackingField: {fileID: 11400000, guid: e50022ad632d69347aac8eb8d0829aff, type: 2}

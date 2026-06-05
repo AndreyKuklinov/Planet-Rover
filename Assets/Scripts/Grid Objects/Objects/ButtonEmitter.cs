@@ -19,14 +19,4 @@ public class ButtonEmitter : GridObject, IGrabbableReceiver
         emitter.Emit(signal);
         return grabbedObject;
     }
-
-    private void OnValidate()
-    {
-        UpdateColor();
-    }
-
-    private void UpdateColor()
-    {
-        spriteRenderer.color = SignalColor.GetColor(signal);
-    }
 }
