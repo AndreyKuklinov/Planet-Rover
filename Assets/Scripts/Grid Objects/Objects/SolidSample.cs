@@ -28,13 +28,13 @@ public class SolidSample : GridObject, IGrabbable
         if (spriteRenderer == null || SampleData == null || SampleData.Sprite == null )
             return;
 
-#if UNITY_EDITOR
-        Undo.RecordObject(spriteRenderer, "Update Sprite from ScriptableObject");
-#endif
+//#if UNITY_EDITOR
+//        Undo.RecordObject(spriteRenderer, "Update Sprite from ScriptableObject");
+//#endif
         spriteRenderer.sprite = SampleData.Sprite;
 
-#if UNITY_EDITOR
-        PrefabUtility.RecordPrefabInstancePropertyModifications(spriteRenderer);
-#endif
+//#if UNITY_EDITOR
+//        PrefabUtility.RecordPrefabInstancePropertyModifications(spriteRenderer);
+//#endif
     }
 }
