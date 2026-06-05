@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IGrabbableReceiver
 {
     public bool CanReceive(IGrabbable grabbedObject);
-    public void Receive(IGrabbable grabbedObject);
+    public IGrabbable Receive(IGrabbable grabbedObject);
 }

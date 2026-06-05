@@ -12,6 +12,8 @@ public class Room : MonoBehaviour
 
     [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
 
+    [SerializeField] ObjectiveEventChannel objectiveCreated;
+    [SerializeField] ObjectiveEventChannel objectiveCompleted;
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
 
@@ -20,11 +22,20 @@ public class Room : MonoBehaviour
 
     void Awake()
     {
-        IObjective.ObjectiveCreated += OnObjectiveCreated;
-        IObjective.ObjectiveCompleted += OnObjectiveCompleted;
+        objectiveCreated.Raised += OnObjectiveCreated;
+        objectiveCompleted.Raised += OnObjectiveCompleted;
         SignalEmitter.EmitterSpawned += OnEmitterSpawned;
         SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
+    }
+
+    void OnDestroy()
+    {
+        objectiveCreated.Raised -= OnObjectiveCreated;
+        objectiveCompleted.Raised -= OnObjectiveCompleted;
+        SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
+        SignalEmitter.SignalEmitted -= OnSignalChanged;
+        SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
     }
 
     void Start()
@@ -40,14 +51,7 @@ public class Room : MonoBehaviour
         grid.AttachAllObjects();
     }
 
-    void OnDestroy()
-    {
-        IObjective.ObjectiveCreated -= OnObjectiveCreated;
-        IObjective.ObjectiveCompleted -= OnObjectiveCompleted;
-        SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
-        SignalEmitter.SignalEmitted -= OnSignalChanged;
-        SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
-    }
+    
 
     private void OnObjectiveCompleted(IObjective obj)
     {

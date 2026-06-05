@@ -277,6 +277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ef46969541a6f4e96bd75f9d4faecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0
-  spriteRenderer: {fileID: 3297792618599156248}
   <RequiredSamples>k__BackingField: []
+  objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
+  objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}

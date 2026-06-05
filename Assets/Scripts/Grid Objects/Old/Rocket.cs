@@ -1,53 +1,65 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
-public class Rocket : LevelObject
+public class Rocket : GridObject, IGrabbableReceiver, IObjective
 {
-    //[field: SerializeField] public List<SampleData> RequiredSamples { get; private set; }
+    [field: SerializeField] public List<SampleData> RequiredSamples { get; private set; }
 
-    //public static event Action<Rocket> RocketCompleted;
-    //public static event Action<Rocket> RocketSpawned;
-    //public static event Action<SampleData> SampleDelivered;
-    //public event Action RequiredObjectsChanged;
+    public bool IsFinal
+        => false;
 
-    //override protected void Start()
-    //{
-    //    RequiredObjectsChanged?.Invoke();
-    //    base.Start();
-    //    RocketSpawned?.Invoke(this);
-    //}
+    public static event Action<SampleData> SampleDelivered;
+    public event Action RequiredObjectsChanged;
 
-    //public override bool CanReceive(LevelObject levelObject)
-    //{
-    //    var sample = levelObject as Sample;
-    //    if (sample == null)
-    //        return false;
-    //    return RequiredSamples.Contains(sample.Data);
-    //}
+    [SerializeField] ObjectiveEventChannel objectiveCompleted;
+    [SerializeField] ObjectiveEventChannel objectiveCreated;
 
-    //public override void Receive(LevelObject levelObject)
-    //{
-    //    var sample = levelObject as Sample;
-    //    if (!CanReceive(sample))
-    //        throw new ArgumentException("Can't drop " + levelObject + " on " + this);
+    void Start()
+    {
+        RequiredObjectsChanged?.Invoke();
+        objectiveCreated.Raise(this);
+    }
 
-    //    Destroy(sample.gameObject);
-    //    RequiredSamples.Remove(sample.Data);
-    //    SampleDelivered?.Invoke(sample.Data);
-    //    RequiredObjectsChanged?.Invoke();
-    //    CheckForCompletion();
-    //}
+    void CheckForCompletion()
+    {
+        if (RequiredSamples.Count > 0)
+            return;
 
-    //void CheckForCompletion()
-    //{
-    //    if (RequiredSamples.Count > 0)
-    //        return;
+        RoomGrid.RemoveObject(this);
+        objectiveCompleted.Raise(this);
 
-    //    LevelGrid.RemoveObject(this);
-    //    RocketCompleted?.Invoke(this);
+        Destroy(gameObject);
+    }
 
-    //    Destroy(gameObject);
-    //}
+    public void CompleteObjective()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool CanReceive(IGrabbable grabbedObject)
+    {
+        var sample = grabbedObject as SolidSample;
+        if (sample == null)
+            return false;
+        return RequiredSamples.Contains(sample.SampleData);
+    }
+
+    public IGrabbable Receive(IGrabbable grabbedObject)
+    {
+        var sample = grabbedObject as SolidSample;
+        if (sample == null)
+            throw new InvalidOperationException(grabbedObject 
+                + " is not a solid sample and can't be dropped on " + this);
+
+        Destroy(sample.gameObject);
+        RequiredSamples.Remove(sample.SampleData);
+        SampleDelivered?.Invoke(sample.SampleData);
+        RequiredObjectsChanged?.Invoke();
+        CheckForCompletion();
+
+        return null;
+    }
 }
