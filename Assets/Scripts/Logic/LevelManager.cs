@@ -56,6 +56,9 @@ public class LevelManager : MonoBehaviour
 
     private void EndRoom()
     {
+        if (CurrentLevel == null)
+            return;
+
         CompletedRoomCount++;
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
             StartNextRoom();
