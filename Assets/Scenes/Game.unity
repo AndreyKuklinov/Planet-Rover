@@ -446,11 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c11220d2c1b55f459bbf931da9c8101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMesh: {fileID: 7753432456235903640}
-  starContainer: {fileID: 2030631655103706756}
-  powerImage: {fileID: 8970953611517074281}
-  ui: {fileID: 7419065835183359315}
-  gm: {fileID: 0}
 --- !u!114 &171792424883780251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,17 +641,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2030631655103706756 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 235090883671874487, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
-  m_PrefabInstance: {fileID: 2264595185020136755}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a5e77775a30ac94aa02b8e3a47ce20f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2264595185020136755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1380,7 +1364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59b38bc83120b438192f2bef55e93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyPrefab: {fileID: 7808436244341271782, guid: 4050702431cb69f45a715f6ac327c9cb, type: 3}
+  lobbyPrefab: {fileID: 7808436244341271782, guid: c30e9e3b781a1d3429418eab57f88ffe, type: 3}
   levelManager: {fileID: 8373723822254126440}
   roomLoader: {fileID: 8373723822254126438}
 --- !u!114 &8373723822254126437

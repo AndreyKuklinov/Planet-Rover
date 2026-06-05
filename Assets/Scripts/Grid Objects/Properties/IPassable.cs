@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IPassable
 {
-    public bool CanHandPassThrough { get; }
+    public bool CanHandPassThrough
+        => true;
 }

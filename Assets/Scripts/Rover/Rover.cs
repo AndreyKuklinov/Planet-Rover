@@ -19,9 +19,6 @@ public class Rover : MonoBehaviour, IPassable
     public bool IsMoving
         => mover.IsMoving;
 
-    public bool CanHandPassThrough =>
-        true;
-
     public void OnPress(Direction direction)
     {
         hands[(int)direction].TryExtend();

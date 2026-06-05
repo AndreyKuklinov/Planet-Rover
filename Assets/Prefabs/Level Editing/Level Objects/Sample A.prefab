@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2923958814578110793}
   - component: {fileID: 3297792618599156248}
-  - component: {fileID: 183116701568318077}
+  - component: {fileID: 6317087835902846897}
   m_Layer: 0
   m_Name: Sample A
   m_TagString: Untagged
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 530406101
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 500427040, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &183116701568318077
+--- !u!114 &6317087835902846897
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,5 +97,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a80a815fdfd93478deced1cf06e8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: cdd25796ed55a0b4fa811936cfca7be6, type: 2}
-  spriteRenderer: {fileID: 3297792618599156248}
