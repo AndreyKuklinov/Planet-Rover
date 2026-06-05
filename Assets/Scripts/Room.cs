@@ -15,13 +15,13 @@ public class Room : MonoBehaviour
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
 
-    readonly HashSet<Rocket> rockets = new();
+    readonly HashSet<IObjective> objectives = new();
     readonly HashSet<SignalEmitter> emitters = new();
 
     void Awake()
     {
-        Rocket.RocketSpawned += OnRocketSpawned;
-        Rocket.RocketCompleted += OnRocketCompleted;
+        IObjective.ObjectiveCreated += OnObjectiveCreated;
+        IObjective.ObjectiveCompleted += OnObjectiveCompleted;
         SignalEmitter.EmitterSpawned += OnEmitterSpawned;
         SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
@@ -42,23 +42,23 @@ public class Room : MonoBehaviour
 
     void OnDestroy()
     {
-        Rocket.RocketCompleted -= OnRocketCompleted;
-        Rocket.RocketSpawned -= OnRocketSpawned;
+        IObjective.ObjectiveCreated -= OnObjectiveCreated;
+        IObjective.ObjectiveCompleted -= OnObjectiveCompleted;
         SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
         SignalEmitter.SignalEmitted -= OnSignalChanged;
         SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
     }
 
-    private void OnRocketCompleted(Rocket obj)
+    private void OnObjectiveCompleted(IObjective obj)
     {
-        rockets.Remove(obj);
-        if (rockets.Count == 0)
+        objectives.Remove(obj);
+        if (objectives.Count == 0 || obj.IsFinal)
             RoomCompleted?.Invoke();
     }
 
-    private void OnRocketSpawned(Rocket obj)
+    private void OnObjectiveCreated(IObjective obj)
     {
-        rockets.Add(obj);
+        objectives.Add(obj);
     }
 
     private void OnSignalChanged(Signal _obj)

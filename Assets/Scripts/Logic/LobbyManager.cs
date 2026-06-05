@@ -15,13 +15,13 @@ public class LobbyManager : MonoBehaviour
 
     void OnEnable()
     {
-        LevelSelector.LevelSetSelected += OnLevelSelected;
+        ILevelSelector.LevelSelected += OnLevelSelected;
         levelManager.LevelCompleted += OnLevelCompleted;
     }
 
     void OnDisable()
     {
-        LevelSelector.LevelSetSelected -= OnLevelSelected;
+        ILevelSelector.LevelSelected -= OnLevelSelected;
         levelManager.LevelCompleted -= OnLevelCompleted;
     }
 

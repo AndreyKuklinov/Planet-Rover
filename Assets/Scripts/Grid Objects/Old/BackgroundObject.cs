@@ -5,6 +5,6 @@ using UnityEngine;
 
 public class BackgroundObject : LevelObject
 {
-    public override bool CanHandGoThrough
-        => true;
+    //public override bool CanHandGoThrough
+    //    => true;
 }

@@ -55,8 +55,8 @@ public class HandRenderer : MonoBehaviour
         });
     }
 
-    void OnHandGrabbedObject(LevelObject obj)
+    void OnHandGrabbedObject(IGrabbable obj)
     {
-        obj.AttachToObject(objectHolder);
+        obj.GridObject.AttachToObject(objectHolder);
     }
 }

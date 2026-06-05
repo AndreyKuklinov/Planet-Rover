@@ -9,27 +9,21 @@ public class RoomGrid : MonoBehaviour
 
     [SerializeField] Grid grid;
 
-    public readonly Map<Vector2Int, LevelObject> Objects = new();
-
-    void Start()
-    {
-        LevelObject.Destroyed += OnLevelObjectDestroyed;
-    }
+    public readonly Map<Vector2Int, GridObject> Objects = new();
 
     public void AttachAllObjects()
     {
-        var levelObjects = GetComponentsInChildren<LevelObject>(true);
-        foreach (var obj in levelObjects)
+        var gridObjects = GetComponentsInChildren<GridObject>(true);
+        foreach (var obj in gridObjects)
         {
             if (!obj.isActiveAndEnabled)
-            {
                 continue;
-            }
             obj.AttachToGrid(this);
+            obj.Destroyed += OnRoomObjectDestroyed;
         }
     }
 
-    public void PlaceObject(LevelObject obj)
+    public void PlaceObject(GridObject obj)
     {
         var cell = WorldToCell(obj.transform.position);
 
@@ -40,7 +34,7 @@ public class RoomGrid : MonoBehaviour
         Objects.Add(obj, cell);
     }
 
-    public void RemoveObject(LevelObject obj)
+    public void RemoveObject(GridObject obj)
     {
         Objects.Remove(obj);
     }
@@ -66,7 +60,7 @@ public class RoomGrid : MonoBehaviour
     public bool IsWithinBounds(Vector2Int cell)
         => Bounds.IsWithinBounds(CellToWorld(cell));
 
-    public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, LevelObject heldObj)
+    public Vector2Int GetStoppingSquare(Vector2Int from, Direction dir, IGrabbable heldObj)
     {
         var prev = from;
         var step = DirectionVector.GetVector2Int(dir);
@@ -75,14 +69,16 @@ public class RoomGrid : MonoBehaviour
         while (IsWithinBounds(point))
         {
             var obj = Objects.GetObject(point);
-            if (obj == null || obj.CanHandGoThrough)
+            if (obj == null 
+                || obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough)
             {
                 prev = point;
                 point += step;
                 continue;
             }
 
-            if (obj.CanBeGrabbed || obj.CanReceive(heldObj))
+            if (obj.TryGetComponent<IGrabbable>(out var grabb) && grabb.CanBeGrabbed 
+                || obj.TryGetComponent<IGrabbableReceived>(out var rec) && rec.CanReceive(heldObj))
             {
                 return point;
             }
@@ -93,7 +89,7 @@ public class RoomGrid : MonoBehaviour
         return prev;
     }
 
-    private void OnLevelObjectDestroyed(LevelObject obj)
+    private void OnRoomObjectDestroyed(GridObject obj)
     {
         if(Objects.Contains(obj))
         {

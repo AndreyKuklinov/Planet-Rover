@@ -4,19 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Rover : MonoBehaviour
+public class Rover : MonoBehaviour, IPassable
 {
     public RoverHand TargetHand { get; private set; }
 
     [SerializeField] RoverHand[] hands;
-    [SerializeField] LevelObject levelObject;
+    [SerializeField] GridObject gridObject;
+    [SerializeField] GridObjectMover mover;
     [SerializeField] bool isRetractionVoluntary;
 
     public RoomGrid LevelGrid
-        => levelObject.LevelGrid;
+        => gridObject.RoomGrid;
 
     public bool IsMoving
-        => levelObject.IsMoving;
+        => mover.IsMoving;
+
+    public bool CanHandPassThrough =>
+        true;
 
     public void OnPress(Direction direction)
     {
@@ -54,6 +58,6 @@ public class Rover : MonoBehaviour
         if (!LevelGrid.IsWithinBounds(cell))
             return;
 
-        levelObject.MoveToPosition(pos);
+        mover.MoveToPosition(pos);
     }   
 }

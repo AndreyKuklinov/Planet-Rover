@@ -7,11 +7,11 @@ using UnityEngine;
 public class RoverHand : MonoBehaviour
 {
     public static event Action<RoverHand, Vector3> SelectedMovementTarget;
-    public event Action<LevelObject> GrabbedObject;
+    public event Action<IGrabbable> GrabbedObject;
 
     [field: SerializeField] public Direction Direction { get; private set; }
 
-    public LevelObject HeldObject { get; private set; }
+    public IGrabbable HeldObject { get; private set; }
     public float CurrentDistance { get; private set; } = 0;
     public HandState HandState { get; private set; }
     public Vector3 LastGrabbedPos { get; private set; }
@@ -54,8 +54,8 @@ public class RoverHand : MonoBehaviour
             return;
 
         var nextCellPos = LevelGrid.CellToWorld(nextCell);
-        HeldObject.transform.position = nextCellPos;
-        HeldObject.AttachToGrid();
+        HeldObject.GridObject.transform.position = nextCellPos;
+        HeldObject.GridObject.AttachToGrid();
         HeldObject = null;
     }
 
@@ -75,22 +75,22 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        if(obj.CanBeGrabbed)
+        if(obj.TryGetComponent<IGrabbable>(out var grab) && grab.CanBeGrabbed)
         {            
-            SwitchOrGrab(obj);
+            SwitchOrGrab(grab);
             return;
         }
 
-        if(obj.CanReceive(HeldObject))
+        if(obj.TryGetComponent<IGrabbableReceived>(out var rec) && rec.CanReceive(HeldObject))
         {
-            PlaceHeldOntoObject(obj);
+            PlaceHeldOntoObject(rec);
             return;
         }
 
         StartRetracting();
     }
 
-    void SwitchOrGrab(LevelObject obj)
+    void SwitchOrGrab(IGrabbable obj)
     {
         if (!obj.CanBeGrabbed)
             throw new ArgumentException("Trying to grab an impossible object: " + obj);
@@ -99,7 +99,7 @@ public class RoverHand : MonoBehaviour
         {
             var prevObject = HeldObject;
             Grab(obj);
-            prevObject.AttachToGrid();
+            prevObject.GridObject.AttachToGrid();
             return;
         }
 
@@ -112,14 +112,14 @@ public class RoverHand : MonoBehaviour
         RetractInstantly();
     }
 
-    void Grab(LevelObject obj)
+    void Grab(IGrabbable obj)
     {
         HeldObject = obj;
         GrabbedObject?.Invoke(obj);
         StartRetracting();
     }
 
-    void PlaceHeldOntoObject(LevelObject obj)
+    void PlaceHeldOntoObject(IGrabbableReceived obj)
     {
         if (!obj.CanReceive(HeldObject))
             throw new ArgumentException("Invalid object to place");
