@@ -7,6 +7,8 @@ public class GridObject : MonoBehaviour
 {
     public event Action<GridObject> Destroyed;
 
+    [field: SerializeField] public GridObjectData Data { get; private set; }
+
     public RoomGrid RoomGrid { get; private set; }
 
     public void AttachToGrid(RoomGrid grid = null)

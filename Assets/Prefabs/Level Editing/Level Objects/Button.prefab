@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622f67d975ef79941be5e5fa68145b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0
+  <Data>k__BackingField: {fileID: 0}
   spriteRenderer: {fileID: 3297792618599156248}
   emitter: {fileID: 1496360582888041627}
   signal: 0

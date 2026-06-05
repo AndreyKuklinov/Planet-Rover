@@ -17,7 +17,7 @@ public class Room : MonoBehaviour
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
 
-    readonly HashSet<IObjective> objectives = new();
+    readonly HashSet<Objective> objectives = new();
     readonly HashSet<SignalEmitter> emitters = new();
 
     void Awake()
@@ -51,16 +51,14 @@ public class Room : MonoBehaviour
         grid.AttachAllObjects();
     }
 
-    
-
-    private void OnObjectiveCompleted(IObjective obj)
+    private void OnObjectiveCompleted(Objective obj)
     {
         objectives.Remove(obj);
-        if (objectives.Count == 0 || obj.IsFinal)
+        if (objectives.Count == 0)
             RoomCompleted?.Invoke();
     }
 
-    private void OnObjectiveCreated(IObjective obj)
+    private void OnObjectiveCreated(Objective obj)
     {
         objectives.Add(obj);
     }

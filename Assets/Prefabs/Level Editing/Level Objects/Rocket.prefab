@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd18ba7034004134396b9bec5801d4f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocket: {fileID: 9022442606716414188}
+  collector: {fileID: 946369956489196448}
   iconPrefab: {fileID: 2102830302927557540, guid: 458e5174b962f884db40dcf33b14945c, type: 3}
 --- !u!1 &6418770776642315459
 GameObject:
@@ -190,6 +190,8 @@ GameObject:
   - component: {fileID: 2923958814578110793}
   - component: {fileID: 3297792618599156248}
   - component: {fileID: 9022442606716414188}
+  - component: {fileID: 946369956489196448}
+  - component: {fileID: 280019297232913305}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -277,6 +279,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ef46969541a6f4e96bd75f9d4faecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <RequiredSamples>k__BackingField: []
+  <Data>k__BackingField: {fileID: 11400000, guid: 3aa02ce51a471654dac56610eeaa6b3b, type: 2}
+  gridObjectCollector: {fileID: 946369956489196448}
+  objective: {fileID: 280019297232913305}
+--- !u!114 &946369956489196448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926348560427703860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d71e59e1ad5c84ea622d2e08556d43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <RequiredObjects>k__BackingField: []
+--- !u!114 &280019297232913305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926348560427703860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb06e8b129b74445aaca3101d97b767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
   objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
