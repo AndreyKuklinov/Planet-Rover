@@ -4,8 +4,7 @@ using UnityEngine;
 
 public interface IGrabbable
 {
-    public bool CanBeGrabbed
-        => true;
+    public bool CanBeGrabbed { get; }
 
     public GridObject GridObject { get; }
 }

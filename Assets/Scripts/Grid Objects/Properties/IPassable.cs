@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHasSignal
+public interface IPassable
 {
-    public Signal Signal { get; }
+    public bool CanHandPassThrough { get; }
 }

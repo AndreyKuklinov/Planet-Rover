@@ -8,7 +8,7 @@ public class Room : MonoBehaviour
 {
     public static event Action<Room> RoomStarted;
     public static event Action RoomCompleted;
-    public static event Action<Signal> SignalChanged;
+    public static event Action<SignalType> SignalChanged;
 
     [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
 
@@ -63,7 +63,7 @@ public class Room : MonoBehaviour
         objectives.Add(obj);
     }
 
-    private void OnSignalChanged(Signal _obj)
+    private void OnSignalChanged(SignalType _obj)
     {
         SignalChanged?.Invoke(_obj);
     }

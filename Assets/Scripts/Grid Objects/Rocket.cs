@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
-public class Rocket : GridObject
+public class Rocket : MonoBehaviour
 {
-    [SerializeField] DeliverableCollector gridObjectCollector;
+    [SerializeField] DeliverableCollector deliverableCollector;
     [SerializeField] Objective objective;
 
     void Start()
     {
-        gridObjectCollector.AllObjectsCollected += OnAllObjectsCollected;
+        deliverableCollector.AllObjectsCollected += OnAllObjectsCollected;
     }
 
     private void OnAllObjectsCollected()

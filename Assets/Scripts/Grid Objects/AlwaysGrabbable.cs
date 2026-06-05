@@ -9,4 +9,7 @@ public class AlwaysGrabbable : MonoBehaviour, IGrabbable
 
     public GridObject GridObject =>
         gridObject;
+
+    public bool CanBeGrabbed =>
+        true;
 }
