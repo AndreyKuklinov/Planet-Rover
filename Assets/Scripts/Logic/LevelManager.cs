@@ -6,12 +6,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public const int MAX_STARS = 3;
-
     public event Action LevelCompleted;
 
     public LevelData CurrentLevel {  get; private set; }
-    public int Stars { get; private set; }
     public int CompletedRoomCount { get; private set; }
 
     [SerializeField] LevelLoader levelLoader;
@@ -19,19 +16,18 @@ public class LevelManager : MonoBehaviour
 
     void OnEnable()
     {
-        Room.RoomCompleted += OnRoomCompleted;
+        Room.RoomCompleted += EndRoom;
         timer.TimeOut += OnTimeOut;
     }
 
     void OnDisable()
     {
-        Room.RoomCompleted -= OnRoomCompleted;
+        Room.RoomCompleted -= EndRoom;
     }
 
     public void StartLevel(LevelData levelData)
     {
         CurrentLevel = levelData;
-        Stars = MAX_STARS;
         CompletedRoomCount = 0;
         levelLoader.SetLevelData(levelData);
         StartNextRoom();
@@ -53,22 +49,12 @@ public class LevelManager : MonoBehaviour
 
     private void EndLevel()
     {
-        UpdateScore();
         LevelCompleted?.Invoke();
         CurrentLevel = null;
         timer.StopTime();
     }
 
-    private void UpdateScore()
-    {
-        var s = CurrentLevel.PrefsString;
-        var score = PlayerPrefs.GetInt(s);
-
-        if (Stars > score)
-            PlayerPrefs.SetInt(s, Stars);
-    }
-
-    private void OnRoomCompleted()
+    private void EndRoom()
     {
         CompletedRoomCount++;
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
@@ -79,14 +65,6 @@ public class LevelManager : MonoBehaviour
 
     private void OnTimeOut()
     {
-        Stars--;
-        Debug.Log(Stars);
-        if(Stars > 0)
-        {
-            StartRoomTimer();
-            return;
-        }
-
-        EndLevel();
+        EndRoom();
     }
 }

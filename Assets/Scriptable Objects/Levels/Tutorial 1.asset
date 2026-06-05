@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tutorial 1
   m_EditorClassIdentifier: 
   <IsTutorial>k__BackingField: 0
-  roomCountToComplete: 1
+  roomCountToComplete: 3
   <GameDuration>k__BackingField: 0
   StarThresholds: 
   <Rooms>k__BackingField:

@@ -9,13 +9,6 @@ public class LevelData : ScriptableObject
     [field: SerializeField] public bool IsTutorial { get; private set; } = false;
     [SerializeField, HideIf("IsTutorial")] private int roomCountToComplete;
 
-
-    // TODO: REMOVE
-    [field: SerializeField, HideInInspector] public int GameDuration { get; private set; } = 30;
-    
-    [field: SerializeField, HideInInspector] public int[] StarThresholds = new int[3];
-
-
     [field: SerializeField] public RoomData[] Rooms { get; private set;  }
 
     public string PrefsString
