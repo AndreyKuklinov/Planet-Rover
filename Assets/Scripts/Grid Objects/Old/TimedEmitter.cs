@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimedEmitter : LevelObject
+public class TimedEmitter
 {
     //const bool RESET_WHEN_OTHER_EMITTER_TRIGGERS = true;
 

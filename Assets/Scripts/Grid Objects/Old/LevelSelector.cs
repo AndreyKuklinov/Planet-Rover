@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSelector : LevelObject
+public class LevelSelector
 {
     //public static event Action<LevelData> LevelSetSelected;
     //[SerializeField] LevelData levelSet;
