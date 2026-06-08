@@ -15,7 +15,7 @@ public class Swapper : MonoBehaviour
                 g => g.Select(m => levelGrid.WorldToCell(m.transform.position)).ToList()
             );
 
-        var levelObjects = FindObjectsOfType<LevelObject>();
+        var levelObjects = FindObjectsOfType<GridObject>();
 
         foreach (var markerGroup in markersByIndex.Values)
         {

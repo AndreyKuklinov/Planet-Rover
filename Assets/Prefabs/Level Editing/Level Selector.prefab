@@ -248,7 +248,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2923958814578110793}
-  - component: {fileID: 8583360353061732143}
   - component: {fileID: 5874102180629400951}
   m_Layer: 0
   m_Name: Level Selector
@@ -273,22 +272,6 @@ Transform:
   - {fileID: 5013787293552960567}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8583360353061732143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8926348560427703860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103b5a0838eed9a40b1de60c46b7eca2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 0
-  spriteRenderer: {fileID: 5874102180629400951}
-  levelSet: {fileID: 0}
-  starContainer: {fileID: 4338160874198590079}
 --- !u!212 &5874102180629400951
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -447,14 +430,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
   m_PrefabInstance: {fileID: 4573136854574643656}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4338160874198590079 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 235090883671874487, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
-  m_PrefabInstance: {fileID: 4573136854574643656}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a5e77775a30ac94aa02b8e3a47ce20f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
