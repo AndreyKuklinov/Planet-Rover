@@ -6,9 +6,13 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public event Action LevelCompleted;
+    public event Action<LevelData> LevelFinished;
+    public event Action LevelStarted;
+    public event Action<Room> RoomFinished;
 
     public LevelData CurrentLevel {  get; private set; }
+    public Room CurrentRoom
+        => levelLoader.CurrentRoom;
     public int CompletedRoomCount { get; private set; }
 
     [SerializeField] LevelLoader levelLoader;
@@ -16,13 +20,14 @@ public class LevelManager : MonoBehaviour
 
     void OnEnable()
     {
-        Room.RoomCompleted += EndRoom;
+        Room.AllObjectivesCompleted += OnAllObjectivesInRoomCompleted;
         timer.TimeOut += OnTimeOut;
     }
 
     void OnDisable()
     {
-        Room.RoomCompleted -= EndRoom;
+        Room.AllObjectivesCompleted -= OnAllObjectivesInRoomCompleted;
+        timer.TimeOut -= OnTimeOut;
     }
 
     public void StartLevel(LevelData levelData)
@@ -30,6 +35,7 @@ public class LevelManager : MonoBehaviour
         CurrentLevel = levelData;
         CompletedRoomCount = 0;
         levelLoader.SetLevelData(levelData);
+        LevelStarted?.Invoke();
         StartNextRoom();
     }
 
@@ -49,7 +55,7 @@ public class LevelManager : MonoBehaviour
 
     private void EndLevel()
     {
-        LevelCompleted?.Invoke();
+        LevelFinished?.Invoke(CurrentLevel);
         CurrentLevel = null;
         timer.StopTime();
     }
@@ -60,6 +66,7 @@ public class LevelManager : MonoBehaviour
             return;
 
         CompletedRoomCount++;
+        RoomFinished?.Invoke(CurrentRoom);
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
             StartNextRoom();
         else
@@ -67,6 +74,11 @@ public class LevelManager : MonoBehaviour
     }
 
     private void OnTimeOut()
+    {
+        EndRoom();
+    }
+
+    private void OnAllObjectivesInRoomCompleted()
     {
         EndRoom();
     }

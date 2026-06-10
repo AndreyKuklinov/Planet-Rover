@@ -17,13 +17,13 @@ public class LobbyManager : MonoBehaviour
     void OnEnable()
     {
         levelSelected.Raised += OnLevelSelected;
-        levelManager.LevelCompleted += OnLevelCompleted;
+        levelManager.LevelFinished += OnLevelCompleted;
     }
 
     void OnDisable()
     {
         levelSelected.Raised -= OnLevelSelected;
-        levelManager.LevelCompleted -= OnLevelCompleted;
+        levelManager.LevelFinished -= OnLevelCompleted;
     }
 
     private void OnLevelSelected(LevelData level)
@@ -31,7 +31,7 @@ public class LobbyManager : MonoBehaviour
         levelManager.StartLevel(level);
     }
 
-    private void OnLevelCompleted()
+    private void OnLevelCompleted(LevelData _)
     {
         roomLoader.LoadRoom(lobbyPrefab);
     }

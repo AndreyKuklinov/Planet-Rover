@@ -1341,6 +1341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7514109260804388948}
   - component: {fileID: 8373723822254126436}
+  - component: {fileID: 8373723822254126441}
   - component: {fileID: 8373723822254126440}
   - component: {fileID: 8373723822254126439}
   - component: {fileID: 8373723822254126438}
@@ -1419,6 +1420,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 8373723822254126439}
   timer: {fileID: 8373723822254126437}
+--- !u!114 &8373723822254126441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8373723822254126435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b28e6ddcf1e6e42bdc8363a04c25d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelManager: {fileID: 8373723822254126440}
 --- !u!224 &8648501041062846986
 RectTransform:
   m_ObjectHideFlags: 0

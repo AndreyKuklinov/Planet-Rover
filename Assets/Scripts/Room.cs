@@ -7,23 +7,20 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public static event Action<Room> RoomStarted;
-    public static event Action RoomCompleted;
+    public static event Action AllObjectivesCompleted;
     public static event Action<SignalType> SignalChanged;
 
     [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
 
-    [SerializeField] ObjectiveEventChannel objectiveCreated;
-    [SerializeField] ObjectiveEventChannel objectiveCompleted;
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
+    [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
 
-    readonly HashSet<Objective> objectives = new();
     readonly HashSet<SignalEmitter> emitters = new();
 
     void Awake()
     {
-        objectiveCreated.Raised += OnObjectiveCreated;
-        objectiveCompleted.Raised += OnObjectiveCompleted;
+        ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesFulfilled;
         SignalEmitter.EmitterSpawned += OnEmitterSpawned;
         SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
@@ -31,8 +28,7 @@ public class Room : MonoBehaviour
 
     void OnDestroy()
     {
-        objectiveCreated.Raised -= OnObjectiveCreated;
-        objectiveCompleted.Raised -= OnObjectiveCompleted;
+        ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesFulfilled;
         SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
         SignalEmitter.SignalEmitted -= OnSignalChanged;
         SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
@@ -40,27 +36,15 @@ public class Room : MonoBehaviour
 
     void Start()
     {
-        InitLevel();
+        InitRoom();
         RoomStarted?.Invoke(this);
     }
 
-    void InitLevel()
+    void InitRoom()
     {
         if(swapper != null)
             swapper.SwapAllObjects();
         grid.AttachAllObjects();
-    }
-
-    private void OnObjectiveCompleted(Objective obj)
-    {
-        objectives.Remove(obj);
-        if (objectives.Count == 0)
-            RoomCompleted?.Invoke();
-    }
-
-    private void OnObjectiveCreated(Objective obj)
-    {
-        objectives.Add(obj);
     }
 
     private void OnSignalChanged(SignalType _obj)
@@ -76,5 +60,10 @@ public class Room : MonoBehaviour
     private void OnEmitterDestroyed(SignalEmitter obj)
     {
         emitters.Remove(obj);
+    }
+
+    private void OnAllObjectivesFulfilled()
+    {
+        AllObjectivesCompleted?.Invoke();
     }
 }

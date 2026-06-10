@@ -11,7 +11,10 @@ public class LevelSelector : MonoBehaviour, IInteractable
 
     void Start()
     {
-        starContainer.SetStars(PlayerPrefs.GetInt(levelData.PrefsString));
+        //starContainer.SetStars(SaveDataManager.GetScore(levelData));
+        
+        // TESTING
+        //Debug.Log(levelData.name + ": " + SaveDataManager.GetScore(levelData));
     }
 
     public bool CanInteractWith(IGrabbable grabbedObject)

@@ -8,6 +8,8 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] RoomLoader roomLoader;
 
     public RoomData CurrentRoomData { get; private set; }
+    public Room CurrentRoom
+        => roomLoader.CurrentRoom;
 
     private LevelData currentLevel;
     private Queue<RoomData> roomQueue;
