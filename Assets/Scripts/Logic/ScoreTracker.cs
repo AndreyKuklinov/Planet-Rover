@@ -21,7 +21,7 @@ public class ScoreTracker : MonoBehaviour
         => accumulatedScore / TotalNumberOfRooms;
 
     public float BestPossibleScore
-        => (accumulatedScore + NumberOfRemainingRooms * 100) / TotalNumberOfRooms;
+        => (accumulatedScore + NumberOfRemainingRooms) / TotalNumberOfRooms;
 
     private float accumulatedScore; 
 
