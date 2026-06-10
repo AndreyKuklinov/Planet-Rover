@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PassableWithSignal : MonoBehaviour, IPassable
+public class SignalDoorController : MonoBehaviour
 {
     [SerializeField] Signal signal;
-    private bool isOpen;
-
-    public bool CanHandPassThrough
-        => isOpen;
+    [SerializeField] Door door;
 
     void Start()
     {
@@ -23,6 +20,6 @@ public class PassableWithSignal : MonoBehaviour, IPassable
 
     private void OnSignalChanged(SignalType signalType)
     {
-        isOpen = signal.SignalType == signalType;
+        door.SetOpen(signalType == signal.SignalType);
     }
 }

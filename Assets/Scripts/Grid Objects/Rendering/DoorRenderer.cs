@@ -7,11 +7,11 @@ public class DoorRenderer : MonoBehaviour
     [SerializeField] Sprite openSprite;
     [SerializeField] Sprite closedSprite;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] PassableWithSignal passable;
+    [SerializeField] Door door;
 
     void Update()
     {
-        var sprite = passable.CanHandPassThrough ? openSprite : closedSprite;
+        var sprite = door.IsOpen ? openSprite : closedSprite;
         spriteRenderer.sprite = sprite;
     }
 }
