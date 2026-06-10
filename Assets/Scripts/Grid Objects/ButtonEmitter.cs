@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonEmitter : MonoBehaviour, IGrabbableReceiver
+public class ButtonEmitter : MonoBehaviour, IInteractable
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SignalEmitter emitter;
     [SerializeField] Signal signal;
 
-    public bool CanReceive(IGrabbable grabbedObject)
+    public bool CanInteractWith(IGrabbable grabbedObject)
     {
         return true;
     }
 
-    public IGrabbable Receive(IGrabbable grabbedObject)
+    public IGrabbable InteractWith(IGrabbable grabbedObject)
     {
         emitter.Emit(signal.SignalType);
         return grabbedObject;

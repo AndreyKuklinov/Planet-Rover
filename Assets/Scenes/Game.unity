@@ -1367,6 +1367,7 @@ MonoBehaviour:
   lobbyPrefab: {fileID: 7808436244341271782, guid: c30e9e3b781a1d3429418eab57f88ffe, type: 3}
   levelManager: {fileID: 8373723822254126440}
   roomLoader: {fileID: 8373723822254126438}
+  levelSelected: {fileID: 11400000, guid: 712d74e65dfea0946ac88aa07aa219b5, type: 2}
 --- !u!114 &8373723822254126437
 MonoBehaviour:
   m_ObjectHideFlags: 0

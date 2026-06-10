@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
-public class DeliverableCollector : MonoBehaviour, IGrabbableReceiver
+public class DeliverableCollector : MonoBehaviour, IInteractable
 {
     public event Action RequiredObjectsChanged;
     public event Action AllObjectsCollected;
@@ -16,14 +16,14 @@ public class DeliverableCollector : MonoBehaviour, IGrabbableReceiver
         RequiredObjectsChanged?.Invoke();
     }
 
-    public bool CanReceive(IGrabbable grabbedObject)
+    public bool CanInteractWith(IGrabbable grabbedObject)
     {
         return grabbedObject != null
             && grabbedObject.GridObject.TryGetComponent<Deliverable>(out var deliverable)
             && RequiredObjects.Contains(deliverable.DeliverableData);
     }
 
-    public IGrabbable Receive(IGrabbable grabbedObject)
+    public IGrabbable InteractWith(IGrabbable grabbedObject)
     {
         var deliverable = grabbedObject.GridObject.GetComponent<Deliverable>();
         RequiredObjects.Remove(deliverable.DeliverableData);

@@ -7,6 +7,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] Room lobbyPrefab;
     [SerializeField] LevelManager levelManager;
     [SerializeField] RoomLoader roomLoader;
+    [SerializeField] LevelDataEventChannel levelSelected;
 
     void Start()
     {
@@ -15,13 +16,13 @@ public class LobbyManager : MonoBehaviour
 
     void OnEnable()
     {
-        ILevelSelector.LevelSelected += OnLevelSelected;
+        levelSelected.Raised += OnLevelSelected;
         levelManager.LevelCompleted += OnLevelCompleted;
     }
 
     void OnDisable()
     {
-        ILevelSelector.LevelSelected -= OnLevelSelected;
+        levelSelected.Raised -= OnLevelSelected;
         levelManager.LevelCompleted -= OnLevelCompleted;
     }
 

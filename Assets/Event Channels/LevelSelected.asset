@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: ExitTriggered
-  m_EditorClassIdentifier: Assembly-CSharp::EventChannel
+  m_Script: {fileID: 11500000, guid: 33ec2fe047d233c4c9f6be6ca1349e69, type: 3}
+  m_Name: LevelSelected
+  m_EditorClassIdentifier: 

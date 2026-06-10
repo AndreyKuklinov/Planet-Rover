@@ -78,7 +78,7 @@ public class RoomGrid : MonoBehaviour
             }
 
             if (obj.TryGetComponent<IGrabbable>(out var grabb) && grabb.CanBeGrabbed 
-                || obj.TryGetComponent<IGrabbableReceiver>(out var rec) && rec.CanReceive(heldObj))
+                || obj.TryGetComponent<IInteractable>(out var rec) && rec.CanInteractWith(heldObj))
             {
                 return point;
             }

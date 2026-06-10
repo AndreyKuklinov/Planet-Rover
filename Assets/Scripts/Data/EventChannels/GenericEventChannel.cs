@@ -13,14 +13,3 @@ public class EventChannel<T> : ScriptableObject
     }
 }
 
-[CreateAssetMenu(menuName = "Events/Void Event Channel")]
-public class EventChannel : ScriptableObject
-{
-    public event Action Raised;
-
-    public void Raise()
-    {
-        Raised?.Invoke();
-    }
-}
-

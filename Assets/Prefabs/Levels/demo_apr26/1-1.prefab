@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TimeBoostMultiplier>k__BackingField: 1
+  objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
+  objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
   grid: {fileID: 5550544186627569082}
   swapper: {fileID: 2079262171390978103}
 --- !u!114 &2079262171390978103

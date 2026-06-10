@@ -81,7 +81,7 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        if(obj.TryGetComponent<IGrabbableReceiver>(out var rec) && rec.CanReceive(HeldObject))
+        if(obj.TryGetComponent<IInteractable>(out var rec) && rec.CanInteractWith(HeldObject))
         {
             PlaceHeldOntoObject(rec);
             return;
@@ -119,12 +119,12 @@ public class RoverHand : MonoBehaviour
         StartRetracting();
     }
 
-    void PlaceHeldOntoObject(IGrabbableReceiver obj)
+    void PlaceHeldOntoObject(IInteractable obj)
     {
-        if (!obj.CanReceive(HeldObject))
+        if (!obj.CanInteractWith(HeldObject))
             throw new ArgumentException("Invalid object to place");
 
-        HeldObject = obj.Receive(HeldObject);
+        HeldObject = obj.InteractWith(HeldObject);
         StartRetracting();
     }
 

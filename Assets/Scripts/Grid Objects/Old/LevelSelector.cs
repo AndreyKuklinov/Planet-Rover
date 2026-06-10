@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSelector
+public class LevelSelector : MonoBehaviour, IInteractable
 {
-    //public static event Action<LevelData> LevelSetSelected;
-    //[SerializeField] LevelData levelSet;
-    //[SerializeField] StarContainer starContainer;
+    [SerializeField] LevelData levelData;
+    [SerializeField] StarContainer starContainer;
+    [SerializeField] LevelDataEventChannel levelSelected;
 
-    //protected override void Start()
-    //{
-    //    starContainer.SetStars(PlayerPrefs.GetInt(levelSet.PrefsString));
-    //    base.Start();
-    //}
+    void Start()
+    {
+        starContainer.SetStars(PlayerPrefs.GetInt(levelData.PrefsString));
+    }
 
-    //public override bool CanReceive(LevelObject levelObject)
-    //{
-    //    return true;
-    //}
+    public bool CanInteractWith(IGrabbable grabbedObject)
+    {
+        return true;
+    }
 
-    //public override void Receive(LevelObject levelObject)
-    //{
-    //    LevelSetSelected?.Invoke(levelSet);
-    //}
+    public IGrabbable InteractWith(IGrabbable grabbedObject)
+    {
+        levelSelected.Raise(levelData);
+        return grabbedObject;
+    }
 }
