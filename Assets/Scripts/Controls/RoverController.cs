@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameController : MonoBehaviour
+public class RoverController : MonoBehaviour
 {
     [SerializeField] bool isTestingModeOn = false;
     [SerializeField] PartyInputManager partyManager;

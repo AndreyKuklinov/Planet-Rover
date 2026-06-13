@@ -36,7 +36,7 @@ public class ScoreUI : MonoBehaviour
 
     void UpdateStars()
     {
-        var score = scoreTracker.FinalScore;
+        var score = scoreTracker.BestPossibleScore;
         var stars = StarCalculator.GetNumberOfStars(score);
         starContainer.SetStars(stars);
     }

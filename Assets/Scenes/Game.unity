@@ -1363,8 +1363,9 @@ GameObject:
   - component: {fileID: 8373723822254126440}
   - component: {fileID: 8373723822254126439}
   - component: {fileID: 8373723822254126438}
-  - component: {fileID: 8373723822254126437}
   - component: {fileID: 8373723822254126442}
+  - component: {fileID: 8373723822254126443}
+  - component: {fileID: 8373723822254126437}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1439,7 +1440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 8373723822254126439}
   <ObjectiveTracker>k__BackingField: {fileID: 8373723822254126442}
-  timer: {fileID: 8373723822254126437}
+  roomTimer: {fileID: 8373723822254126443}
 --- !u!114 &8373723822254126441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1467,6 +1468,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
   objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
+--- !u!114 &8373723822254126443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8373723822254126435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9036d008b33e9942a844b1dfe34b6c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: {fileID: 8373723822254126437}
 --- !u!224 &8648501041062846986
 RectTransform:
   m_ObjectHideFlags: 0

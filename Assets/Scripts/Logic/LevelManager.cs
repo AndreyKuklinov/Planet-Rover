@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] LevelLoader levelLoader;
     [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
-    [SerializeField] Timer timer;
+    [SerializeField] RoomTimer roomTimer;
 
     public bool IsLevelRunning
         => CurrentLevel != null;
@@ -23,13 +23,13 @@ public class LevelManager : MonoBehaviour
     void OnEnable()
     {
         ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesInRoomCompleted;
-        timer.TimeOut += OnTimeOut;
+        roomTimer.TimeOut += OnTimeOut;
     }
 
     void OnDisable()
     {
         ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesInRoomCompleted;
-        timer.TimeOut -= OnTimeOut;
+        roomTimer.TimeOut -= OnTimeOut;
     }
 
     public void StartLevel(LevelData levelData)
@@ -53,14 +53,18 @@ public class LevelManager : MonoBehaviour
         if (!CurrentLevel.IsTimeLimited)
             return;
 
-        timer.StartTime(levelLoader.CurrentRoomData.BaseTimeLimit);
+        roomTimer.StartRoomTime(
+            CompletedRoomCount, 
+            CurrentLevel.RoomCountToComplete, 
+            levelLoader.CurrentRoomData.BaseTimeLimit
+        );
     }
 
     private void EndLevel()
     {
         LevelFinished?.Invoke(CurrentLevel);
         CurrentLevel = null;
-        timer.StopTime();
+        roomTimer.StopTime();
     }
 
     private void EndRoom()
