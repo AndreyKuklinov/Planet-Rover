@@ -16,7 +16,7 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] Timer roomTimer;
 
     bool IsVisible
-        => levelManager.IsLevelRunning;
+        => levelManager.IsLevelRunning && !levelManager.CurrentLevel.IsTutorial;
 
     void Update()
     {

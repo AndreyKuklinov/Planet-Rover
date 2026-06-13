@@ -24,7 +24,7 @@ public class ObjectiveTracker : MonoBehaviour
         objectiveCreated.Raised += OnObjectiveCreated;
         objectiveCompleted.Raised += OnObjectiveCompleted;
         roomLoader.LoadedRoom += OnRoomloaded;
-        DebugObjectives();
+        //DebugObjectives();
     }
 
     private void OnDestroy()

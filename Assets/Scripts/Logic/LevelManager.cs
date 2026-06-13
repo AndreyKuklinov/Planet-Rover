@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
 
     private void StartNextRoom()
     {
-        Debug.Log("Started next room");
+        //Debug.Log("Started next room");
         levelLoader.LoadNextRoom();
         StartRoomTimer();
     }
