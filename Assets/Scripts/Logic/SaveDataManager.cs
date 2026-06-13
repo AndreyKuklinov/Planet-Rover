@@ -18,6 +18,11 @@ public static class SaveDataManager
         return PlayerPrefs.GetFloat(GetLevelScoreString(levelData));
     }
 
+    public static void DeleteAllSaveData()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     private static string GetLevelScoreString(LevelData levelData)
     {
         return levelData.name + "_stars";

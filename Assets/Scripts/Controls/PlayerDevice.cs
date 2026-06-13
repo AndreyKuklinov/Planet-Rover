@@ -57,16 +57,22 @@ public class PlayerDevice : MonoBehaviour
 
     public void OnQuit(InputAction.CallbackContext ctx)
     {
+        if (!ctx.performed)
+            return;
         quitTriggered.Raise();
     }
 
     public void OnRestart(InputAction.CallbackContext ctx)
     {
+        if (!ctx.performed)
+            return;
         restartTriggered.Raise();
     }
 
     public void OnDelete(InputAction.CallbackContext ctx)
     {
+        if (!ctx.performed)
+            return;
         deleteSaveDataTriggered.Raise();
     }
 

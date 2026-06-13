@@ -9,6 +9,7 @@ public class LogicController : MonoBehaviour
     [SerializeField] VoidEventChannel quitTriggered;
     [SerializeField] VoidEventChannel restartTriggered;
     [SerializeField] VoidEventChannel deleteSaveDataTriggered;
+    [SerializeField] LevelManager levelManager;
 
     void Awake()
     {
@@ -19,7 +20,8 @@ public class LogicController : MonoBehaviour
 
     private void OnDeleteTriggered()
     {
-        Debug.Log("Save data deleted");
+        Debug.Log("Deleted all save data");
+        SaveDataManager.DeleteAllSaveData();
     }
 
     private void OnRestartTriggered()
@@ -29,6 +31,14 @@ public class LogicController : MonoBehaviour
 
     private void OnQuitTriggered()
     {
-        Debug.Log("Quitting");
+        if(levelManager.IsLevelRunning)
+        {
+            Debug.Log("Quit level");
+            levelManager.StopCurrentLevel();
+            return;
+        }
+
+        Debug.Log("Quitting game");
+        Application.Quit();
     }
 }

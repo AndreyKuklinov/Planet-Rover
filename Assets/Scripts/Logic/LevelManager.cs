@@ -41,6 +41,14 @@ public class LevelManager : MonoBehaviour
         StartNextRoom();
     }
 
+    public void StopCurrentLevel()
+    {
+        if (!IsLevelRunning)
+            throw new InvalidOperationException("Trying to stop the level, when no level is active");
+
+        EndLevel();
+    }
+
     private void StartNextRoom()
     {
         levelLoader.LoadNextRoom();
