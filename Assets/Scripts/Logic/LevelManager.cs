@@ -49,10 +49,15 @@ public class LevelManager : MonoBehaviour
         EndLevel();
     }
 
+    public void RestartLevel()
+    {
+        StartLevel(CurrentLevel);
+    }
+
     private void StartNextRoom()
     {
+        Debug.Log("Started next room");
         levelLoader.LoadNextRoom();
-        ObjectiveTracker.ClearObjectives();
         StartRoomTimer();
     }
 

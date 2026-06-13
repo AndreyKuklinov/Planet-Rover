@@ -1472,6 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
   objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
+  roomLoader: {fileID: 8373723822254126438}
 --- !u!114 &8373723822254126443
 MonoBehaviour:
   m_ObjectHideFlags: 0

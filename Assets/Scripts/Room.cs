@@ -9,8 +9,6 @@ public class Room : MonoBehaviour
     public static event Action<Room> RoomStarted;
     public static event Action<SignalType> SignalChanged;
 
-    [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
-
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
 

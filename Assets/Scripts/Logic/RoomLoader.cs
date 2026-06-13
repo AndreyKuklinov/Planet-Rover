@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class RoomLoader : MonoBehaviour
 {
+    public event Action LoadedRoom;
+
     public Room CurrentRoom { get; private set; }
 
     public void LoadRoom(Room room)
@@ -15,5 +17,6 @@ public class RoomLoader : MonoBehaviour
             Destroy(CurrentRoom.gameObject);
 
         CurrentRoom = Instantiate(room, transform);
+        LoadedRoom?.Invoke();
     }
 }

@@ -195,7 +195,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9077937005382707400}
   - component: {fileID: 7808436244341271782}
-  - component: {fileID: 8315016462899851032}
   - component: {fileID: 1485926958746475265}
   - component: {fileID: 4540148692922112564}
   - component: {fileID: 1834403923448895002}
@@ -237,23 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec0ceb0f04adcd44b63024c29cadb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TimeBoostMultiplier>k__BackingField: 2
   grid: {fileID: 4540148692922112564}
   swapper: {fileID: 1485926958746475265}
---- !u!114 &8315016462899851032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7377244487854333734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b5475075480e2438e1b23ab7dd52f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
-  objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
 --- !u!114 &1485926958746475265
 MonoBehaviour:
   m_ObjectHideFlags: 0

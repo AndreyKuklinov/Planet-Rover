@@ -9,17 +9,22 @@ public class ObjectiveTracker : MonoBehaviour
 
     [SerializeField] ObjectiveEventChannel objectiveCreated;
     [SerializeField] ObjectiveEventChannel objectiveCompleted;
+    [SerializeField] RoomLoader roomLoader;
 
     public HashSet<Objective> AllObjectives { get; private set; } = new HashSet<Objective>();
     public HashSet<Objective> FulfilledObjectives { get; private set; } = new HashSet<Objective>();
 
     public float FulfilledProportion
-        => (float)(FulfilledObjectives.Count) / AllObjectives.Count;
+        => AllObjectives.Count == 0 
+            ? 1f
+            : (float)(FulfilledObjectives.Count) / AllObjectives.Count;
 
     void Awake()
     {
         objectiveCreated.Raised += OnObjectiveCreated;
         objectiveCompleted.Raised += OnObjectiveCompleted;
+        roomLoader.LoadedRoom += OnRoomloaded;
+        DebugObjectives();
     }
 
     private void OnDestroy()
@@ -32,11 +37,15 @@ public class ObjectiveTracker : MonoBehaviour
     {
         AllObjectives.Clear();
         FulfilledObjectives.Clear();
+        //Debug.Log("Objectives cleared");
+        //DebugObjectives();
     }
 
     private void OnObjectiveCreated(Objective objective)
     {
         AllObjectives.Add(objective);
+
+        //DebugObjectives();
     }
 
     private void OnObjectiveCompleted(Objective objective)
@@ -47,5 +56,17 @@ public class ObjectiveTracker : MonoBehaviour
         FulfilledObjectives.Add(objective);
         if (FulfilledObjectives.Count == AllObjectives.Count)
             AllObjectivesWereFulfilled?.Invoke();
+
+        //DebugObjectives();
+    }
+
+    private void DebugObjectives()
+    {
+        Debug.Log(FulfilledObjectives.Count + "/" + AllObjectives.Count);
+    }
+
+    private void OnRoomloaded()
+    {
+        ClearObjectives();
     }
 }

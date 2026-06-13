@@ -26,7 +26,11 @@ public class LogicController : MonoBehaviour
 
     private void OnRestartTriggered()
     {
-        Debug.Log("Level restarted");
+        if (!levelManager.IsLevelRunning)
+            return;
+
+        levelManager.RestartLevel();
+        Debug.Log("Restarted level");
     }
 
     private void OnQuitTriggered()
