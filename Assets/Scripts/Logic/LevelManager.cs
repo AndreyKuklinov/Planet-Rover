@@ -8,25 +8,27 @@ public class LevelManager : MonoBehaviour
 {
     public event Action<LevelData> LevelFinished;
     public event Action LevelStarted;
-    public event Action<Room> RoomFinished;
+    public event Action RoomFinished;
 
     public LevelData CurrentLevel {  get; private set; }
-    public Room CurrentRoom
-        => levelLoader.CurrentRoom;
     public int CompletedRoomCount { get; private set; }
 
     [SerializeField] LevelLoader levelLoader;
+    [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
     [SerializeField] Timer timer;
+
+    public bool IsLevelRunning
+        => CurrentLevel != null;
 
     void OnEnable()
     {
-        Room.AllObjectivesCompleted += OnAllObjectivesInRoomCompleted;
+        ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesInRoomCompleted;
         timer.TimeOut += OnTimeOut;
     }
 
     void OnDisable()
     {
-        Room.AllObjectivesCompleted -= OnAllObjectivesInRoomCompleted;
+        ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesInRoomCompleted;
         timer.TimeOut -= OnTimeOut;
     }
 
@@ -42,6 +44,7 @@ public class LevelManager : MonoBehaviour
     private void StartNextRoom()
     {
         levelLoader.LoadNextRoom();
+        ObjectiveTracker.ClearObjectives();
         StartRoomTimer();
     }
 
@@ -66,7 +69,7 @@ public class LevelManager : MonoBehaviour
             return;
 
         CompletedRoomCount++;
-        RoomFinished?.Invoke(CurrentRoom);
+        RoomFinished?.Invoke();
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
             StartNextRoom();
         else

@@ -240,7 +240,6 @@ MonoBehaviour:
   <TimeBoostMultiplier>k__BackingField: 2
   grid: {fileID: 4540148692922112564}
   swapper: {fileID: 1485926958746475265}
-  <ObjectiveTracker>k__BackingField: {fileID: 8315016462899851032}
 --- !u!114 &8315016462899851032
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,63 +1,49 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.Text;
-//using TMPro;
-//using UnityEngine;
-//using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-//public class ScoreUI : MonoBehaviour
-//{
-//    [SerializeField] TextMeshProUGUI textMesh;
-//    [SerializeField] StarContainer starContainer;
-//    [SerializeField] Image powerImage;
-//    [SerializeField] Transform ui;
-//    [SerializeField] GameManager gm;
+public class ScoreUI : MonoBehaviour
+{
+    [SerializeField] TextMeshProUGUI textMesh;
+    [SerializeField] StarContainer starContainer;
+    [SerializeField] Image powerImage;
+    [SerializeField] Transform ui;
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] ScoreTracker scoreTracker;
+    [SerializeField] Timer roomTimer;
 
-//    bool isVisible
-//        => gm.IsTimeRunning || gm.IsGameOver;
+    bool IsVisible
+        => levelManager.IsLevelRunning;
 
-//    void Update()
-//    {
-//        ui.gameObject.SetActive(isVisible);
-//        if (!isVisible)
-//            return;
+    void Update()
+    {
+        ui.gameObject.SetActive(IsVisible);
+        if (!IsVisible)
+            return;
 
-//        textMesh.text = GetScoreText();
-//        UpdateStars();
-//        UpdatePower();
-//    }
+        textMesh.text = GetScoreText();
+        UpdateStars();
+        UpdatePower();
+    }
 
-//    string GetScoreText()
-//    {
-//        return gm.Score.ToString() + GetTargetScore();
-//    }
+    string GetScoreText()
+    {
+        return (scoreTracker.NumberOfCompletedRooms+1) + "/" + scoreTracker.TotalNumberOfRooms;
+    }
 
-//    void UpdateStars()
-//    {
-//        starContainer.SetStars(gm.Stars);
-//    }
+    void UpdateStars()
+    {
+        var score = scoreTracker.FinalScore;
+        var stars = StarCalculator.GetNumberOfStars(score);
+        starContainer.SetStars(stars);
+    }
 
-//    void UpdatePower()
-//    {
-//        var value = gm.SecondsLeft / gm.LevelSet.GameDuration;
-//        powerImage.fillAmount = Mathf.Clamp(value, 0, 1);
-//    }
-
-//    string GetTargetScore()
-//    {
-//        int? target = null;
-//        foreach(var star in gm.LevelSet.StarThresholds)
-//        {
-//            if(gm.Score < star)
-//            {
-//                target = star;
-//                break;
-//            }
-//        }
-
-//        if(target == null)
-//            return "";
-
-//        return "/" + target.Value;
-//    }
-//}
+    void UpdatePower()
+    {
+        var value = roomTimer.TimeRemaining / roomTimer.Duration;
+        powerImage.fillAmount = Mathf.Clamp(value, 0, 1);
+    }
+}

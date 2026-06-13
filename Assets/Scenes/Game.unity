@@ -441,11 +441,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973263240}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c11220d2c1b55f459bbf931da9c8101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textMesh: {fileID: 7753432456235903640}
+  starContainer: {fileID: 2492042602823806333}
+  powerImage: {fileID: 8970953611517074281}
+  ui: {fileID: 7419065835183359315}
+  levelManager: {fileID: 8373723822254126440}
+  scoreTracker: {fileID: 8373723822254126441}
+  roomTimer: {fileID: 8373723822254126437}
 --- !u!114 &171792424883780251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,9 +497,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6027012368114631418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 8.866798, y: -14.57555}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3.4883, y: 28.964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &526839383509058002
@@ -554,9 +561,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6027012368114631418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 31.5634, y: -14.57555}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3.4883, y: 28.964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1589523015255180804
@@ -743,6 +750,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
   m_PrefabInstance: {fileID: 2264595185020136755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2492042602823806333 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 235090883671874487, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
+  m_PrefabInstance: {fileID: 2264595185020136755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5e77775a30ac94aa02b8e3a47ce20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2569536869444444444
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,9 +880,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6027012368114631418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 42.911697, y: -14.57555}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3.4883, y: 28.964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3770193777391714565
@@ -890,7 +908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &4756595665820805986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,6 +1364,7 @@ GameObject:
   - component: {fileID: 8373723822254126439}
   - component: {fileID: 8373723822254126438}
   - component: {fileID: 8373723822254126437}
+  - component: {fileID: 8373723822254126442}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1419,6 +1438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 8373723822254126439}
+  <ObjectiveTracker>k__BackingField: {fileID: 8373723822254126442}
   timer: {fileID: 8373723822254126437}
 --- !u!114 &8373723822254126441
 MonoBehaviour:
@@ -1433,6 +1453,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 8373723822254126440}
+--- !u!114 &8373723822254126442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8373723822254126435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45b5475075480e2438e1b23ab7dd52f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
+  objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
 --- !u!224 &8648501041062846986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1499,9 +1533,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6027012368114631418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20.2151, y: -14.57555}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3.4883, y: 28.964}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807

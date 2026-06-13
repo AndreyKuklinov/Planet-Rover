@@ -11,10 +11,7 @@ public class LevelSelector : MonoBehaviour, IInteractable
 
     void Start()
     {
-        //starContainer.SetStars(SaveDataManager.GetScore(levelData));
-        
-        // TESTING
-        //Debug.Log(levelData.name + ": " + SaveDataManager.GetScore(levelData));
+        DisplayStars();
     }
 
     public bool CanInteractWith(IGrabbable grabbedObject)
@@ -26,5 +23,12 @@ public class LevelSelector : MonoBehaviour, IInteractable
     {
         levelSelected.Raise(levelData);
         return grabbedObject;
+    }
+
+    private void DisplayStars()
+    {
+        var score = SaveDataManager.GetScore(levelData);
+        var stars = StarCalculator.GetNumberOfStars(score);
+        starContainer.SetStars(stars);
     }
 }

@@ -54,8 +54,17 @@ public class PlayerDevice : MonoBehaviour
 
     public void OnQuit()
     {
-        Debug.Log("Quitting...");
-        Application.Quit();
+
+    }
+
+    public void OnRestart()
+    {
+
+    }
+
+    public void OnDeleteSaveData()
+    {
+
     }
 
     void HandleDirection(InputAction.CallbackContext ctx, Direction direction)

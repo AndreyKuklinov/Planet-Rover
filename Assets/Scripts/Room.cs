@@ -7,20 +7,17 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public static event Action<Room> RoomStarted;
-    public static event Action AllObjectivesCompleted;
     public static event Action<SignalType> SignalChanged;
 
     [field: SerializeField] public int TimeBoostMultiplier { get; private set; } = 2;
 
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
-    [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
 
     readonly HashSet<SignalEmitter> emitters = new();
 
     void Awake()
     {
-        ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesFulfilled;
         SignalEmitter.EmitterSpawned += OnEmitterSpawned;
         SignalEmitter.SignalEmitted += OnSignalChanged;
         SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
@@ -28,7 +25,6 @@ public class Room : MonoBehaviour
 
     void OnDestroy()
     {
-        ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesFulfilled;
         SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
         SignalEmitter.SignalEmitted -= OnSignalChanged;
         SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
@@ -60,10 +56,5 @@ public class Room : MonoBehaviour
     private void OnEmitterDestroyed(SignalEmitter obj)
     {
         emitters.Remove(obj);
-    }
-
-    private void OnAllObjectivesFulfilled()
-    {
-        AllObjectivesCompleted?.Invoke();
     }
 }

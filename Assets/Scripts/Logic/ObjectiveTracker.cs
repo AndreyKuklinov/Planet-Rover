@@ -22,15 +22,21 @@ public class ObjectiveTracker : MonoBehaviour
         objectiveCompleted.Raised += OnObjectiveCompleted;
     }
 
-    private void OnObjectiveCreated(Objective objective)
-    {
-        AllObjectives.Add(objective);
-    }
-
     private void OnDestroy()
     {
         objectiveCreated.Raised -= OnObjectiveCreated;
         objectiveCompleted.Raised -= OnObjectiveCompleted;
+    }
+
+    public void ClearObjectives()
+    {
+        AllObjectives.Clear();
+        FulfilledObjectives.Clear();
+    }
+
+    private void OnObjectiveCreated(Objective objective)
+    {
+        AllObjectives.Add(objective);
     }
 
     private void OnObjectiveCompleted(Objective objective)

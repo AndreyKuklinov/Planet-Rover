@@ -44,9 +44,9 @@ public class ScoreTracker : MonoBehaviour
         accumulatedScore = 0;
     }
 
-    private void OnRoomFinished(Room room)
+    private void OnRoomFinished()
     {
-        var proportion = room.ObjectiveTracker.FulfilledProportion;
+        var proportion = levelManager.ObjectiveTracker.FulfilledProportion;
         accumulatedScore += proportion;
     }
 
