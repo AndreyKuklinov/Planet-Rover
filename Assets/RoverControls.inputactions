@@ -2,7 +2,7 @@
     "name": "RoverControls",
     "maps": [
         {
-            "name": "Hands",
+            "name": "Rover",
             "id": "b0bfc33a-4b85-4bde-bb18-5f90f108bb59",
             "actions": [
                 {
@@ -13,6 +13,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "68c1d97b-258a-481e-ac35-83f409e06532",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "e2d124c9-0572-4f96-9940-5617356f7ccc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Quit",
+                    "type": "Button",
+                    "id": "4e51e763-a6e9-476c-be5d-1eda5ce92d4a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Down",
@@ -392,45 +419,10 @@
                     "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Extra",
-            "id": "c6a95f93-2549-427f-8f0c-3f82d92d8845",
-            "actions": [
-                {
-                    "name": "Quit",
-                    "type": "Button",
-                    "id": "107d8fc3-480c-4bea-8076-140480ddbe36",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
-                {
-                    "name": "Restart",
-                    "type": "Button",
-                    "id": "8a31fa41-9b04-4127-a354-b5021ccaf8eb",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Delete",
-                    "type": "Button",
-                    "id": "ed4104fa-5b96-48d9-8a80-e6d0c37721a1",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
                 {
                     "name": "",
-                    "id": "d0d9001a-b6e0-45d2-8f25-63879397fe0c",
+                    "id": "aec248aa-27e6-475b-8dc9-09e779d9a0f8",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
@@ -441,22 +433,22 @@
                 },
                 {
                     "name": "",
-                    "id": "645cd488-e085-426e-8c85-f49cc33ce91b",
+                    "id": "79e05a23-0765-45e6-9113-aa4b63f9e147",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Restart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "2c84f5cd-4c2c-446e-925b-0ab8aa02540d",
+                    "id": "eda6d645-2744-4f28-920d-048da408ab42",
                     "path": "<Keyboard>/delete",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false

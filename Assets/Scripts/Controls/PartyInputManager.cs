@@ -70,7 +70,11 @@ public class PartyInputManager : MonoBehaviour
         ConfigurePlayers();
         device.DirectionTriggered += OnDirectionTriggered;
         device.DropTriggered += OnDropTriggered;
-        device.DeviceLost += OnDeviceLost;
+    }
+
+    private void OnQuitTriggered()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnDeviceLost(PlayerDevice player)

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 321668386510180103}
   - component: {fileID: 5193713711339032704}
   - component: {fileID: 3231085089424757697}
+  - component: {fileID: 6930178009783789600}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -103,6 +104,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTestingModeOn: 0
-  rover: {fileID: 0}
   partyManager: {fileID: 5193713711339032704}
-  gameManager: {fileID: 0}
+  rover: {fileID: 0}
+--- !u!114 &6930178009783789600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2455338429468300830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67fe2bd567f6ac4fa5ff196c55f0b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quitTriggered: {fileID: 11400000, guid: b32dfe8ed1a140d4c97b11c23ddebaab, type: 2}
+  restartTriggered: {fileID: 11400000, guid: 831b4b346fc4c234097cdc9971851c56, type: 2}
+  deleteSaveDataTriggered: {fileID: 11400000, guid: b7659ab15931fc84eb02a5df08d4bed3, type: 2}

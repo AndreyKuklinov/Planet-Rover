@@ -21,6 +21,9 @@ public class PlayerDevice : MonoBehaviour
     public HashSet<Direction> AllowedDirections;
 
     [SerializeField] PlayerInput playerInput;
+    [SerializeField] VoidEventChannel quitTriggered;
+    [SerializeField] VoidEventChannel restartTriggered;
+    [SerializeField] VoidEventChannel deleteSaveDataTriggered;
 
     public void OnUp(InputAction.CallbackContext ctx)
     {
@@ -52,19 +55,19 @@ public class PlayerDevice : MonoBehaviour
         DeviceLost?.Invoke(this);
     }
 
-    public void OnQuit()
+    public void OnQuit(InputAction.CallbackContext ctx)
     {
-
+        quitTriggered.Raise();
     }
 
-    public void OnRestart()
+    public void OnRestart(InputAction.CallbackContext ctx)
     {
-
+        restartTriggered.Raise();
     }
 
-    public void OnDeleteSaveData()
+    public void OnDelete(InputAction.CallbackContext ctx)
     {
-
+        deleteSaveDataTriggered.Raise();
     }
 
     void HandleDirection(InputAction.CallbackContext ctx, Direction direction)
