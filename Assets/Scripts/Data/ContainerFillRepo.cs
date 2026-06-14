@@ -14,7 +14,7 @@ public class ContainerFillRepo : ScriptableObject
     {
         foreach (var recipe in recipes)
         {
-            if (recipe.Container == container && recipe.Container == container)
+            if (recipe.Container == container && recipe.Content == content)
                 return recipe.Result;
         }
 
