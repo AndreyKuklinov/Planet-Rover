@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ItemContainerData : ScriptableObject
+[CreateAssetMenu(menuName = "Objects/Item Container Data")]
+public class ItemContainerData : ScriptableObject
 {
-    public Sprite Sprite { get; }
+    [field: SerializeField] public Sprite EmptySprite { get; private set; }
 }
