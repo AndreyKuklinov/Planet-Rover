@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class RoomGrid : MonoBehaviour
@@ -64,23 +65,26 @@ public class RoomGrid : MonoBehaviour
     {
         var prev = from;
         var step = DirectionVector.GetVector2Int(dir);
-        var point = from;
+        var point = from + step;
 
         while (IsWithinBounds(point))
         {
             var obj = Objects.GetObject(point);
-            if (obj == null 
-                || obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough)
+
+            if (obj != null && (
+                (obj.TryGetComponent<IGrabbable>(out var grabb) && grabb.CanBeGrabbed) ||
+                (obj.TryGetComponent<IInteractable>(out var rec) && rec.CanInteractWith(heldObj))
+               ))
+            {
+                //Debug.Log("Stopped properly!");
+                return point;
+            }
+
+            if (obj == null || (obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough))
             {
                 prev = point;
                 point += step;
                 continue;
-            }
-
-            if (obj.TryGetComponent<IGrabbable>(out var grabb) && grabb.CanBeGrabbed 
-                || obj.TryGetComponent<IInteractable>(out var rec) && rec.CanInteractWith(heldObj))
-            {
-                return point;
             }
 
             return prev;
@@ -91,7 +95,7 @@ public class RoomGrid : MonoBehaviour
 
     private void OnRoomObjectDestroyed(GridObject obj)
     {
-        if(Objects.Contains(obj))
+        if (Objects.Contains(obj))
         {
             Objects.Remove(obj);
         }

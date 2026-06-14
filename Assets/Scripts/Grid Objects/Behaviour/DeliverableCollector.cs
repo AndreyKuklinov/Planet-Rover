@@ -30,8 +30,7 @@ public class DeliverableCollector : MonoBehaviour, IInteractable
         RequiredObjectsChanged?.Invoke();
         CheckForCompletion();
 
-        Destroy(grabbedObject.GridObject.gameObject);
-        return null;
+        return GetReturnAfterDelivery(grabbedObject);
     }
 
     void CheckForCompletion()
@@ -40,5 +39,19 @@ public class DeliverableCollector : MonoBehaviour, IInteractable
             return;
 
         AllObjectsCollected?.Invoke();
+    }
+
+    IGrabbable GetReturnAfterDelivery(IGrabbable grabbedObject)
+    {
+        var obj = grabbedObject.GridObject.gameObject;
+
+        if(obj.TryGetComponent<IFillable>(out var fillable))
+        {
+            fillable.Empty();
+            return grabbedObject;
+        }
+
+        Destroy(obj);
+        return null;
     }
 }
