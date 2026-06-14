@@ -23,6 +23,9 @@ public class ScoreTracker : MonoBehaviour
     public float BestPossibleScore
         => (accumulatedScore + NumberOfRemainingRooms) / TotalNumberOfRooms;
 
+    public float CurrentScore
+        => NumberOfCompletedRooms == 0 ? 1 : accumulatedScore / NumberOfCompletedRooms;
+
     private float accumulatedScore; 
 
     private void OnEnable()

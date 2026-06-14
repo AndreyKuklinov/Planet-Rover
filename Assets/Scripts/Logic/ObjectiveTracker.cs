@@ -9,7 +9,6 @@ public class ObjectiveTracker : MonoBehaviour
 
     [SerializeField] ObjectiveEventChannel objectiveCreated;
     [SerializeField] ObjectiveEventChannel objectiveCompleted;
-    [SerializeField] RoomLoader roomLoader;
 
     public HashSet<Objective> AllObjectives { get; private set; } = new HashSet<Objective>();
     public HashSet<Objective> FulfilledObjectives { get; private set; } = new HashSet<Objective>();
@@ -23,7 +22,6 @@ public class ObjectiveTracker : MonoBehaviour
     {
         objectiveCreated.Raised += OnObjectiveCreated;
         objectiveCompleted.Raised += OnObjectiveCompleted;
-        roomLoader.LoadedRoom += OnRoomloaded;
         //DebugObjectives();
     }
 
@@ -63,10 +61,5 @@ public class ObjectiveTracker : MonoBehaviour
     private void DebugObjectives()
     {
         Debug.Log(FulfilledObjectives.Count + "/" + AllObjectives.Count);
-    }
-
-    private void OnRoomloaded()
-    {
-        ClearObjectives();
     }
 }

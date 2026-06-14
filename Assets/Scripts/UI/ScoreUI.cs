@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class ScoreUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI textMesh;
+    [SerializeField] TextMeshProUGUI roomText;
     [SerializeField] StarContainer starContainer;
     [SerializeField] Image powerImage;
     [SerializeField] Transform ui;
     [SerializeField] LevelManager levelManager;
     [SerializeField] ScoreTracker scoreTracker;
     [SerializeField] Timer roomTimer;
+    [SerializeField] TextMeshProUGUI scoreText;
 
     bool IsVisible
         => levelManager.IsLevelRunning && !levelManager.CurrentLevel.IsTutorial;
@@ -24,14 +25,20 @@ public class ScoreUI : MonoBehaviour
         if (!IsVisible)
             return;
 
-        textMesh.text = GetScoreText();
+        roomText.text = GetRoomText();
+        scoreText.text = GetScoreText();
         UpdateStars();
         UpdatePower();
     }
 
-    string GetScoreText()
+    string GetRoomText()
     {
         return (scoreTracker.NumberOfCompletedRooms+1) + "/" + scoreTracker.TotalNumberOfRooms;
+    }
+
+    string GetScoreText()
+    {
+        return ((int)(scoreTracker.CurrentScore * 100)).ToString() + "%";
     }
 
     void UpdateStars()

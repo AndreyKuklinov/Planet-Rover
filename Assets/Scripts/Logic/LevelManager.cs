@@ -14,8 +14,10 @@ public class LevelManager : MonoBehaviour
     public int CompletedRoomCount { get; private set; }
 
     [SerializeField] LevelLoader levelLoader;
+    [SerializeField] RoomLoader roomLoader;
     [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
     [SerializeField] RoomTimer roomTimer;
+    [SerializeField] VoidEventChannel roomExitTriggered;
 
     public bool IsLevelRunning
         => CurrentLevel != null;
@@ -23,13 +25,17 @@ public class LevelManager : MonoBehaviour
     void OnEnable()
     {
         ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesInRoomCompleted;
+        roomExitTriggered.Raised += OnRoomExitTriggered;
         roomTimer.TimeOut += OnTimeOut;
+        roomLoader.LoadedRoom += OnRoomLoaded;
     }
 
     void OnDisable()
     {
         ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesInRoomCompleted;
         roomTimer.TimeOut -= OnTimeOut;
+        roomLoader.LoadedRoom -= OnRoomLoaded;
+        roomExitTriggered.Raised -= OnRoomExitTriggered;
     }
 
     public void StartLevel(LevelData levelData)
@@ -100,6 +106,15 @@ public class LevelManager : MonoBehaviour
 
     private void OnAllObjectivesInRoomCompleted()
     {
+        //EndRoom();
+    }
+    private void OnRoomExitTriggered()
+    {
         EndRoom();
+    }
+
+    private void OnRoomLoaded()
+    {
+        ObjectiveTracker.ClearObjectives();
     }
 }
