@@ -5,5 +5,5 @@ using UnityEngine;
 
 public abstract class ItemContainerData : ScriptableObject
 {
-
+    public Sprite Sprite { get; }
 }
