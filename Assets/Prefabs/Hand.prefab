@@ -74,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: 2034242417
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 07bc85be94eae7d4b81c8d1e23c48566, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e8514a81795c8064a802d5f93f79e7f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 0
-  m_Size: {x: 0.85333335, y: 0.85333335}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -153,8 +153,14 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6091276724954147042}
   lineRenderer: {fileID: 8397864754370603764}
   objectHolder: {fileID: 2459121359799727033}
-  visibleDistance: 0.5
+  visibleDistance: 0.1
   holdingDistance: 0.5
+  emptyHandRestingDistance: 0.2
+  handSprites:
+  - {fileID: 21300000, guid: e8514a81795c8064a802d5f93f79e7f3, type: 3}
+  - {fileID: 21300000, guid: d552f54c78630f4419fee19ba6615ede, type: 3}
+  - {fileID: 21300000, guid: 2f743cae829bbb048aef08dbfb8a8737, type: 3}
+  - {fileID: 21300000, guid: 35e50f12d5581954ca6a50be61f4eee8, type: 3}
 --- !u!120 &8397864754370603764
 LineRenderer:
   serializedVersion: 2
@@ -284,7 +290,7 @@ Transform:
   m_GameObject: {fileID: 3699531563045268744}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.19, z: 0}
+  m_LocalPosition: {x: 0, y: 0.235, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

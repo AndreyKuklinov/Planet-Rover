@@ -10,6 +10,10 @@ public class HandRenderer : MonoBehaviour
     [SerializeField] Transform objectHolder;
     [SerializeField] float visibleDistance;
     [SerializeField] float holdingDistance;
+    [SerializeField] float emptyHandRestingDistance;
+    [SerializeField] Sprite[] handSprites = new Sprite[4];
+
+    private int playerIndex;
 
     Vector3 TargetPosition
         => hand.transform.position
@@ -17,7 +21,7 @@ public class HandRenderer : MonoBehaviour
             * DirectionVector.GetVector3(hand.Direction);
 
     float HandRestingDistance
-        => hand.IsHoldingObject ? holdingDistance : 0;
+        => hand.IsHoldingObject ? holdingDistance : emptyHandRestingDistance;
 
     void Start()
     {
@@ -31,12 +35,15 @@ public class HandRenderer : MonoBehaviour
 
     void LateUpdate()
     {
-        UpdateHand();
+        UpdateHandPosition();
+        UpdateHandSprite();
         UpdateLine();
     }
-    void UpdateHand()
+    void UpdateHandPosition()
     {
-        spriteRenderer.enabled = hand.CurrentDistance >= visibleDistance
+        float renderDistance = Mathf.Max(hand.CurrentDistance, HandRestingDistance);
+
+        spriteRenderer.enabled = renderDistance >= visibleDistance
             || hand.IsHoldingObject
             || hand.IsMovingRover;
 
@@ -53,6 +60,16 @@ public class HandRenderer : MonoBehaviour
             transform.position,
             spriteRenderer.transform.position,
         });
+    }
+
+    void UpdateHandSprite()
+    {
+        var index = PartyInputManager.Instance.DirectionToPlayerIndex[hand.Direction];
+        if (playerIndex == index)
+            return;
+
+        playerIndex = index;
+        spriteRenderer.sprite = handSprites[playerIndex];
     }
 
     void OnHandGrabbedObject(IGrabbable obj)

@@ -13,7 +13,15 @@ public class PartyInputManager : MonoBehaviour
     public event PlayerDevice.DirectionTriggeredHandler DirectionTriggered;
     public event Action<PlayerDevice> DropTriggered;
 
-    private readonly List<PlayerDevice> players = new();
+    public readonly Dictionary<Direction, int> DirectionToPlayerIndex = new()
+    {
+        { Direction.Up, 0 },
+        { Direction.Down, 0 },
+        { Direction.Left, 0 },
+        { Direction.Right, 0 },
+    };
+
+    private List<PlayerDevice> players = new();
 
     private readonly Dictionary<int, HashSet<Direction>[]> allowedDirections = new()
     {
@@ -72,11 +80,6 @@ public class PartyInputManager : MonoBehaviour
         device.DropTriggered += OnDropTriggered;
     }
 
-    private void OnQuitTriggered()
-    {
-        throw new NotImplementedException();
-    }
-
     private void OnDeviceLost(PlayerDevice player)
     {
         players.Remove(player);
@@ -104,6 +107,10 @@ public class PartyInputManager : MonoBehaviour
         for (var i = 0; i < players.Count; i++)
         {
             players[i].AllowedDirections = allowedDirections[players.Count][i];
+            foreach (var direction in players[i].AllowedDirections)
+            {
+                DirectionToPlayerIndex[direction] = i;
+            }
         }
     }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   <Room>k__BackingField: {fileID: 7808436244341271782, guid: c30e9e3b781a1d3429418eab57f88ffe, type: 3}
-  <BaseTimeLimit>k__BackingField: 10
+  <BaseTimeLimit>k__BackingField: 20

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1759a35c3891bc4fab30289a17b0ac5, type: 3}
   m_Name: Sample A
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 500427040, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}
