@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
-  m_Name: Tutorial-1
+  m_Name: Tutorial 1
   m_EditorClassIdentifier: 
   <IsTutorial>k__BackingField: 1
   roomCountToComplete: 4
   <Rooms>k__BackingField:
   - {fileID: 11400000, guid: b5da78e68e7c43f48bcf54ceb27738ff, type: 2}
-  - {fileID: 11400000, guid: 56769d505f36fc04e96d649efd514e4d, type: 2}
-  - {fileID: 11400000, guid: 2cb90c72e0d2ef84eb956ce9549a6197, type: 2}
-  - {fileID: 11400000, guid: ed4dbbac0d7a4ce4f8d17d995a16eeac, type: 2}
+  - {fileID: 11400000, guid: b24d43fd4cd00fa4fb8a954a1039a587, type: 2}
+  - {fileID: 11400000, guid: 900880418a1a2bc4ea904f79c85e123a, type: 2}
+  - {fileID: 11400000, guid: 3e7b778ebde3a814c86f5c46f1025d4f, type: 2}
