@@ -684,6 +684,7 @@ MonoBehaviour:
   starContainer: {fileID: 2492042602823806333}
   powerImage: {fileID: 8970953611517074281}
   ui: {fileID: 7419065835183359315}
+  powerTransform: {fileID: 8648501041062846986}
   levelManager: {fileID: 8373723822254126440}
   scoreTracker: {fileID: 8373723822254126441}
   roomTimer: {fileID: 8373723822254126437}
@@ -957,11 +958,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 63.727
+      value: 63.72699
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -78.3
+      value: -74.324326
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1421,13 +1422,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1625,7 +1626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59b38bc83120b438192f2bef55e93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyPrefab: {fileID: 1336206892249136254, guid: 634c2abd22dca0e47b6de35fe3e165ef, type: 3}
+  lobbyPrefab: {fileID: 8785264272414102714, guid: 92ff97e84f3ca6d47911b43c38bd5d9b, type: 3}
   levelManager: {fileID: 8373723822254126440}
   roomLoader: {fileID: 8373723822254126438}
   levelSelected: {fileID: 11400000, guid: 712d74e65dfea0946ac88aa07aa219b5, type: 2}

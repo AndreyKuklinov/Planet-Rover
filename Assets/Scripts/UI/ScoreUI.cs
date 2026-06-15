@@ -11,13 +11,17 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] StarContainer starContainer;
     [SerializeField] Image powerImage;
     [SerializeField] Transform ui;
+    [SerializeField] Transform powerTransform;
     [SerializeField] LevelManager levelManager;
     [SerializeField] ScoreTracker scoreTracker;
     [SerializeField] Timer roomTimer;
     [SerializeField] TextMeshProUGUI scoreText;
 
     bool IsVisible
-        => levelManager.IsLevelRunning && !levelManager.CurrentLevel.IsTutorial;
+        => levelManager.IsLevelRunning;
+
+    bool IsPowerVisible
+        => levelManager.CurrentLevel.IsTimeLimited;
 
     void Update()
     {
@@ -50,6 +54,10 @@ public class ScoreUI : MonoBehaviour
 
     void UpdatePower()
     {
+        powerTransform.gameObject.SetActive(IsPowerVisible);
+        if (!IsPowerVisible)
+            return;
+
         var value = roomTimer.TimeRemaining / roomTimer.Duration;
         powerImage.fillAmount = Mathf.Clamp(value, 0, 1);
     }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
+  m_Name: Tutorial-1
+  m_EditorClassIdentifier: 
+  <IsTutorial>k__BackingField: 1
+  roomCountToComplete: 4
+  <Rooms>k__BackingField:
+  - {fileID: 11400000, guid: b5da78e68e7c43f48bcf54ceb27738ff, type: 2}
+  - {fileID: 11400000, guid: 56769d505f36fc04e96d649efd514e4d, type: 2}
+  - {fileID: 11400000, guid: 2cb90c72e0d2ef84eb956ce9549a6197, type: 2}
+  - {fileID: 11400000, guid: ed4dbbac0d7a4ce4f8d17d995a16eeac, type: 2}
