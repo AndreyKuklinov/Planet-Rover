@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 530406101
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc027e62b7b6ff469e1a29e8cb5db91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DeliverableData>k__BackingField: {fileID: 0}
+  <DeliverableData>k__BackingField: {fileID: 11400000, guid: 9bb060aa15512a345948628a994cae55, type: 2}
 --- !u!114 &1038969931549546596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +142,4 @@ MonoBehaviour:
   containerData: {fileID: 11400000, guid: b816b31f7c342dd46a5f68a903aee790, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
   deliverable: {fileID: 903711316869083397}
+  bucketDeliverableData: {fileID: 11400000, guid: 9bb060aa15512a345948628a994cae55, type: 2}

@@ -44,7 +44,7 @@ public class DeliverableCollector : MonoBehaviour, IInteractable
     {
         var obj = grabbedObject.GridObject.gameObject;
 
-        if(obj.TryGetComponent<IFillable>(out var fillable))
+        if(obj.TryGetComponent<IFillable>(out var fillable) && fillable.IsFilled)
         {
             fillable.Empty();
             return grabbedObject;

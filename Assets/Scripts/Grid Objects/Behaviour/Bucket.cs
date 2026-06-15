@@ -9,6 +9,7 @@ public class Bucket : MonoBehaviour, IFillable
     [SerializeField] ItemContainerData containerData;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Deliverable deliverable;
+    [SerializeField] DeliverableData bucketDeliverableData;
 
     public ContainableData CurrentContainedData { get; private set; }
 
@@ -21,7 +22,7 @@ public class Bucket : MonoBehaviour, IFillable
     {
         CurrentContainedData = null;
         spriteRenderer.sprite = containerData.EmptySprite;
-        deliverable.DeliverableData = null;
+        deliverable.DeliverableData = bucketDeliverableData;
     }
 
     public void FillWith(ContainableData containable)
