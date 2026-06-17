@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd69a737af9bc764bbee4bebf1030acb, type: 3}
-  m_Name: Liquid B
+  m_Name: Cloud A
   m_EditorClassIdentifier: 
-  <TypeData>k__BackingField: {fileID: 11400000, guid: 6c8e75d24619d714eb205442dd4bb4b0, type: 2}
-  <ColorData>k__BackingField: {fileID: 11400000, guid: f7e8cd71835097a4a8febf0737667d0f, type: 2}
-  <MainSprite>k__BackingField: {fileID: 21300000, guid: 4c2bbfbe6e0783740833446c6ad896db, type: 3}
+  <TypeData>k__BackingField: {fileID: 11400000, guid: 7fc21004691cca248942f44d6f0d665c, type: 2}
+  <ColorData>k__BackingField: {fileID: 11400000, guid: b4cf9a7f7832ae848aee3abff332f5cb, type: 2}
+  <MainSprite>k__BackingField: {fileID: 21300000, guid: b508de69b6763ce48a6c4ba041a29f99, type: 3}

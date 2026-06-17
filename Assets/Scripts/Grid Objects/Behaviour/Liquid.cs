@@ -6,7 +6,7 @@ using UnityEngine;
 public class Liquid : MonoBehaviour, IPassable, IInteractable
 {
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] LiquidData liquidData;
+    [SerializeField] ItemData itemData;
 
     public bool CanHandPassThrough =>
         true;
@@ -30,7 +30,7 @@ public class Liquid : MonoBehaviour, IPassable, IInteractable
         var bucket = grabbedObject.GridObject.GetComponent<Bucket>();
 
         var data = bucket.CurrentLiquid;
-        bucket.FillWith(liquidData);
+        bucket.FillWith(itemData);
 
         if (data == null)
         {
@@ -38,9 +38,8 @@ public class Liquid : MonoBehaviour, IPassable, IInteractable
             return grabbedObject;
         }
 
-        liquidData = data;
-        spriteRenderer.sprite = liquidData.Sprite;
+        itemData = data;
+        spriteRenderer.sprite = itemData.MainSprite;
         return grabbedObject;
-
     }
 }

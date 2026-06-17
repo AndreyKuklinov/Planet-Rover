@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Filled Bucket Sprite Repo
   m_EditorClassIdentifier: 
   recipes:
-  - Liquid: {fileID: 11400000, guid: ed83196313f03f441918258d7e20b1ff, type: 2}
+  - Liquid: {fileID: 11400000, guid: 09f31c6b8e5a690408c397a23c590d41, type: 2}
     FilledBucketSprite: {fileID: 21300000, guid: a8ed21068b1a0624abe07102ba3d9740, type: 3}
-  - Liquid: {fileID: 11400000, guid: c2c40452bf826d44884ecbf7472a5812, type: 2}
+  - Liquid: {fileID: 11400000, guid: f9ba0753966214b4b9a3776f87f0f917, type: 2}
     FilledBucketSprite: {fileID: 21300000, guid: 5b7ec878d7ad2c040ac2a60ba574e381, type: 3}

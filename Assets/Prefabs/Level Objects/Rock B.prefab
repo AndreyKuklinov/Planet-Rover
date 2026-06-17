@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7321424722306189273}
   - component: {fileID: 9006592477194857855}
   - component: {fileID: 2282542154250862780}
+  - component: {fileID: 6091287929959645397}
   m_Layer: 0
   m_Name: Rock B
   m_TagString: Untagged
@@ -125,3 +126,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemData>k__BackingField: {fileID: 11400000, guid: 4c2b5cbb0bec8ea429c2c51a6186fc9a, type: 2}
+--- !u!114 &6091287929959645397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926348560427703860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e754fe4c74c7f4aad4e3331760d5fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 2282542154250862780}
+  spriteRenderer: {fileID: 3297792618599156248}
+  itemDataRepo: {fileID: 11400000, guid: b51b4f34d01c6a84faafd85c5b03d319, type: 2}

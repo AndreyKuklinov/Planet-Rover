@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Objects/Item Color Data")]
+[CreateAssetMenu(menuName = "Items/Item Color Data")]
 public class ItemColorData : ScriptableObject
 {
 

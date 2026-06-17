@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd69a737af9bc764bbee4bebf1030acb, type: 3}
   m_Name: Rock A
   m_EditorClassIdentifier: 
+  <TypeData>k__BackingField: {fileID: 11400000, guid: de20b69e5eb5d33418edd7a2a729ae8d, type: 2}
+  <ColorData>k__BackingField: {fileID: 11400000, guid: b4cf9a7f7832ae848aee3abff332f5cb, type: 2}
+  <MainSprite>k__BackingField: {fileID: 21300000, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}

@@ -111,4 +111,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3297792618599156248}
-  liquidData: {fileID: 11400000, guid: c2c40452bf826d44884ecbf7472a5812, type: 2}
+  itemData: {fileID: 11400000, guid: f9ba0753966214b4b9a3776f87f0f917, type: 2}

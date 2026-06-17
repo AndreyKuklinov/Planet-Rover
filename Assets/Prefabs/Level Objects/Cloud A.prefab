@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2923958814578110793}
   - component: {fileID: 3297792618599156248}
-  - component: {fileID: 1935716101850627654}
-  - component: {fileID: 1178842768208730050}
-  - component: {fileID: 1038969931549546596}
+  - component: {fileID: 7943294138656579724}
+  - component: {fileID: 4749359871252938686}
   m_Layer: 0
-  m_Name: Bucket
+  m_Name: Cloud A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 530406101
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b508de69b6763ce48a6c4ba041a29f99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,8 +85,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!114 &1935716101850627654
+  m_SpriteSortPoint: 1
+--- !u!114 &7943294138656579724
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708cb62677552554faebe3084d85a0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1178842768208730050
+--- !u!114 &4749359871252938686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,24 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8926348560427703860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f36e52aadd4299a4597f7ebf9ddad7e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c7540e80515b214e85266a212fd1018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridObject: {fileID: 1935716101850627654}
---- !u!114 &1038969931549546596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8926348560427703860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f70d99e05bad6af428cb455b894f2cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  filledBucketRepo: {fileID: 11400000, guid: 5177810bc9eb5954cb2d5f50ef945384, type: 2}
-  itemDataRepo: {fileID: 11400000, guid: b51b4f34d01c6a84faafd85c5b03d319, type: 2}
-  spriteRenderer: {fileID: 3297792618599156248}
-  emptyBucketData: {fileID: 11400000, guid: 170af110a8c9c1343829574466675de7, type: 2}
-  emptySprite: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}
+  itemData: {fileID: 11400000, guid: 3d1eeacf9d5427f4bb1ffed38738abaa, type: 2}

@@ -10,7 +10,7 @@ public class FilledBucketSpriteRepo : ScriptableObject
 {
     [SerializeField] private List<Recipe> recipes = new();
 
-    public Sprite GetSprite(LiquidData liquidData)
+    public Sprite GetSprite(ItemData liquidData)
     {
         foreach (var recipe in recipes)
         {
@@ -24,7 +24,7 @@ public class FilledBucketSpriteRepo : ScriptableObject
     [Serializable]
     public struct Recipe
     {
-        public LiquidData Liquid;
+        public ItemData Liquid;
         public Sprite FilledBucketSprite;
     }
 }
