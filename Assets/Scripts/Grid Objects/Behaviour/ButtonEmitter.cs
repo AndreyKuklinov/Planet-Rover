@@ -7,7 +7,7 @@ public class ButtonEmitter : MonoBehaviour, IInteractable
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SignalEmitter emitter;
-    [SerializeField] Signal signal;
+    [SerializeField] HasSignal signal;
 
     public bool CanInteractWith(IGrabbable grabbedObject)
     {

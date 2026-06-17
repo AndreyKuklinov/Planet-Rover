@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd18ba7034004134396b9bec5801d4f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collector: {fileID: 3135125082544484411}
+  deliveryIconRepo: {fileID: 11400000, guid: 236d012073e21b74d81f480775760a87, type: 2}
+  collector: {fileID: 5678340617127529021}
   iconPrefab: {fileID: 2102830302927557540, guid: 458e5174b962f884db40dcf33b14945c, type: 3}
 --- !u!1 &6418770776642315459
 GameObject:
@@ -192,7 +193,7 @@ GameObject:
   - component: {fileID: 9022442606716414188}
   - component: {fileID: 4636829388745870696}
   - component: {fileID: 280019297232913305}
-  - component: {fileID: 3135125082544484411}
+  - component: {fileID: 5678340617127529021}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -255,7 +256,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 530406101
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: be763be4f31b45f44b3bfeee7fb13a0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -280,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ef46969541a6f4e96bd75f9d4faecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deliverableCollector: {fileID: 3135125082544484411}
+  deliverableCollector: {fileID: 5678340617127529021}
   objective: {fileID: 280019297232913305}
 --- !u!114 &4636829388745870696
 MonoBehaviour:
@@ -308,7 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
   objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
---- !u!114 &3135125082544484411
+--- !u!114 &5678340617127529021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,7 +318,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8926348560427703860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259e6615371e1c64d883136dbb6545ba, type: 3}
+  m_Script: {fileID: 11500000, guid: dddac62741565814b9a2f7d6d3b9fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <RequiredObjects>k__BackingField: []
+  <RequiredItems>k__BackingField: []

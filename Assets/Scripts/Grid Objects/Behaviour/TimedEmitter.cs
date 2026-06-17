@@ -9,7 +9,7 @@ public class TimedEmitter : MonoBehaviour
     const bool RESET_WHEN_OTHER_EMITTER_TRIGGERS = true;
 
     [SerializeField] SignalEmitter emitter;
-    [SerializeField] SignalType[] signals;
+    [SerializeField] Signal[] signals;
     [SerializeField] float signalInterval;
     [SerializeField] float pauseDuration;
     [SerializeField] Image progressBar;
@@ -28,7 +28,7 @@ public class TimedEmitter : MonoBehaviour
         Room.SignalChanged -= OnSignalChanged;
     }
 
-    private void OnSignalChanged(SignalType _)
+    private void OnSignalChanged(Signal _)
     {
         if (!RESET_WHEN_OTHER_EMITTER_TRIGGERS || progressBar.fillAmount == 1)
             return;

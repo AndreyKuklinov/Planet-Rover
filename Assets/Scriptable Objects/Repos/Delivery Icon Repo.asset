@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506543886cf095f4aad5cddc7b634297, type: 3}
+  m_Name: Delivery Icon Repo
+  m_EditorClassIdentifier: 
+  recipes:
+  - ItemData: {fileID: 11400000, guid: 170af110a8c9c1343829574466675de7, type: 2}
+    Icon: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}
+  - ItemData: {fileID: 11400000, guid: 09f31c6b8e5a690408c397a23c590d41, type: 2}
+    Icon: {fileID: 21300000, guid: 5de12b03a9632f24ca65d21be70a2acb, type: 3}
+  - ItemData: {fileID: 11400000, guid: f9ba0753966214b4b9a3776f87f0f917, type: 2}
+    Icon: {fileID: 21300000, guid: 4c2bbfbe6e0783740833446c6ad896db, type: 3}
+  - ItemData: {fileID: 11400000, guid: 0cb6914c2301aea4fa950427ec088ec3, type: 2}
+    Icon: {fileID: 21300000, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}
+  - ItemData: {fileID: 11400000, guid: 4c2b5cbb0bec8ea429c2c51a6186fc9a, type: 2}
+    Icon: {fileID: 21300000, guid: e189221a05bd4724fb350b186f9c33dd, type: 3}

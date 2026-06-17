@@ -7,9 +7,9 @@ public class SignalEmitter : MonoBehaviour
 {
     public static event Action<SignalEmitter> EmitterSpawned;
     public static event Action<SignalEmitter> EmitterDestroyed;
-    public static event Action<SignalType> SignalEmitted;
+    public static event Action<Signal> SignalEmitted;
 
-    public void Emit(SignalType signal)
+    public void Emit(Signal signal)
     {
         SignalEmitted?.Invoke(signal);
     }

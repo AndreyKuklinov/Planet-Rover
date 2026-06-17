@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SignalDoorController : MonoBehaviour
 {
-    [SerializeField] Signal signal;
+    [SerializeField] HasSignal signal;
     [SerializeField] Door door;
 
     void Start()
@@ -18,7 +18,7 @@ public class SignalDoorController : MonoBehaviour
         Room.SignalChanged -= OnSignalChanged;
     }
 
-    private void OnSignalChanged(SignalType signalType)
+    private void OnSignalChanged(Signal signalType)
     {
         door.SetOpen(signalType == signal.SignalType);
     }

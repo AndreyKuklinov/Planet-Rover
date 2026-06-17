@@ -7,7 +7,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public static event Action<Room> RoomStarted;
-    public static event Action<SignalType> SignalChanged;
+    public static event Action<Signal> SignalChanged;
 
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
@@ -41,7 +41,7 @@ public class Room : MonoBehaviour
         grid.AttachAllObjects();
     }
 
-    private void OnSignalChanged(SignalType _obj)
+    private void OnSignalChanged(Signal _obj)
     {
         SignalChanged?.Invoke(_obj);
     }

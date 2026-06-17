@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70d99e05bad6af428cb455b894f2cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filledBucketRepo: {fileID: 11400000, guid: a93a2302de01bf54ca6a16021579624e, type: 2}
+  filledBucketRepo: {fileID: 11400000, guid: 5177810bc9eb5954cb2d5f50ef945384, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
-  bucketDeliverableData: {fileID: 11400000, guid: 9bb060aa15512a345948628a994cae55, type: 2}
+  emptyBucketData: {fileID: 11400000, guid: 170af110a8c9c1343829574466675de7, type: 2}
   emptySprite: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}

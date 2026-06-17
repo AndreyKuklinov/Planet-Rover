@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    [SerializeField] DeliverableCollector deliverableCollector;
+    [SerializeField] ItemCollector deliverableCollector;
     [SerializeField] Objective objective;
 
     void Start()

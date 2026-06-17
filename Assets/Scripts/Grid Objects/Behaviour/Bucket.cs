@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bucket : MonoBehaviour, IDeliverable
+public class Bucket : MonoBehaviour, IHasItemData
 {
-    [SerializeField] FilledBucketRepo filledBucketRepo;
+    [SerializeField] FilledBucketSpriteRepo filledBucketRepo;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] DeliverableData bucketDeliverableData;
+    [SerializeField] ItemData emptyBucketData;
     [SerializeField] Sprite emptySprite;
 
     public LiquidData CurrentLiquid { get; private set; }
@@ -15,8 +15,8 @@ public class Bucket : MonoBehaviour, IDeliverable
     public bool IsFilled
         => CurrentLiquid != null;
 
-    public DeliverableData DeliverableData
-        => IsFilled ? CurrentLiquid.DeliverableData : bucketDeliverableData;
+    public ItemData ItemData
+        => IsFilled ? CurrentLiquid.ItemData : emptyBucketData;
 
     public void Empty()
     {

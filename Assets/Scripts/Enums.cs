@@ -23,7 +23,7 @@ public enum HandState
     Retracting
 }
 
-public enum SignalType
+public enum Signal
 {
     Purple,
     Blue,
@@ -34,12 +34,10 @@ public enum SignalType
     Brown
 }
 
-public enum GameState
+public enum SampleType
 {
-    Lobby,
-    Running,
-    Lost,
-    Won
+    A,
+    B
 }
 
 public static class SignalColor
@@ -55,7 +53,7 @@ public static class SignalColor
         ColorExtensions.FromHex("#6c584c")
     };
 
-    public static Color GetColor(SignalType signal)
+    public static Color GetColor(Signal signal)
         => colors[(int)signal];
 }
 

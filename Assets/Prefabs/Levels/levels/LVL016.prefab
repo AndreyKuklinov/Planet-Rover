@@ -286,6 +286,18 @@ PrefabInstance:
       propertyPath: <RequiredObjects>k__BackingField.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 95a8c161de26c0e41ad963978146b93c, type: 2}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 09f31c6b8e5a690408c397a23c590d41, type: 2}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 09f31c6b8e5a690408c397a23c590d41, type: 2}
     - target: {fileID: 8926348560427703860, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
       propertyPath: m_Name
       value: Rocket (1)
@@ -1408,6 +1420,22 @@ PrefabInstance:
       propertyPath: <RequiredObjects>k__BackingField.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: edcd9310987adcf4792dc921d485dd27, type: 2}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f9ba0753966214b4b9a3776f87f0f917, type: 2}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: f9ba0753966214b4b9a3776f87f0f917, type: 2}
+    - target: {fileID: 5678340617127529021, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
+      propertyPath: <RequiredItems>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: f9ba0753966214b4b9a3776f87f0f917, type: 2}
     - target: {fileID: 8926348560427703860, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
       propertyPath: m_Name
       value: Rocket

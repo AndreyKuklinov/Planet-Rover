@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class RocketIcons : MonoBehaviour
 {
-    [SerializeField] DeliverableCollector collector;
+    [SerializeField] DeliveryIconRepo deliveryIconRepo;
+    [SerializeField] ItemCollector collector; 
     [SerializeField] Image iconPrefab;
 
     private List<Image> icons = new();
@@ -23,10 +24,10 @@ public class RocketIcons : MonoBehaviour
 
         icons = new List<Image>();
 
-        foreach (var sample in collector.RequiredObjects)
+        foreach (var item in collector.RequiredItems)
         {
             var icon = Instantiate(iconPrefab, transform);
-            icon.sprite = sample.Icon;
+            icon.sprite = deliveryIconRepo.GetIcon(item);
             icons.Add(icon);
         }
     }

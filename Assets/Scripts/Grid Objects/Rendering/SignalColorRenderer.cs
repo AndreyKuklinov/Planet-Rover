@@ -6,7 +6,7 @@ using UnityEngine;
 public class SignalColorRenderer : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Signal signal;
+    [SerializeField] HasSignal signal;
 
     private void OnValidate()
     {
