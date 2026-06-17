@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LevelTest
   m_EditorClassIdentifier: 
   <IsTutorial>k__BackingField: 0
-  roomCountToComplete: 3
+  roomCountToComplete: 10
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: 8397392c9cecf194a886644f55bb48c3, type: 2}
+  - {fileID: 11400000, guid: b5da78e68e7c43f48bcf54ceb27738ff, type: 2}
+  - {fileID: 11400000, guid: b24d43fd4cd00fa4fb8a954a1039a587, type: 2}

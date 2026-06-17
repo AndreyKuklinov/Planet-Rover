@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: portal tutor 1
   m_EditorClassIdentifier: 
   <Room>k__BackingField: {fileID: 1336206892249136254, guid: 634c2abd22dca0e47b6de35fe3e165ef, type: 3}
-  <BaseTimeLimit>k__BackingField: 0
+  <BaseTimeLimit>k__BackingField: 10
