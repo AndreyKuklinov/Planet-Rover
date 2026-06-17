@@ -3,33 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bucket : MonoBehaviour, IFillable
+public class Bucket : MonoBehaviour, IDeliverable
 {
-    [SerializeField] FilledContainerSpriteRepo containerFillRepo;
-    [SerializeField] ItemContainerData containerData;
+    [SerializeField] FilledBucketRepo filledBucketRepo;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Deliverable deliverable;
     [SerializeField] DeliverableData bucketDeliverableData;
+    [SerializeField] Sprite emptySprite;
 
-    public ContainableData CurrentContainedData { get; private set; }
+    public LiquidData CurrentLiquid { get; private set; }
 
-    public bool CanContain(ContainableData data)
-    {
-        return data.IsLiquid;
-    }
+    public bool IsFilled
+        => CurrentLiquid != null;
+
+    public DeliverableData DeliverableData
+        => IsFilled ? CurrentLiquid.DeliverableData : bucketDeliverableData;
 
     public void Empty()
     {
-        CurrentContainedData = null;
-        spriteRenderer.sprite = containerData.EmptySprite;
-        deliverable.DeliverableData = bucketDeliverableData;
+        CurrentLiquid = null;
+        spriteRenderer.sprite = emptySprite;
     }
 
-    public void FillWith(ContainableData containable)
+    public void FillWith(LiquidData liquid)
     {
-        CurrentContainedData = containable;
-        var sprite = containerFillRepo.GetSprite(containerData, containable);
+        CurrentLiquid = liquid;
+        var sprite = filledBucketRepo.GetSprite(liquid);
         spriteRenderer.sprite = sprite;
-        deliverable.DeliverableData = data.DeliverableData;
     }
 }

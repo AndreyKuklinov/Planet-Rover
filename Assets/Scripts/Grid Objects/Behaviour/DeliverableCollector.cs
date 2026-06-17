@@ -18,13 +18,13 @@ public class DeliverableCollector : MonoBehaviour, IInteractable
     public bool CanInteractWith(IGrabbable grabbedObject)
     {
         return grabbedObject != null
-            && grabbedObject.GridObject.TryGetComponent<Deliverable>(out var deliverable)
+            && grabbedObject.GridObject.TryGetComponent<IDeliverable>(out var deliverable)
             && RequiredObjects.Contains(deliverable.DeliverableData);
     }
 
     public IGrabbable InteractWith(IGrabbable grabbedObject)
     {
-        var deliverable = grabbedObject.GridObject.GetComponent<Deliverable>();
+        var deliverable = grabbedObject.GridObject.GetComponent<IDeliverable>();
         RequiredObjects.Remove(deliverable.DeliverableData);
         RequiredObjectsChanged?.Invoke();
         CheckForCompletion();
@@ -44,9 +44,9 @@ public class DeliverableCollector : MonoBehaviour, IInteractable
     {
         var obj = grabbedObject.GridObject.gameObject;
 
-        if(obj.TryGetComponent<IFillable>(out var fillable) && fillable.IsFilled)
+        if(obj.TryGetComponent<Bucket>(out var bucket) && bucket.IsFilled)
         {
-            fillable.Empty();
+            bucket.Empty();
             return grabbedObject;
         }
 

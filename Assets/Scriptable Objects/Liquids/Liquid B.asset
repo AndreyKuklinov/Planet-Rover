@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 953d75ffc8e7cf649acdccf1d3466cc7, type: 3}
-  m_Name: Liquid A
+  m_Name: Liquid B
   m_EditorClassIdentifier: 
-  <IsLiquid>k__BackingField: 1
-  Sprite: {fileID: 21300000, guid: 5de12b03a9632f24ca65d21be70a2acb, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 4c2bbfbe6e0783740833446c6ad896db, type: 3}
+  <DeliverableData>k__BackingField: {fileID: 11400000, guid: edcd9310987adcf4792dc921d485dd27, type: 2}

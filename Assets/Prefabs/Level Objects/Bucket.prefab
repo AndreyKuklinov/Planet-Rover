@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3297792618599156248}
   - component: {fileID: 1935716101850627654}
   - component: {fileID: 1178842768208730050}
-  - component: {fileID: 903711316869083397}
   - component: {fileID: 1038969931549546596}
   m_Layer: 0
   m_Name: Bucket
@@ -113,19 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridObject: {fileID: 1935716101850627654}
---- !u!114 &903711316869083397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8926348560427703860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfc027e62b7b6ff469e1a29e8cb5db91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DeliverableData>k__BackingField: {fileID: 11400000, guid: 9bb060aa15512a345948628a994cae55, type: 2}
 --- !u!114 &1038969931549546596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,8 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70d99e05bad6af428cb455b894f2cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  containerFillRepo: {fileID: 11400000, guid: c22f10b3dda10fd4490cfc06cda11b3e, type: 2}
-  containerData: {fileID: 11400000, guid: b816b31f7c342dd46a5f68a903aee790, type: 2}
+  filledBucketRepo: {fileID: 11400000, guid: a93a2302de01bf54ca6a16021579624e, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
-  deliverable: {fileID: 903711316869083397}
   bucketDeliverableData: {fileID: 11400000, guid: 9bb060aa15512a345948628a994cae55, type: 2}
+  emptySprite: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}

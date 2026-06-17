@@ -6,7 +6,7 @@ using UnityEngine;
 public class Liquid : MonoBehaviour, IPassable, IInteractable
 {
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] ContainableData containableData;
+    [SerializeField] LiquidData liquidData;
 
     public bool CanHandPassThrough =>
         true;
@@ -16,10 +16,10 @@ public class Liquid : MonoBehaviour, IPassable, IInteractable
         if (grabbedObject == null)
             return false;
 
-        if (!grabbedObject.GridObject.TryGetComponent<IFillable>(out var obj))
+        if (!grabbedObject.GridObject.TryGetComponent<Bucket>(out var obj))
             return false;
 
-        return obj.CanContain(containableData);
+        return true;
     }
 
     public IGrabbable InteractWith(IGrabbable grabbedObject)
@@ -27,10 +27,10 @@ public class Liquid : MonoBehaviour, IPassable, IInteractable
         if (!CanInteractWith(grabbedObject))
             throw new InvalidOperationException("Trying to interact with an object that can't interact with");
 
-        var fillable = grabbedObject.GridObject.GetComponent<IFillable>();
+        var bucket = grabbedObject.GridObject.GetComponent<Bucket>();
 
-        var data = fillable.CurrentContainedData;
-        fillable.FillWith(containableData);
+        var data = bucket.CurrentLiquid;
+        bucket.FillWith(liquidData);
 
         if (data == null)
         {
@@ -38,8 +38,8 @@ public class Liquid : MonoBehaviour, IPassable, IInteractable
             return grabbedObject;
         }
 
-        containableData = data;
-        spriteRenderer.sprite = containableData.Sprite;
+        liquidData = data;
+        spriteRenderer.sprite = liquidData.Sprite;
         return grabbedObject;
 
     }

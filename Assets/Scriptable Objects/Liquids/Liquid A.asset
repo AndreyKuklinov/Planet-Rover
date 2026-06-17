@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 602c3e7e5b595014bae88a06a251680d, type: 3}
-  m_Name: Bucket
+  m_Script: {fileID: 11500000, guid: 953d75ffc8e7cf649acdccf1d3466cc7, type: 3}
+  m_Name: Liquid A
   m_EditorClassIdentifier: 
-  <EmptySprite>k__BackingField: {fileID: 21300000, guid: c75bf836efd21cf498e38d8d06cce49c, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 5de12b03a9632f24ca65d21be70a2acb, type: 3}
+  <DeliverableData>k__BackingField: {fileID: 11400000, guid: 95a8c161de26c0e41ad963978146b93c, type: 2}
