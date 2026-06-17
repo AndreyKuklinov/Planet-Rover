@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1759a35c3891bc4fab30289a17b0ac5, type: 3}
-  m_Name: Liquid A Deliverable
+  m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
+  m_Name: Level 1 - Sample Simple
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 21300000, guid: 5de12b03a9632f24ca65d21be70a2acb, type: 3}
+  <IsTutorial>k__BackingField: 0
+  roomCountToComplete: 1
+  <Rooms>k__BackingField:
+  - {fileID: 11400000, guid: 8636a563a78bc1c4197c12b60ad79d38, type: 2}

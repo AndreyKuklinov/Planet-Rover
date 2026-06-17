@@ -7,5 +7,5 @@ using UnityEngine;
 public class ContainableData : ScriptableObject
 {
     [field: SerializeField] public bool IsLiquid { get; private set; }
-    [field: SerializeField] public Sprite Sprite;
+    [field: SerializeField] public Sprite Sprite { get; private set; }
 }

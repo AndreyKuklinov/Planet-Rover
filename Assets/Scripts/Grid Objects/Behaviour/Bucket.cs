@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bucket : MonoBehaviour, IFillable
 {
-    [SerializeField] ContainerFillRepo containerFillRepo;
+    [SerializeField] FilledContainerSpriteRepo containerFillRepo;
     [SerializeField] ItemContainerData containerData;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Deliverable deliverable;
@@ -28,8 +28,8 @@ public class Bucket : MonoBehaviour, IFillable
     public void FillWith(ContainableData containable)
     {
         CurrentContainedData = containable;
-        var data = containerFillRepo.GetFillData(containerData, containable);
-        spriteRenderer.sprite = data.FilledSprite;
+        var sprite = containerFillRepo.GetSprite(containerData, containable);
+        spriteRenderer.sprite = sprite;
         deliverable.DeliverableData = data.DeliverableData;
     }
 }
