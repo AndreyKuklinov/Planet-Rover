@@ -7,6 +7,8 @@ public class Rocket : MonoBehaviour
 {
     [SerializeField] ItemCollector deliverableCollector;
     [SerializeField] Objective objective;
+    [SerializeField] Animator animator;
+    [SerializeField] GridObject gridObject;
 
     void Start()
     {
@@ -16,6 +18,7 @@ public class Rocket : MonoBehaviour
     private void OnAllObjectsCollected()
     {
         objective.Complete();
-        Destroy(gameObject);
+        animator.SetTrigger("Fulfilled");
+        gridObject.TryRemoveFromGrid();
     }
 }
