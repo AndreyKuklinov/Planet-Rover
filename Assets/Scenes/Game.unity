@@ -1626,7 +1626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59b38bc83120b438192f2bef55e93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyPrefab: {fileID: 442944379675754973, guid: 0c4b29b5eb9596346955dc3b1396ac64, type: 3}
+  lobbyPrefab: {fileID: 8785264272414102714, guid: 92ff97e84f3ca6d47911b43c38bd5d9b, type: 3}
   levelManager: {fileID: 8373723822254126440}
   roomLoader: {fileID: 8373723822254126438}
   levelSelected: {fileID: 11400000, guid: 712d74e65dfea0946ac88aa07aa219b5, type: 2}

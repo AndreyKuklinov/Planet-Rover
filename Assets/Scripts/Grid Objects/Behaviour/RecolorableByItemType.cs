@@ -15,7 +15,8 @@ public class RecolorableByItemType : MonoBehaviour, IInteractable
 
         return grabbedObject != null
             && grabbedObject.GridObject.TryGetComponent<IHasItemData>(out var grabbedItem)
-            && grabbedItem.ItemData.ColorData != null;
+            && grabbedItem.ItemData.ColorData != null
+            && grabbedItem.ItemData.TypeData == recoloringItemType;
     }
 
     public IGrabbable InteractWith(IGrabbable grabbedObject)
