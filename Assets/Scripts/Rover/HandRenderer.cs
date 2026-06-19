@@ -12,6 +12,8 @@ public class HandRenderer : MonoBehaviour
     [SerializeField] float holdingDistance;
     [SerializeField] float emptyHandRestingDistance;
     [SerializeField] Sprite[] handSprites = new Sprite[4];
+    [SerializeField] SpriteRenderer cellHighlight;
+    [SerializeField] bool isCellHighlightEnabled;
 
     private int playerIndex;
 
@@ -38,6 +40,7 @@ public class HandRenderer : MonoBehaviour
         UpdateHandPosition();
         UpdateHandSprite();
         UpdateLine();
+        UpdateCellHightlight();
     }
     void UpdateHandPosition()
     {
@@ -70,6 +73,20 @@ public class HandRenderer : MonoBehaviour
 
         playerIndex = index;
         spriteRenderer.sprite = handSprites[playerIndex];
+    }
+
+    void UpdateCellHightlight()
+    {
+        if (hand.HandState != HandState.Extending 
+            || hand.CurrentDistance < visibleDistance
+            || !isCellHighlightEnabled)
+        {
+            cellHighlight.enabled = false;
+            return;
+        }
+        cellHighlight.enabled = true;
+        var pos = hand.LevelGrid.SnapToGrid(TargetPosition);
+        cellHighlight.transform.position = pos;
     }
 
     void OnHandGrabbedObject(IGrabbable obj)
