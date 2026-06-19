@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class DoorRenderer : MonoBehaviour
 {
-    [SerializeField] Sprite openSprite;
-    [SerializeField] Sprite closedSprite;
+    [SerializeField] DoorSpriteRepo spriteRepo;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Door door;
+    [SerializeField] Item item;
 
     void Update()
     {
-        var sprite = door.IsOpen ? openSprite : closedSprite;
+        var color = item.ColorData;
+        var doorSprites = spriteRepo.GetSprites(color);
+        var sprite = door.IsOpen ? doorSprites.OpenDoorSprite : doorSprites.ClosedDoorSprite;
         spriteRenderer.sprite = sprite;
     }
 }

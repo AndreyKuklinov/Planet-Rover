@@ -8,83 +8,111 @@ public class TimedEmitter : MonoBehaviour
 {
     const bool RESET_WHEN_OTHER_EMITTER_TRIGGERS = true;
 
+    [SerializeField] ItemColorDataEventChannel roomSignalChanged;
     [SerializeField] SignalEmitter emitter;
-    [SerializeField] Signal[] signals;
-    [SerializeField] float signalInterval;
-    [SerializeField] float pauseDuration;
+    [SerializeField] List<SignalInterval> signalIntervals;
     [SerializeField] Image progressBar;
 
-    private Coroutine timer;
-    private int signalIndex;
+    private Coroutine emissionCoroutine;
+    private int intervalIndex;
+
+    ItemColorData NextSignal
+        => signalIntervals[intervalIndex].Signal;
+
+    float NextIntervalDuration
+        => signalIntervals[intervalIndex].TimeBeforeActivation;
 
     void Start()
     {
+        if (signalIntervals == null || signalIntervals.Count == 0)
+        {
+            Debug.LogWarning("TimedEmitter has no signal intervals assigned!", this);
+            return;
+        }
+
         StartTimer();
-        Room.SignalChanged += OnSignalChanged;
+        if (roomSignalChanged != null)
+            roomSignalChanged.Raised += OnSignalChanged;
     }
 
     void OnDestroy()
     {
-        Room.SignalChanged -= OnSignalChanged;
+        if (roomSignalChanged != null)
+            roomSignalChanged.Raised -= OnSignalChanged;
     }
 
-    private void OnSignalChanged(Signal _)
+    private void OnSignalChanged(ItemColorData _)
     {
-        if (!RESET_WHEN_OTHER_EMITTER_TRIGGERS || progressBar.fillAmount == 1)
+        if (!RESET_WHEN_OTHER_EMITTER_TRIGGERS || (progressBar != null && Mathf.Approximately(progressBar.fillAmount, 1f)))
             return;
+
         StartTimer();
     }
 
     private void StartTimer()
     {
-        if (progressBar == null)
-            return;
+        UpdateColor();
 
-        if (signalInterval <= 0)
-            Debug.LogWarning("Signal Interval must be greater than 0. ", this);
+        if (progressBar != null)
+            progressBar.fillAmount = 0f;
 
-        progressBar.fillAmount = 0f;
+        if (emissionCoroutine != null)
+            StopCoroutine(emissionCoroutine);
 
-        if (timer != null)
-            StopCoroutine(timer);
-
-        timer = StartCoroutine(EmissionCycleRoutine());
+        emissionCoroutine = StartCoroutine(EmissionCycleRoutine());
     }
 
     private IEnumerator EmissionCycleRoutine()
     {
-        float timer = 0f;
+        float elapsedTime = 0f;
+        float duration = NextIntervalDuration;
 
-        while (timer < signalInterval)
+        if (duration <= 0f)
         {
-            timer += Time.deltaTime;
-            progressBar.fillAmount = timer / signalInterval;
+            if (progressBar != null) progressBar.fillAmount = 1f;
             yield return null;
         }
+        else
+        {
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                if (progressBar != null)
+                {
+                    progressBar.fillAmount = elapsedTime / duration;
+                }
+                yield return null;
+            }
+        }
 
-        progressBar.fillAmount = 1f;
-        emitter.Emit(signals[signalIndex]);
-        yield return new WaitForSeconds(pauseDuration);
+        if (progressBar != null)
+            progressBar.fillAmount = 1f;
+
+        if (emitter != null)
+            emitter.Emit(NextSignal);
+
         ChangeSignal();
         StartTimer();
     }
 
-    private void OnValidate()
-    {
-        UpdateColor();
-    }
-
     private void UpdateColor()
     {
-        if (progressBar == null || signals == null || signals.Length == 0)
+        if (progressBar == null || signalIntervals == null || signalIntervals.Count == 0)
             return;
 
-        progressBar.color = SignalColor.GetColor(signals[signalIndex]);
+        progressBar.color = NextSignal.Color;
     }
 
     private void ChangeSignal()
     {
-        signalIndex = (signalIndex + 1) % signals.Length;
+        intervalIndex = (intervalIndex + 1) % signalIntervals.Count;
         UpdateColor();
+    }
+
+    [Serializable]
+    public struct SignalInterval
+    {
+        public ItemColorData Signal;
+        public float TimeBeforeActivation;
     }
 }

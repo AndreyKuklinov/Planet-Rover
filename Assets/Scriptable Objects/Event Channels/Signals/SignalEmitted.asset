@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb77037527959e648a18661e04386c2b, type: 3}
-  m_Name: Color A
+  m_Script: {fileID: 11500000, guid: a469516e008f20348a21bb0abea60e68, type: 3}
+  m_Name: SignalEmitted
   m_EditorClassIdentifier: 
-  <Color>k__BackingField: {r: 0.95686275, g: 0.5372549, b: 0.37254903, a: 1}

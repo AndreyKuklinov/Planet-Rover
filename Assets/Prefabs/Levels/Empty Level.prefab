@@ -278,6 +278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 4540148692922112564}
   swapper: {fileID: 1485926958746475265}
+  signalEmitted: {fileID: 11400000, guid: 3af475b0d38a4ee43bff33cd48e90a8c, type: 2}
+  roomSignalChanged: {fileID: 11400000, guid: 8996103ba6cb5a0438a0be9c53c79151, type: 2}
 --- !u!114 &1485926958746475265
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class SignalDoorController : MonoBehaviour
 {
-    [SerializeField] HasSignal signal;
+    [SerializeField] ItemColorDataEventChannel roomSignalChanged;
+    [SerializeField] Item item;
     [SerializeField] Door door;
 
     void Start()
     {
-        Room.SignalChanged += OnSignalChanged;
+        roomSignalChanged.Raised += OnSignalChanged;
     }
 
     void OnDestroy()
     {
-        Room.SignalChanged -= OnSignalChanged;
+        roomSignalChanged.Raised -= OnSignalChanged;
     }
 
-    private void OnSignalChanged(Signal signalType)
+    private void OnSignalChanged(ItemColorData signal)
     {
-        door.SetOpen(signalType == signal.SignalType);
+        door.SetOpen(item.ColorData == signal);
     }
 }

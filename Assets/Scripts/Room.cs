@@ -7,25 +7,20 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public static event Action<Room> RoomStarted;
-    public static event Action<Signal> SignalChanged;
 
     [SerializeField] RoomGrid grid;
     [SerializeField] Swapper swapper;
-
-    readonly HashSet<SignalEmitter> emitters = new();
+    [SerializeField] ItemColorDataEventChannel signalEmitted;
+    [SerializeField] ItemColorDataEventChannel roomSignalChanged;
 
     void Awake()
     {
-        SignalEmitter.EmitterSpawned += OnEmitterSpawned;
-        SignalEmitter.SignalEmitted += OnSignalChanged;
-        SignalEmitter.EmitterDestroyed += OnEmitterDestroyed;
+        signalEmitted.Raised += OnSignalEmitted;
     }
 
     void OnDestroy()
     {
-        SignalEmitter.EmitterSpawned -= OnEmitterSpawned;
-        SignalEmitter.SignalEmitted -= OnSignalChanged;
-        SignalEmitter.EmitterDestroyed -= OnEmitterDestroyed;
+        signalEmitted.Raised -= OnSignalEmitted;
     }
 
     void Start()
@@ -41,18 +36,8 @@ public class Room : MonoBehaviour
         grid.AttachAllObjects();
     }
 
-    private void OnSignalChanged(Signal _obj)
+    private void OnSignalEmitted(ItemColorData obj)
     {
-        SignalChanged?.Invoke(_obj);
-    }
-
-    private void OnEmitterSpawned(SignalEmitter obj)
-    {
-        emitters.Add(obj);
-    }
-
-    private void OnEmitterDestroyed(SignalEmitter obj)
-    {
-        emitters.Remove(obj);
+        roomSignalChanged.Raise(obj);
     }
 }

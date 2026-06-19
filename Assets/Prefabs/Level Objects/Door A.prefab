@@ -14,10 +14,9 @@ GameObject:
   - component: {fileID: 5958832473240844717}
   - component: {fileID: 1831786196606055034}
   - component: {fileID: 838244046898566622}
-  - component: {fileID: 7944111447786085388}
-  - component: {fileID: 1404081635508915415}
+  - component: {fileID: 4261212395563941234}
   m_Layer: 0
-  m_Name: Door
+  m_Name: Door A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 530406101
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 72e2fd9f8c5299f44944215a16577834, type: 3}
-  m_Color: {r: 0.5882353, g: 0.3372549, b: 0.63529414, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 2cc855462472a8c46a90f1b786de5e2e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,10 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35590e32e78eff44e88b7f716ccfc098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openSprite: {fileID: 21300000, guid: 1934ba70a9304db48bc2d10877291e7d, type: 3}
-  closedSprite: {fileID: 21300000, guid: 72e2fd9f8c5299f44944215a16577834, type: 3}
+  spriteRepo: {fileID: 11400000, guid: ada14b449fc3277489d5814ae1e8f68b, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
   door: {fileID: 5958832473240844717}
+  item: {fileID: 4261212395563941234}
 --- !u!114 &838244046898566622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,9 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2dac16da6afdf4fbaccc939676c196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signal: {fileID: 7944111447786085388}
+  roomSignalChanged: {fileID: 11400000, guid: 8996103ba6cb5a0438a0be9c53c79151, type: 2}
+  item: {fileID: 4261212395563941234}
   door: {fileID: 5958832473240844717}
---- !u!114 &7944111447786085388
+--- !u!114 &4261212395563941234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,21 +154,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8926348560427703860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752916a813020b1439f604b0af1cc655, type: 3}
+  m_Script: {fileID: 11500000, guid: 3acdebd506b73654eaa92e00b7471570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SignalType>k__BackingField: 0
---- !u!114 &1404081635508915415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8926348560427703860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc066f250afad94aa5f338ab9e18d3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  <ItemData>k__BackingField: {fileID: 11400000, guid: 4603d06b7855db74fab297c47d3d3af2, type: 2}
+  itemDataRepo: {fileID: 11400000, guid: b51b4f34d01c6a84faafd85c5b03d319, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
-  signal: {fileID: 7944111447786085388}

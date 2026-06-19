@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ButtonEmitter : MonoBehaviour, IInteractable
 {
+    [SerializeField] Item item;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SignalEmitter emitter;
-    [SerializeField] HasSignal signal;
 
     public bool CanInteractWith(IGrabbable grabbedObject)
     {
@@ -16,7 +16,7 @@ public class ButtonEmitter : MonoBehaviour, IInteractable
 
     public IGrabbable InteractWith(IGrabbable grabbedObject)
     {
-        emitter.Emit(signal.SignalType);
+        emitter.Emit(item.ColorData);
         return grabbedObject;
     }
 }
