@@ -15,4 +15,13 @@ MonoBehaviour:
   <IsTutorial>k__BackingField: 1
   roomCountToComplete: 0
   <Rooms>k__BackingField:
+  - {fileID: 11400000, guid: 74746a346f327fe4fa9314c0f0f8e9cd, type: 2}
+  - {fileID: 11400000, guid: 23be0a0ae141ba34d858fbccfe057345, type: 2}
+  - {fileID: 11400000, guid: ef3524aecbf24d54598caec829a0f76e, type: 2}
+  - {fileID: 11400000, guid: c1a3e56a10f00604f880c97e4b585189, type: 2}
+  - {fileID: 11400000, guid: d2624e064aafe0749bbdab3e829145ca, type: 2}
+  - {fileID: 11400000, guid: afbf21c41b7e3d04db239a1e329f05f3, type: 2}
+  - {fileID: 11400000, guid: 8c33a629718c11d45a54f59974c2f230, type: 2}
+  - {fileID: 11400000, guid: bd8b66381ab8e3d449cc70e0275e969f, type: 2}
+  - {fileID: 11400000, guid: a30357701512c38498d8550599e7b115, type: 2}
   - {fileID: 11400000, guid: 46fce9575d6624f4081f5a7adae3e215, type: 2}
