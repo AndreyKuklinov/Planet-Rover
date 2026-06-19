@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd69a737af9bc764bbee4bebf1030acb, type: 3}
+  m_Name: Saw Neutral
+  m_EditorClassIdentifier: 
+  <TypeData>k__BackingField: {fileID: 11400000, guid: cd0e11e3dccd7814a98e9afcf75c5910, type: 2}
+  <ColorData>k__BackingField: {fileID: 11400000, guid: 60ff6edd8b8677843b6fe995143d1d6d, type: 2}
+  <MainSprite>k__BackingField: {fileID: 21300000, guid: ac04a235413e49a449e0d7eb3f526d95, type: 3}
