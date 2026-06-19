@@ -18,7 +18,7 @@ public class DeliveryIconRepo : ScriptableObject
                 return recipe.Icon;
         }
 
-        throw new InvalidOperationException("No icon found in repo to be used with deliverable " + itemData);
+        return itemData.MainSprite;
     }
 
     [Serializable]

@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 953d75ffc8e7cf649acdccf1d3466cc7, type: 3}
-  m_Name: Liquid A
+  m_Script: {fileID: 11500000, guid: 7e1b4976870343144ab9dea42ea18f04, type: 3}
+  m_Name: Flower
   m_EditorClassIdentifier: 
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 5de12b03a9632f24ca65d21be70a2acb, type: 3}
-  <ItemData>k__BackingField: {fileID: 11400000, guid: 09f31c6b8e5a690408c397a23c590d41, type: 2}

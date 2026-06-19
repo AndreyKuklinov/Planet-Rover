@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -7,7 +8,7 @@ public class Item : MonoBehaviour, IHasItemData, IRecolorable
     [SerializeField] ItemDataRepo itemDataRepo;
     [SerializeField] SpriteRenderer spriteRenderer;
 
-    public ItemColorData CurrentColor
+    public ItemColorData ColorData
         => ItemData.ColorData;
 
     public bool CanBeRecolored(ItemColorData _)
@@ -17,8 +18,12 @@ public class Item : MonoBehaviour, IHasItemData, IRecolorable
 
     public void Recolor(ItemColorData newColor)
     {
-        var t = ItemData.TypeData;
-        var newItemData = itemDataRepo.GetItemData(t, newColor);
+        ChangeData(ItemData.TypeData, newColor);
+    }
+
+    public void ChangeData(ItemTypeData typeData, ItemColorData colorData)
+    {
+        var newItemData = itemDataRepo.GetItemData(typeData, colorData);
         ItemData = newItemData;
         spriteRenderer.sprite = ItemData.MainSprite;
     }

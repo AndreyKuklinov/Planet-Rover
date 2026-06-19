@@ -18,7 +18,7 @@ public class Cloud : MonoBehaviour, IInteractable, IPassable
             || !grabbedObject.GridObject.TryGetComponent<IRecolorable>(out var recolorable))
             return false;
 
-        return recolorable.CanBeRecolored(ColorData) && recolorable.CurrentColor != ColorData;
+        return recolorable.CanBeRecolored(ColorData) && recolorable.ColorData != ColorData;
     }
 
     public IGrabbable InteractWith(IGrabbable grabbedObject)

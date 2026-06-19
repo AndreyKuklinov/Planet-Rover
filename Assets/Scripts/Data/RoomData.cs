@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Objects/Room Data")]
+[CreateAssetMenu(menuName = "Levels/Room Data")]
 public class RoomData : ScriptableObject
 {
     [field: SerializeField] public Room Room { get; private set; }

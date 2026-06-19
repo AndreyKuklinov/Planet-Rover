@@ -19,7 +19,7 @@ public class Bucket : MonoBehaviour, IHasItemData, IRecolorable
     public ItemData ItemData
         => IsFilled ? CurrentLiquid : emptyBucketData;
 
-    public ItemColorData CurrentColor =>
+    public ItemColorData ColorData =>
         ItemData.ColorData;
 
     public bool CanBeRecolored(ItemColorData _)
