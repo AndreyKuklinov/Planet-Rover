@@ -11,7 +11,7 @@ public class ButtonEmitter : MonoBehaviour, IInteractable
 
     public bool CanInteractWith(IGrabbable grabbedObject)
     {
-        return true;
+        return !item.ColorData.IsNeutral;
     }
 
     public IGrabbable InteractWith(IGrabbable grabbedObject)

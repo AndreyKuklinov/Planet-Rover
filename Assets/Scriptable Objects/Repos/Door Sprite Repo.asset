@@ -19,3 +19,6 @@ MonoBehaviour:
   - ColorData: {fileID: 11400000, guid: f7e8cd71835097a4a8febf0737667d0f, type: 2}
     OpenDoorSprite: {fileID: 21300000, guid: bc70c2e55efb6464da4f84d7743fcae1, type: 3}
     ClosedDoorSprite: {fileID: 21300000, guid: a9d1cb425703b2148b56e1f2cf95dbb8, type: 3}
+  - ColorData: {fileID: 11400000, guid: 60ff6edd8b8677843b6fe995143d1d6d, type: 2}
+    OpenDoorSprite: {fileID: 21300000, guid: c7f5ced79d472294dbbdf70f93cba39e, type: 3}
+    ClosedDoorSprite: {fileID: 21300000, guid: 9018c8db74ddbcb4aafb1b329b2dd74b, type: 3}

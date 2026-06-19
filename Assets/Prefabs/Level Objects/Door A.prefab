@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1831786196606055034}
   - component: {fileID: 838244046898566622}
   - component: {fileID: 4261212395563941234}
+  - component: {fileID: 8455627069788500874}
   m_Layer: 0
   m_Name: Door A
   m_TagString: Untagged
@@ -160,3 +161,17 @@ MonoBehaviour:
   <ItemData>k__BackingField: {fileID: 11400000, guid: 4603d06b7855db74fab297c47d3d3af2, type: 2}
   itemDataRepo: {fileID: 11400000, guid: b51b4f34d01c6a84faafd85c5b03d319, type: 2}
   spriteRenderer: {fileID: 3297792618599156248}
+--- !u!114 &8455627069788500874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926348560427703860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91959ba7a5c2a0e4aaff98521011d228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 4261212395563941234}
+  recoloringItemType: {fileID: 11400000, guid: c7856b34987755f4ea3fd6c1f0155813, type: 2}

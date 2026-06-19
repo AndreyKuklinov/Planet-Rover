@@ -9,16 +9,9 @@ public class SignalEmitter : MonoBehaviour
 
     public void Emit(ItemColorData signal)
     {
+        if (signal.IsNeutral)
+            return;
+
         signalEmitted.Raise(signal);
-    }
-
-    void Start()
-    {
-        //EmitterSpawned?.Invoke(this);
-    }
-
-    private void OnDestroy()
-    {
-        //EmitterDestroyed?.Invoke(this);
     }
 }
