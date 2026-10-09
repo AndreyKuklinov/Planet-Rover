@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
   m_Name: Level Bucket
   m_EditorClassIdentifier: 
-  <IsTutorial>k__BackingField: 0
+  <IsRandomOrder>k__BackingField: 1
   roomCountToComplete: 4
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: 03fa415e41505454c8ba8fa616b29f9e, type: 2}
-  - {fileID: 11400000, guid: db52749f36b853b40b2b4220fffc09c9, type: 2}
+  - {fileID: 1336206892249136254, guid: c85b6bd2b5fe8224f8ef1a446545dbf0, type: 3}
+  - {fileID: 1336206892249136254, guid: 618443e1e61cc5f43b8b15dcfa1cd811, type: 3}

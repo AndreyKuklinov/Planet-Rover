@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -8,112 +6,94 @@ public class LevelManager : MonoBehaviour
     public event Action<LevelData> LevelFinished;
     public event Action LevelStarted;
     public event Action RoomFinished;
-
-    public LevelData CurrentLevel {  get; private set; }
+    public LevelData CurrentLevel { get; private set; }
     public int CompletedRoomCount { get; private set; }
+    public int FinalStars { get; private set; }
+    public bool IsLevelRunning => CurrentLevel != null;
+    public bool IsCurrentRoomTimed => IsLevelRunning && levelLoader.CurrentRoom.IsTimed;
+    public float StandardTime => levelLoader.StandardTime;
+    public int AchievableStars => starConfig.GetStars(roomTimer.ElapsedTime, StandardTime);
+    public float GetStarFill(int starNumber)
+        => starConfig.GetStarFill(starNumber, roomTimer.ElapsedTime, StandardTime);
 
     [SerializeField] LevelLoader levelLoader;
-    [SerializeField] RoomLoader roomLoader;
     [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
     [SerializeField] RoomTimer roomTimer;
-    [SerializeField] VoidEventChannel roomExitTriggered;
+    [SerializeField] StarConfig starConfig;
+    private bool roomCompletionPending;
 
-    public bool IsLevelRunning
-        => CurrentLevel != null;
-
-    void OnEnable()
+    private void OnEnable()
     {
-        ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesInRoomCompleted;
-        roomExitTriggered.Raised += OnRoomExitTriggered;
+        ObjectiveTracker.AllObjectivesWereFulfilled += OnAllObjectivesCompleted;
         roomTimer.TimeOut += OnTimeOut;
-        roomLoader.LoadedRoom += OnRoomLoaded;
     }
-
-    void OnDisable()
+    private void OnDisable()
     {
-        ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesInRoomCompleted;
+        ObjectiveTracker.AllObjectivesWereFulfilled -= OnAllObjectivesCompleted;
         roomTimer.TimeOut -= OnTimeOut;
-        roomLoader.LoadedRoom -= OnRoomLoaded;
-        roomExitTriggered.Raised -= OnRoomExitTriggered;
     }
-
-    public void StartLevel(LevelData levelData)
+    public void StartLevel(LevelData level)
     {
-        CurrentLevel = levelData;
+        if (starConfig == null || !starConfig.IsValid)
+            throw new InvalidOperationException("Assign a valid shared Star Config to LevelManager.");
+        levelLoader.SetLevelData(level);
+        CurrentLevel = level;
         CompletedRoomCount = 0;
-        levelLoader.SetLevelData(levelData);
+        FinalStars = 0;
+        roomCompletionPending = false;
+        roomTimer.StartLevelTime(StandardTime * starConfig.MaximumMultiplier);
         LevelStarted?.Invoke();
         StartNextRoom();
     }
-
     public void StopCurrentLevel()
     {
         if (!IsLevelRunning)
-            throw new InvalidOperationException("Trying to stop the level, when no level is active");
-
-        EndLevel();
+            throw new InvalidOperationException("No active level.");
+        EndLevel(0);
     }
-
-    public void RestartLevel()
-    {
-        StartLevel(CurrentLevel);
-    }
+    public void RestartLevel() => StartLevel(CurrentLevel);
 
     private void StartNextRoom()
     {
-        //Debug.Log("Started next room");
+        roomCompletionPending = false;
+        ObjectiveTracker.ClearObjectives();
         levelLoader.LoadNextRoom();
-        StartRoomTimer();
+        roomTimer.SetRoomTimed(levelLoader.CurrentRoom.IsTimed);
     }
-
-    private void StartRoomTimer()
+    private void OnAllObjectivesCompleted() => roomCompletionPending = IsLevelRunning;
+    private void OnTimeOut()
     {
-        if (!CurrentLevel.IsTimeLimited)
+        if (IsLevelRunning)
+            EndLevel(0);
+    }
+    private void LateUpdate()
+    {
+        // Defer transitions until item interactions and objective registration have finished.
+        if (!IsLevelRunning || !roomCompletionPending)
             return;
-
-        roomTimer.StartRoomTime(
-            CompletedRoomCount, 
-            CurrentLevel.RoomCountToComplete, 
-            levelLoader.CurrentRoomData.BaseTimeLimit
-        );
-    }
-
-    private void EndLevel()
-    {
-        LevelFinished?.Invoke(CurrentLevel);
-        CurrentLevel = null;
-        roomTimer.StopTime();
-    }
-
-    private void EndRoom()
-    {
-        if (CurrentLevel == null)
+        roomCompletionPending = false;
+        if (ObjectiveTracker.AllObjectives.Count == 0 || ObjectiveTracker.FulfilledProportion < 1f)
             return;
-
+        if (roomTimer.HasExpired)
+        {
+            EndLevel(0);
+            return;
+        }
         CompletedRoomCount++;
         RoomFinished?.Invoke();
         if (CompletedRoomCount < CurrentLevel.RoomCountToComplete)
             StartNextRoom();
         else
-            EndLevel();
+            EndLevel(AchievableStars);
     }
-
-    private void OnTimeOut()
+    private void EndLevel(int stars)
     {
-        EndRoom();
-    }
-
-    private void OnAllObjectivesInRoomCompleted()
-    {
-        //EndRoom();
-    }
-    private void OnRoomExitTriggered()
-    {
-        EndRoom();
-    }
-
-    private void OnRoomLoaded()
-    {
-        ObjectiveTracker.ClearObjectives();
+        var level = CurrentLevel;
+        FinalStars = stars;
+        CurrentLevel = null;
+        roomCompletionPending = false;
+        roomTimer.StopTime();
+        SaveDataManager.AddStars(level, stars);
+        LevelFinished?.Invoke(level);
     }
 }

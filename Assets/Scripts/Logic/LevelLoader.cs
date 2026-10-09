@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,42 +6,43 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
     [SerializeField] RoomLoader roomLoader;
+    private Queue<Room> roomQueue;
+    public Room CurrentRoom { get; private set; }
+    public float StandardTime { get; private set; }
 
-    public RoomData CurrentRoomData { get; private set; }
-
-    private LevelData currentLevel;
-    private Queue<RoomData> roomQueue;
-
-    public void SetLevelData(LevelData levelData)
+    public void SetLevelData(LevelData level)
     {
-        currentLevel = levelData;
-        roomQueue = CreateRoomQueue();
+        if (level.Rooms == null || level.Rooms.Length == 0
+            || level.Rooms.Any(room => room == null) || level.RoomCountToComplete <= 0)
+            throw new InvalidOperationException("Level must contain room prefabs and a positive room count.");
+
+        var sequence = new List<Room>();
+        Room previous = null;
+        while (sequence.Count < level.RoomCountToComplete)
+        {
+            var batch = level.IsRandomOrder
+                ? level.Rooms.OrderBy(_ => UnityEngine.Random.value).ToArray()
+                : level.Rooms.ToArray();
+            if (level.IsRandomOrder && batch.Length > 1 && batch[0] == previous)
+                (batch[0], batch[batch.Length - 1]) = (batch[batch.Length - 1], batch[0]);
+            foreach (var room in batch)
+            {
+                if (room.IsTimed && (room.StandardTime <= 0f
+                    || float.IsNaN(room.StandardTime) || float.IsInfinity(room.StandardTime)))
+                    throw new InvalidOperationException("Timed rooms must have a finite positive standard time.");
+                sequence.Add(room);
+                previous = room;
+                if (sequence.Count == level.RoomCountToComplete)
+                    break;
+            }
+        }
+        StandardTime = sequence.Where(room => room.IsTimed).Sum(room => room.StandardTime);
+        roomQueue = new Queue<Room>(sequence);
     }
 
     public void LoadNextRoom()
     {
-        if (roomQueue == null || roomQueue.Count == 0)
-            roomQueue = CreateRoomQueue();
-
-        CurrentRoomData = roomQueue.Dequeue();
-        roomLoader.LoadRoom(CurrentRoomData.Room);
-    }
-
-    private Queue<RoomData> CreateRoomQueue()
-    {
-        if (!currentLevel.IsOrderRandom)
-        {
-            return new Queue<RoomData>(currentLevel.Rooms);
-        }
-
-        var rooms = currentLevel.Rooms.OrderBy(x => Random.value).ToArray();
-
-        if (rooms.Length > 1 && CurrentRoomData != null && rooms[0] == CurrentRoomData)
-        {
-            var lastIndex = rooms.Length - 1;
-            (rooms[lastIndex], rooms[0]) = (rooms[0], rooms[lastIndex]);
-        }
-
-        return new Queue<RoomData>(rooms);
+        CurrentRoom = roomQueue.Dequeue();
+        roomLoader.LoadRoom(CurrentRoom);
     }
 }

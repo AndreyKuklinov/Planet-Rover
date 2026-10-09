@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    [field: SerializeField] public bool IsTimed { get; private set; }
+    [field: SerializeField, Min(0.01f)] public float StandardTime { get; private set; } = 30f;
     public static event Action<Room> RoomStarted;
 
     [SerializeField] RoomGrid grid;

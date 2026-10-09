@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 3297792618599156248}
   - component: {fileID: 5614948424447463873}
   - component: {fileID: 7943294138656579724}
-  - component: {fileID: 6663840502670259335}
-  - component: {fileID: 2602153082687850015}
   m_Layer: 0
   m_Name: RoomExit
   m_TagString: Untagged
@@ -100,12 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e572266da7f8b46b04ca41dd93d3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomExitTriggered: {fileID: 11400000, guid: 2ae69c58d8b1de041a9b2233c1937a58, type: 2}
-  objective: {fileID: 6663840502670259335}
-  objectiveTracker: {fileID: 2602153082687850015}
-  disabledSprite: {fileID: 21300000, guid: a53b7a445723cd54baec660975c8a5d9, type: 3}
-  enabledSprite: {fileID: 21300000, guid: a5a0ce4dfdcd7f94c8b45416b46803f0, type: 3}
-  spriteRenderer: {fileID: 3297792618599156248}
 --- !u!114 &7943294138656579724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,31 +110,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708cb62677552554faebe3084d85a0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6663840502670259335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8926348560427703860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb06e8b129b74445aaca3101d97b767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}
-  objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
---- !u!114 &2602153082687850015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8926348560427703860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b5475075480e2438e1b23ab7dd52f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveCreated: {fileID: 11400000, guid: 3eeb3742a9846684e9d04b3f84cb8f5c, type: 2}
-  objectiveCompleted: {fileID: 11400000, guid: 28ea6e3b31c60a34f94a968e3c4c9fec, type: 2}

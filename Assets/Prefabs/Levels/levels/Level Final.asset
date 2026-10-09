@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
   m_Name: Level Final
   m_EditorClassIdentifier: 
-  <IsTutorial>k__BackingField: 1
-  roomCountToComplete: 0
+  <IsRandomOrder>k__BackingField: 0
+  roomCountToComplete: 10
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: 74746a346f327fe4fa9314c0f0f8e9cd, type: 2}
-  - {fileID: 11400000, guid: 23be0a0ae141ba34d858fbccfe057345, type: 2}
-  - {fileID: 11400000, guid: ef3524aecbf24d54598caec829a0f76e, type: 2}
-  - {fileID: 11400000, guid: c1a3e56a10f00604f880c97e4b585189, type: 2}
-  - {fileID: 11400000, guid: d2624e064aafe0749bbdab3e829145ca, type: 2}
-  - {fileID: 11400000, guid: afbf21c41b7e3d04db239a1e329f05f3, type: 2}
-  - {fileID: 11400000, guid: 8c33a629718c11d45a54f59974c2f230, type: 2}
-  - {fileID: 11400000, guid: bd8b66381ab8e3d449cc70e0275e969f, type: 2}
-  - {fileID: 11400000, guid: a30357701512c38498d8550599e7b115, type: 2}
-  - {fileID: 11400000, guid: 46fce9575d6624f4081f5a7adae3e215, type: 2}
+  - {fileID: 1336206892249136254, guid: 785b19ed138d179428208e69098edb74, type: 3}
+  - {fileID: 1336206892249136254, guid: 23a09d4e99f5cc1449a151a1a00c911c, type: 3}
+  - {fileID: 1336206892249136254, guid: 6f0dda3d6cdad7242a81a0ba9ceb4d6c, type: 3}
+  - {fileID: 1336206892249136254, guid: 17caabf667aa8dc4e9ba25a42ae28d43, type: 3}
+  - {fileID: 1336206892249136254, guid: 3ba7582fd7d851144b46aa5f35e1f5d4, type: 3}
+  - {fileID: 1336206892249136254, guid: 8be9fb95f8319dc4299a772c2380f39c, type: 3}
+  - {fileID: 1336206892249136254, guid: 53ff5590ed6ed4c4abea00a9a784ada7, type: 3}
+  - {fileID: 1336206892249136254, guid: c5b3b94148e61324f960d8345f8f1d14, type: 3}
+  - {fileID: 1336206892249136254, guid: 656a1feb97ea719449390ff5ca4e2c49, type: 3}
+  - {fileID: 1336206892249136254, guid: 7b3a1ad18067b174382b7177b86aa8bb, type: 3}

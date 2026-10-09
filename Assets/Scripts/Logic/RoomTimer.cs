@@ -1,40 +1,25 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Retains the existing scene component and timer reference, now timing a whole level.
 public class RoomTimer : MonoBehaviour
 {
     public event Action TimeOut;
-
-    public const float STARTING_MULTIPLIER = 1f;
-    public const float FINAL_MULTIPLIER = 1.5f;
-
     [SerializeField] Timer timer;
+    public float ElapsedTime => timer.Duration - timer.TimeRemaining;
+    public bool HasExpired => timer.Duration > 0f && timer.TimeRemaining <= 0f;
 
-    void Start()
+    private void OnEnable() => timer.TimeOut += OnTimeOut;
+    private void OnDisable() => timer.TimeOut -= OnTimeOut;
+    public void StartLevelTime(float duration)
     {
-        timer.TimeOut += OnTimeOut;
+        if (duration > 0f)
+            timer.StartTime(duration);
+        else
+            timer.StopTime();
+        timer.SetPaused(true);
     }
-
-    public void StartRoomTime(int roomIndex, int totalRooms, float baseTimeLimit)
-    {
-        var progress = (float)roomIndex / totalRooms;
-        var currentMultiplier = Mathf.Lerp(
-            STARTING_MULTIPLIER, 
-            FINAL_MULTIPLIER, 
-            progress);
-
-        timer.StartTime(baseTimeLimit / currentMultiplier);
-    }
-
-    public void StopTime()
-    {
-        timer.StopTime();
-    }
-
-    private void OnTimeOut()
-    {
-        TimeOut?.Invoke();
-    }
+    public void SetRoomTimed(bool isTimed) => timer.SetPaused(!isTimed);
+    public void StopTime() => timer.StopTime();
+    private void OnTimeOut() => TimeOut?.Invoke();
 }

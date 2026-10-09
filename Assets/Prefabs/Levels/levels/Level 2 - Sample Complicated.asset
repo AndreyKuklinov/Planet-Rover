@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
   m_Name: Level 2 - Sample Complicated
   m_EditorClassIdentifier: 
-  <IsTutorial>k__BackingField: 0
+  <IsRandomOrder>k__BackingField: 1
   roomCountToComplete: 5
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: c44749ae05861ac43808daba2d2930f4, type: 2}
-  - {fileID: 11400000, guid: 5f918833b19a1fa4980016e19c4d9af2, type: 2}
-  - {fileID: 11400000, guid: 4f6f746f937f3f84e8dd724875d7403d, type: 2}
-  - {fileID: 11400000, guid: 2827bc673bd13a1408ea25d19d68eaa0, type: 2}
+  - {fileID: 1336206892249136254, guid: 5f54e11fec06aaa488ef5abded5b1514, type: 3}
+  - {fileID: 1336206892249136254, guid: 5bcf627fdb145fd4fbf49673fa6cebf3, type: 3}
+  - {fileID: 1336206892249136254, guid: bba86dc4f1a61dc4e8cf7e104f478963, type: 3}
+  - {fileID: 1336206892249136254, guid: 7e4c0665c1edb5445a96ee093897a62f, type: 3}

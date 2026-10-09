@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
   m_Name: Tutorial Bucket
   m_EditorClassIdentifier: 
-  <IsTutorial>k__BackingField: 1
-  roomCountToComplete: 0
+  <IsRandomOrder>k__BackingField: 0
+  roomCountToComplete: 3
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: 41bc1ec11a645414c8206c04544979e3, type: 2}
-  - {fileID: 11400000, guid: d31a2418f29d9034a9e9d1192c76ebc3, type: 2}
-  - {fileID: 11400000, guid: 17be7109ff2e85747b72691d6ab91807, type: 2}
+  - {fileID: 1336206892249136254, guid: 1721c29584be77e4a9cd5cbaff69383a, type: 3}
+  - {fileID: 1336206892249136254, guid: 3a492b65330118742998f91d422fc5d7, type: 3}
+  - {fileID: 1336206892249136254, guid: 9713e8c14516b2d4e810671801f198d0, type: 3}

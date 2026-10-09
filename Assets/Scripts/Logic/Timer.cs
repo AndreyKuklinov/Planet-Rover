@@ -10,10 +10,14 @@ public class Timer : MonoBehaviour
     public float TimeRemaining { get; private set; }
     public float Duration { get; private set; }
     public bool IsTimeRunning { get; private set;  }
+    public bool IsPaused { get; private set; }
+
+    public void SetPaused(bool paused) => IsPaused = paused;
 
     public void StartTime(float duration)
     {
         Duration = duration;
+        IsPaused = false;
         IsTimeRunning = true;
         TimeRemaining = duration;
     }
@@ -21,13 +25,14 @@ public class Timer : MonoBehaviour
     public void StopTime()
     {
         IsTimeRunning = false;
+        IsPaused = false;
         TimeRemaining = 0;
         Duration = 0;
     }
 
     void Update()
     {
-        if (!IsTimeRunning)
+        if (!IsTimeRunning || IsPaused)
             return;
 
         TimeRemaining -= Time.deltaTime;

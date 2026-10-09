@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
   m_Name: LevelTest
   m_EditorClassIdentifier: 
-  <IsTutorial>k__BackingField: 0
+  <IsRandomOrder>k__BackingField: 1
   roomCountToComplete: 10
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: b5da78e68e7c43f48bcf54ceb27738ff, type: 2}
-  - {fileID: 11400000, guid: b24d43fd4cd00fa4fb8a954a1039a587, type: 2}
+  - {fileID: 1336206892249136254, guid: 634c2abd22dca0e47b6de35fe3e165ef, type: 3}
+  - {fileID: 1336206892249136254, guid: cfbe095143f9a084982a62ef4c633e54, type: 3}

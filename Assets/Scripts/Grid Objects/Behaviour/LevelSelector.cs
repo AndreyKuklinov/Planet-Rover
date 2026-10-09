@@ -27,8 +27,7 @@ public class LevelSelector : MonoBehaviour, IInteractable
 
     private void DisplayStars()
     {
-        var score = SaveDataManager.GetScore(levelData);
-        var stars = StarCalculator.GetNumberOfStars(score);
+        var stars = SaveDataManager.GetStars(levelData);
         starContainer.SetStars(stars);
     }
 }

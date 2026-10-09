@@ -41,6 +41,8 @@ public class ObjectiveTracker : MonoBehaviour
 
     private void OnObjectiveCreated(Objective objective)
     {
+        if (objective.GetComponent<RoomExit>() != null)
+            return;
         AllObjectives.Add(objective);
 
         //DebugObjectives();

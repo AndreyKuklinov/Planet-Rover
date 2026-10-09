@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
   m_Name: Tutorial Rocket
   m_EditorClassIdentifier: 
-  <IsTutorial>k__BackingField: 1
+  <IsRandomOrder>k__BackingField: 0
   roomCountToComplete: 4
   <Rooms>k__BackingField:
-  - {fileID: 11400000, guid: 2a467abf0689409458bfa8c24f77ee87, type: 2}
-  - {fileID: 11400000, guid: 04d90bdd470a2f74bacee9da2cc35b5c, type: 2}
-  - {fileID: 11400000, guid: 529da383fad0183438f9f49a9bf2f7e2, type: 2}
-  - {fileID: 11400000, guid: eb7401cf0deede34e96327a5d8ec3ca0, type: 2}
+  - {fileID: 1336206892249136254, guid: 176882ad274ac7e41b8d0bb0583af5ac, type: 3}
+  - {fileID: 1336206892249136254, guid: 75a027c597524744cad4cbaa66b4916c, type: 3}
+  - {fileID: 1336206892249136254, guid: 8eb080433d6c7fc42bdfad70f491f1bc, type: 3}
+  - {fileID: 1336206892249136254, guid: 361a12568ddde3945bc3088abeeb68c6, type: 3}

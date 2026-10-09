@@ -1,25 +1,10 @@
-using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Levels/Level Data")]
 public class LevelData : ScriptableObject
 {
-    [field: SerializeField] public bool IsTutorial { get; private set; } = false;
-    [SerializeField, HideIf("IsTutorial")] private int roomCountToComplete;
-
-    [field: SerializeField] public RoomData[] Rooms { get; private set;  }
-
-    public bool IsOrderRandom
-        => !IsTutorial;
-
-    public bool IsTimeLimited
-        => !IsTutorial;
-
-    public bool GoToLobbyWhenWon
-        => IsTutorial;
-
-    public int RoomCountToComplete
-        => IsTutorial ? Rooms.Length : roomCountToComplete;
+    [field: SerializeField] public bool IsRandomOrder { get; private set; }
+    [SerializeField, Min(1)] private int roomCountToComplete = 1;
+    [field: SerializeField] public Room[] Rooms { get; private set; }
+    public int RoomCountToComplete => roomCountToComplete;
 }

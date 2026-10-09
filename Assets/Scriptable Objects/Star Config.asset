@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eea7948337eb484449400d697672f66e, type: 3}
-  m_Name: sample barriers
+  m_Script: {fileID: 11500000, guid: d3ad0d925532c874983bee607639908b, type: 3}
+  m_Name: Star Config
   m_EditorClassIdentifier: 
-  <Room>k__BackingField: {fileID: 1336206892249136254, guid: 5bcf627fdb145fd4fbf49673fa6cebf3, type: 3}
-  <BaseTimeLimit>k__BackingField: 35
+  threeStarMultiplier: 1
+  twoStarMultiplier: 2
+  oneStarMultiplier: 3
