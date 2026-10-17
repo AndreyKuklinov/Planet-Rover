@@ -17,18 +17,9 @@ public class RoverHand : MonoBehaviour
     public Vector3 LastGrabbedPos { get; private set; }
 
     [SerializeField] Rover rover;
-    [SerializeField] float extendSpeed;
-    [SerializeField, Min(0.01f)]
-    [Tooltip("Extension speed through Interact Or Retract passable objects affected by Only Affect Interactable Passables.")]
-    float interactablePassThroughSpeed = 4f;
-    [SerializeField]
-    [Tooltip("Apply slowdown and snap-back to Interact Or Retract passables only when the hand can currently interact with or grab them. Disable to affect all passables in that mode. Continue To Free Cell objects are always exempt.")]
-    bool onlyAffectInteractablePassables = true;
-    [SerializeField]
-    [Tooltip("Snap an extended hand back to the cell before an affected passable object when the rover changes rows or columns.")]
-    bool enablePassableSnapBack = true;
-    [SerializeField] float retractSpeed;
-    [SerializeField] bool isAutoRetractEnabled;
+    [SerializeField] RoverHandConfig config;
+
+    public RoverHandConfig Config => config;
 
     Vector2Int? pendingMovementCell;
     Vector2Int? previousExtensionCell;
@@ -185,7 +176,7 @@ public class RoverHand : MonoBehaviour
         var maxDist = (LevelGrid.CellToWorld(stoppingCell) - transform.position).magnitude;
 
         CurrentDistance = Mathf.Min(CurrentDistance, maxDist);
-        var snappedBack = enablePassableSnapBack && changedLine && TrySnapBackToPassable(cell);
+        var snappedBack = Config.EnablePassableSnapBack && changedLine && TrySnapBackToPassable(cell);
         if (needsReleaseUpdate)
         {
             TryInteract();
@@ -203,7 +194,7 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
-        if (isAutoRetractEnabled && CurrentDistance >= maxDist)
+        if (Config.IsAutoRetractEnabled && CurrentDistance >= maxDist)
             TryInteract();
     }
 
@@ -211,18 +202,18 @@ public class RoverHand : MonoBehaviour
     {
         var cell = LevelGrid.WorldToCell(HandPosition);
         if (cell == LevelGrid.WorldToCell(transform.position))
-            return extendSpeed;
+            return Config.ExtendSpeed;
 
         var obj = LevelGrid.Objects.GetObject(cell);
 
-        return ShouldAffectPassable(obj) ? interactablePassThroughSpeed : extendSpeed;
+        return ShouldAffectPassable(obj) ? Config.InteractablePassThroughSpeed : Config.ExtendSpeed;
     }
 
     bool ShouldAffectPassable(GridObject obj)
     {
         return obj != null && obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough
             && pass.PassageMode == HandPassageMode.InteractOrRetract
-            && (!onlyAffectInteractablePassables
+            && (!Config.OnlyAffectInteractablePassables
                 || (obj.TryGetComponent<IInteractable>(out var interactable) && interactable.CanInteractWith(HeldObject))
                 || (obj.TryGetComponent<IGrabbable>(out var grabbable) && grabbable.CanBeGrabbed));
     }
@@ -262,7 +253,7 @@ public class RoverHand : MonoBehaviour
         if (HandState != HandState.Retracting)
             return;
 
-        CurrentDistance -= retractSpeed * Time.deltaTime;
+        CurrentDistance -= Config.RetractSpeed * Time.deltaTime;
 
         if (CurrentDistance <= 0)
             HandState = HandState.None;
