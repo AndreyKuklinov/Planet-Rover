@@ -71,6 +71,13 @@ public class RoomGrid : MonoBehaviour
         {
             var obj = Objects.GetObject(point);
 
+            if (obj != null && obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough)
+            {
+                prev = point;
+                point += step;
+                continue;
+            }
+
             if (obj != null && (
                 (obj.TryGetComponent<IGrabbable>(out var grabb) && grabb.CanBeGrabbed) ||
                 (obj.TryGetComponent<IInteractable>(out var rec) && rec.CanInteractWith(heldObj))
@@ -80,7 +87,7 @@ public class RoomGrid : MonoBehaviour
                 return point;
             }
 
-            if (obj == null || (obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough))
+            if (obj == null)
             {
                 prev = point;
                 point += step;
@@ -91,6 +98,26 @@ public class RoomGrid : MonoBehaviour
         }
 
         return prev;
+    }
+
+    public bool TryGetNextFreeSquare(Vector2Int from, Direction dir, out Vector2Int freeCell)
+    {
+        var step = DirectionVector.GetVector2Int(dir);
+        freeCell = from + step;
+
+        while (IsWithinBounds(freeCell))
+        {
+            var obj = Objects.GetObject(freeCell);
+            if (obj == null)
+                return true;
+
+            if (!obj.TryGetComponent<IPassable>(out var pass) || !pass.CanHandPassThrough)
+                return false;
+
+            freeCell += step;
+        }
+
+        return false;
     }
 
     private void OnRoomObjectDestroyed(GridObject obj)

@@ -21,6 +21,8 @@ public class RoverHand : MonoBehaviour
     [SerializeField] float retractSpeed;
     [SerializeField] bool isAutoRetractEnabled;
 
+    Vector2Int? pendingMovementCell;
+
     public RoomGrid LevelGrid
         => rover.LevelGrid;
 
@@ -61,7 +63,7 @@ public class RoverHand : MonoBehaviour
 
     public void TryInteract()
     {
-        if (HandState == HandState.Retracting || IsMovingRover)
+        if (HandState == HandState.Retracting || IsMovingRover || pendingMovementCell.HasValue)
             return;
 
         LastGrabbedPos = HandPosition;
@@ -87,6 +89,14 @@ public class RoverHand : MonoBehaviour
             return;
         }
 
+        if (obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough
+            && LevelGrid.TryGetNextFreeSquare(cell, Direction, out var freeCell))
+        {
+            pendingMovementCell = freeCell;
+            HandState = HandState.Extending;
+            return;
+        }
+
         StartRetracting();
     }
 
@@ -108,6 +118,7 @@ public class RoverHand : MonoBehaviour
 
     void MoveToHand()
     {
+        LastGrabbedPos = HandPosition;
         SelectedMovementTarget?.Invoke(this, HandPosition);
         RetractInstantly();
     }
@@ -142,10 +153,16 @@ public class RoverHand : MonoBehaviour
         CurrentDistance += extendSpeed * Time.deltaTime;
 
         var cell = LevelGrid.WorldToCell(transform.position);
-        var stoppingCell = LevelGrid.GetStoppingSquare(cell, Direction, HeldObject);
+        var stoppingCell = pendingMovementCell ?? LevelGrid.GetStoppingSquare(cell, Direction, HeldObject);
         var maxDist = (LevelGrid.CellToWorld(stoppingCell) - transform.position).magnitude;
 
         CurrentDistance = Mathf.Min(CurrentDistance, maxDist);
+
+        if (pendingMovementCell.HasValue && CurrentDistance >= maxDist)
+        {
+            MoveToHand();
+            return;
+        }
 
         if (isAutoRetractEnabled && CurrentDistance >= maxDist)
             TryInteract();
@@ -163,6 +180,7 @@ public class RoverHand : MonoBehaviour
     }
     void RetractInstantly()
     {
+        pendingMovementCell = null;
         HandState = HandState.None;
         CurrentDistance = 0;
     }
