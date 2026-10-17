@@ -137,6 +137,8 @@ MonoBehaviour:
   rover: {fileID: 0}
   extendSpeed: 14
   interactablePassThroughSpeed: 2
+  onlyAffectInteractablePassables: 0
+  enablePassableSnapBack: 1
   retractSpeed: 30
   isAutoRetractEnabled: 0
 --- !u!114 &6421409979537266196

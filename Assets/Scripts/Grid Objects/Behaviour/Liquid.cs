@@ -11,6 +11,8 @@ public class Liquid : MonoBehaviour, IPassable, IInteractable
     public bool CanHandPassThrough =>
         true;
 
+    public HandPassageMode PassageMode => HandPassageMode.InteractOrRetract;
+
     public bool CanInteractWith(IGrabbable grabbedObject)
     {
         if (grabbedObject == null)

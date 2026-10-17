@@ -12,6 +12,8 @@ public class Cloud : MonoBehaviour, IInteractable, IPassable
     public bool CanHandPassThrough 
         => true;
 
+    public HandPassageMode PassageMode => HandPassageMode.InteractOrRetract;
+
     public bool CanInteractWith(IGrabbable grabbedObject)
     {
         if (grabbedObject == null 

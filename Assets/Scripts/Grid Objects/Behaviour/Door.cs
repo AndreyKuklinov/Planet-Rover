@@ -9,6 +9,8 @@ public class Door : MonoBehaviour, IPassable
     public bool CanHandPassThrough =>
         IsOpen;
 
+    public HandPassageMode PassageMode => HandPassageMode.ContinueToFreeCell;
+
     public void SetOpen(bool isOpen)
     {
         IsOpen = isOpen;
