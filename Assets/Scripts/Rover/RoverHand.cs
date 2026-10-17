@@ -18,6 +18,9 @@ public class RoverHand : MonoBehaviour
 
     [SerializeField] Rover rover;
     [SerializeField] float extendSpeed;
+    [SerializeField, Min(0.01f)]
+    [Tooltip("Extension speed while passing through an object the hand can currently interact with or grab.")]
+    float interactablePassThroughSpeed = 4f;
     [SerializeField] float retractSpeed;
     [SerializeField] bool isAutoRetractEnabled;
 
@@ -150,7 +153,7 @@ public class RoverHand : MonoBehaviour
         if (HandState != HandState.Extending)
             return;
 
-        CurrentDistance += extendSpeed * Time.deltaTime;
+        CurrentDistance += GetExtensionSpeed() * Time.deltaTime;
 
         var cell = LevelGrid.WorldToCell(transform.position);
         var stoppingCell = pendingMovementCell ?? LevelGrid.GetStoppingSquare(cell, Direction, HeldObject);
@@ -166,6 +169,19 @@ public class RoverHand : MonoBehaviour
 
         if (isAutoRetractEnabled && CurrentDistance >= maxDist)
             TryInteract();
+    }
+
+    float GetExtensionSpeed()
+    {
+        var cell = LevelGrid.WorldToCell(HandPosition);
+        var obj = LevelGrid.Objects.GetObject(cell);
+
+        if (obj != null && obj.TryGetComponent<IPassable>(out var pass) && pass.CanHandPassThrough
+            && ((obj.TryGetComponent<IInteractable>(out var interactable) && interactable.CanInteractWith(HeldObject))
+                || (obj.TryGetComponent<IGrabbable>(out var grabbable) && grabbable.CanBeGrabbed)))
+            return interactablePassThroughSpeed;
+
+        return extendSpeed;
     }
 
     void UpdateRetraction()

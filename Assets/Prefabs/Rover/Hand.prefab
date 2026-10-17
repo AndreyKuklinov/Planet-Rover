@@ -136,6 +136,7 @@ MonoBehaviour:
   <Direction>k__BackingField: 0
   rover: {fileID: 0}
   extendSpeed: 14
+  interactablePassThroughSpeed: 2
   retractSpeed: 30
   isAutoRetractEnabled: 0
 --- !u!114 &6421409979537266196
@@ -163,6 +164,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2f743cae829bbb048aef08dbfb8a8737, type: 3}
   - {fileID: 21300000, guid: 35e50f12d5581954ca6a50be61f4eee8, type: 3}
   cellHighlight: {fileID: 7437379873583373110}
+  isCellHighlightEnabled: 0
 --- !u!120 &8397864754370603764
 LineRenderer:
   serializedVersion: 2
