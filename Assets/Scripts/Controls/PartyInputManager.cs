@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class PartyInputManager : MonoBehaviour
 {
@@ -73,8 +74,42 @@ public class PartyInputManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    void Start()
+    {
+        var manager = GetComponent<PlayerInputManager>();
+        if (manager != null) manager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
+    }
+
+    void Update()
+    {
+        var manager = GetComponent<PlayerInputManager>();
+        if (manager == null || !manager.joiningEnabled || players.Count >= 4) return;
+        foreach (var keyboard in InputSystem.devices.OfType<Keyboard>())
+        {
+            TryJoinKeyboard(manager, keyboard, PlayerDevice.KeyboardGroup.Wasd,
+                keyboard.wKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame || keyboard.sKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame);
+            TryJoinKeyboard(manager, keyboard, PlayerDevice.KeyboardGroup.Arrows,
+                keyboard.upArrowKey.wasPressedThisFrame || keyboard.leftArrowKey.wasPressedThisFrame || keyboard.downArrowKey.wasPressedThisFrame || keyboard.rightArrowKey.wasPressedThisFrame);
+        }
+        foreach (var gamepad in Gamepad.all)
+            if (players.Count < 4 && !players.Any(p => p.GetComponent<PlayerInput>().devices.Contains(gamepad))
+                && gamepad.allControls.OfType<ButtonControl>().Any(b => !b.synthetic && b.wasPressedThisFrame))
+                manager.JoinPlayer(controlScheme: "Gamepad", pairWithDevice: gamepad);
+    }
+
+    void TryJoinKeyboard(PlayerInputManager manager, Keyboard keyboard, PlayerDevice.KeyboardGroup group, bool pressed)
+    {
+        if (!pressed || players.Count >= 4 || players.Any(p => p.SharedKeyboard == keyboard && p.Keys == group)) return;
+        var input = manager.JoinPlayer(controlScheme: "Keyboard", pairWithDevice: keyboard);
+        if (input != null) input.GetComponent<PlayerDevice>().SetKeyboardGroup(group);
+    }
+
+    public bool IsPrimaryKeyboardPlayer(PlayerDevice player)
+        => players.FirstOrDefault(p => p.SharedKeyboard == player.SharedKeyboard) == player;
+
     void OnPlayerJoined(PlayerInput playerInput)
     {
+        playerInput.neverAutoSwitchControlSchemes = true;
         var device = playerInput.GetComponent<PlayerDevice>();
         device.transform.SetParent(transform);
         players.Add(device);
