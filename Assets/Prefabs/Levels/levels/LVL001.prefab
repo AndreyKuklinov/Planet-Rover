@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7808436244341271782, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
       propertyPath: config
-      value:
+      value: 
       objectReference: {fileID: 11400000, guid: fca97d62638f485ca72ed1252b12aa04, type: 2}
     - target: {fileID: 7808436244341271782, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
       propertyPath: <StandardTime>k__BackingField

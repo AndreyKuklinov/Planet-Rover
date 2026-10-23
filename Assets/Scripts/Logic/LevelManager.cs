@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     public int FinalStars { get; private set; }
     public bool IsLevelRunning => CurrentLevel != null;
     public bool IsCurrentRoomTimed => IsLevelRunning && levelLoader.CurrentRoom.IsTimed;
-    public float StandardTime => levelLoader.StandardTime;
+    public float StandardTime => levelLoader.StandardTime * playerTimeMultiplier;
     public int AchievableStars => starConfig.GetStars(roomTimer.ElapsedTime, StandardTime);
     public float GetStarFill(int starNumber)
         => starConfig.GetStarFill(starNumber, roomTimer.ElapsedTime, StandardTime);
@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
     [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
     [SerializeField] RoomTimer roomTimer;
     [SerializeField] StarConfig starConfig;
+    [SerializeField] PlayerCountTimeConfig playerCountTimeConfig;
+    float playerTimeMultiplier = 1f;
     private bool roomCompletionPending;
 
     private void OnEnable()
@@ -36,6 +38,12 @@ public class LevelManager : MonoBehaviour
     {
         if (starConfig == null || !starConfig.IsValid)
             throw new InvalidOperationException("Assign a valid shared Star Config to LevelManager.");
+        if (playerCountTimeConfig == null)
+            throw new InvalidOperationException("Assign a Player Count Time Config to LevelManager.");
+        playerTimeMultiplier = playerCountTimeConfig.GetMultiplier(
+            PartyInputManager.Instance == null ? 1 : PartyInputManager.Instance.PlayerCount);
+        if (playerTimeMultiplier <= 0f || float.IsNaN(playerTimeMultiplier) || float.IsInfinity(playerTimeMultiplier))
+            throw new InvalidOperationException("Player time multipliers must be finite and positive.");
         levelLoader.SetLevelData(level);
         CurrentLevel = level;
         CompletedRoomCount = 0;

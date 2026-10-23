@@ -23,6 +23,7 @@ public class PartyInputManager : MonoBehaviour
     };
 
     private List<PlayerDevice> players = new();
+    public int PlayerCount => players.Count;
     public int RosterVersion { get; private set; }
     public bool AllPlayersHoldingDrop => players.Count > 0 && players.All(p => p != null && p.IsDropHeld);
     public bool AnyPlayerHoldingDrop => players.Any(p => p != null && p.IsDropHeld);
