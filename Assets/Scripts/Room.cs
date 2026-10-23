@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [field: SerializeField] public bool IsTimed { get; private set; }
+    [SerializeField] RoomConfig config;
+    public RoomConfig Config => config;
+    public bool IsTimed => config == null || config.IsTimed;
+    public bool CanUseReset => config == null || config.CanUseReset;
     [field: SerializeField, Min(0.01f)] public float StandardTime { get; private set; } = 30f;
     public static event Action<Room> RoomStarted;
 

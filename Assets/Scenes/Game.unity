@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb662113d0830d4486f3d8b3c289c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetConfig: {fileID: 11400000, guid: 460b5966f3d54d019a7b59c7bcb2acc7, type: 2}
+  handConfig: {fileID: 11400000, guid: 34f02c63a58c49b28e9c668c0e9f81a4, type: 2}
 --- !u!114 &8373723822254126439
 MonoBehaviour:
   m_ObjectHideFlags: 0

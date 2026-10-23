@@ -23,3 +23,4 @@ MonoBehaviour:
   holdingDistance: 0.5
   emptyHandRestingDistance: 0.2
   isCellHighlightEnabled: 0
+  roomResetHoldDuration: 2

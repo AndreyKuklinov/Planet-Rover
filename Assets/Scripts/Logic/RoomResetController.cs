@@ -8,7 +8,7 @@ public class RoomResetController : MonoBehaviour
     public float HoldProgress { get; private set; }
 
     RoomLoader loader;
-    RoomResetConfig config;
+    RoverHandConfig config;
     Room snapshot;
     GameObject snapshotContainer;
     readonly List<PreserveOnRoomReset> preserved = new();
@@ -16,7 +16,7 @@ public class RoomResetController : MonoBehaviour
     bool waitingForRelease;
     int rosterVersion = -1;
 
-    public void Initialize(RoomLoader roomLoader, RoomResetConfig settings)
+    public void Initialize(RoomLoader roomLoader, RoverHandConfig settings)
     {
         Room.RoomStarted -= CaptureRoom;
         loader = roomLoader;
@@ -34,6 +34,7 @@ public class RoomResetController : MonoBehaviour
     {
         if (loader == null || room != loader.CurrentRoom) return;
         ClearSnapshot();
+        if (!room.CanUseReset) return;
         foreach (var marker in room.GetComponentsInChildren<PreserveOnRoomReset>(true))
             if (marker.transform.parent.GetComponentInParent<PreserveOnRoomReset>() == null)
                 preserved.Add(marker);
@@ -88,13 +89,13 @@ public class RoomResetController : MonoBehaviour
             if (!anyHeld) waitingForRelease = false;
             return;
         }
-        if (!allHeld || snapshot == null || config == null)
+        if (!allHeld || snapshot == null || config == null || !loader.CurrentRoom.CanUseReset)
         {
             heldTime = HoldProgress = 0f;
             return;
         }
         heldTime += Mathf.Max(0f, deltaTime);
-        HoldProgress = Mathf.Clamp01(heldTime / Mathf.Max(0.01f, config.HoldDuration));
+        HoldProgress = Mathf.Clamp01(heldTime / Mathf.Max(0.01f, config.RoomResetHoldDuration));
         if (HoldProgress < 1f) return;
         waitingForRelease = true;
         heldTime = HoldProgress = 0f;
@@ -103,7 +104,7 @@ public class RoomResetController : MonoBehaviour
 
     public void ResetRoom()
     {
-        if (snapshot == null || loader.CurrentRoom == null) return;
+        if (snapshot == null || loader.CurrentRoom == null || !loader.CurrentRoom.CanUseReset) return;
         var oldRoom = loader.CurrentRoom;
         var oldGrid = oldRoom.Grid;
         var livePreserved = new List<(PreserveOnRoomReset marker, GridObject obj, bool registered)>();

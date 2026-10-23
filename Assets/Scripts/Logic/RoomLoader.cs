@@ -10,14 +10,14 @@ public class RoomLoader : MonoBehaviour
     public event Action LoadedRoom;
 
     public Room CurrentRoom { get; private set; }
-    [SerializeField] RoomResetConfig resetConfig;
+    [SerializeField] RoverHandConfig handConfig;
     public RoomResetController ResetController { get; private set; }
 
     void Awake()
     {
         ResetController = GetComponent<RoomResetController>();
         if (ResetController == null) ResetController = gameObject.AddComponent<RoomResetController>();
-        ResetController.Initialize(this, resetConfig);
+        ResetController.Initialize(this, handConfig);
     }
 
     public void SetResetRoom(Room room) => CurrentRoom = room;

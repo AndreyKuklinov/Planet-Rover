@@ -3,6 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Rover Hand Config", menuName = "Rover/Hand Config")]
 public class RoverHandConfig : ScriptableObject
 {
+    [Header("Room Reset")]
+    [SerializeField, Min(0.01f)] float roomResetHoldDuration = 2f;
+    public float RoomResetHoldDuration => roomResetHoldDuration;
+
     [Header("Movement")]
     [SerializeField, Min(0.01f)] float extendSpeed = 12f;
     [SerializeField, Min(0.01f)] float retractSpeed = 30f;
