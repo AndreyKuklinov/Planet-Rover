@@ -19,6 +19,9 @@ public class PlayerDevice : MonoBehaviour
     public event Action<PlayerDevice> DeviceLost;
 
     public HashSet<Direction> AllowedDirections;
+    public bool IsDropHeld => isActiveAndEnabled && playerInput != null
+        && playerInput.isActiveAndEnabled && playerInput.actions != null
+        && playerInput.actions.FindAction("Drop", false)?.IsPressed() == true;
 
     [SerializeField] PlayerInput playerInput;
     [SerializeField] VoidEventChannel quitTriggered;
@@ -47,7 +50,7 @@ public class PlayerDevice : MonoBehaviour
 
     public void OnDrop(InputAction.CallbackContext ctx)
     {
-        DropTriggered?.Invoke(this);
+        if (ctx.performed) DropTriggered?.Invoke(this);
     }
 
     public void OnDeviceLost(PlayerInput _playerInput)

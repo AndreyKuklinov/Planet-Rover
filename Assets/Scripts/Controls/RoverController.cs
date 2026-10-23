@@ -49,7 +49,7 @@ public class RoverController : MonoBehaviour
 
     bool TryFindRover()
     {
-        if (rover != null)
+        if (rover != null && rover.isActiveAndEnabled)
             return true;
 
         rover = FindObjectOfType<Rover>();

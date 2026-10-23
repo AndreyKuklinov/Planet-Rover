@@ -9,6 +9,8 @@ public class GridObject : MonoBehaviour
 
     public RoomGrid RoomGrid { get; private set; }
 
+    public void RebindGrid(RoomGrid grid) => RoomGrid = grid;
+
     public void AttachToGrid(RoomGrid grid = null)
     {
         if (grid != null)

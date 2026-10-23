@@ -11,6 +11,10 @@ public class Room : MonoBehaviour
     public static event Action<Room> RoomStarted;
 
     [SerializeField] RoomGrid grid;
+    public RoomGrid Grid => grid;
+    bool restoredFromSnapshot;
+
+    public void PrepareForReset() => restoredFromSnapshot = true;
     [SerializeField] Swapper swapper;
     [SerializeField] ItemColorDataEventChannel signalEmitted;
     [SerializeField] ItemColorDataEventChannel roomSignalChanged;
@@ -27,6 +31,7 @@ public class Room : MonoBehaviour
 
     void Start()
     {
+        if (restoredFromSnapshot) return;
         InitRoom();
         RoomStarted?.Invoke(this);
     }

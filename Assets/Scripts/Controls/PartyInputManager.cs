@@ -22,6 +22,9 @@ public class PartyInputManager : MonoBehaviour
     };
 
     private List<PlayerDevice> players = new();
+    public int RosterVersion { get; private set; }
+    public bool AllPlayersHoldingDrop => players.Count > 0 && players.All(p => p != null && p.IsDropHeld);
+    public bool AnyPlayerHoldingDrop => players.Any(p => p != null && p.IsDropHeld);
 
     private readonly Dictionary<int, HashSet<Direction>[]> allowedDirections = new()
     {
@@ -78,10 +81,15 @@ public class PartyInputManager : MonoBehaviour
         ConfigurePlayers();
         device.DirectionTriggered += OnDirectionTriggered;
         device.DropTriggered += OnDropTriggered;
+        device.DeviceLost += OnDeviceLost;
     }
 
     private void OnDeviceLost(PlayerDevice player)
     {
+        if (!players.Contains(player)) return;
+        player.DirectionTriggered -= OnDirectionTriggered;
+        player.DropTriggered -= OnDropTriggered;
+        player.DeviceLost -= OnDeviceLost;
         players.Remove(player);
         Destroy(player.gameObject);
         ConfigurePlayers();
@@ -99,11 +107,12 @@ public class PartyInputManager : MonoBehaviour
 
     void OnPlayerLeft(PlayerInput playerInput)
     {
-        Debug.Log("player left");
+        OnDeviceLost(playerInput.GetComponent<PlayerDevice>());
     }
 
     void ConfigurePlayers()
     {
+        RosterVersion++;
         for (var i = 0; i < players.Count; i++)
         {
             players[i].AllowedDirections = allowedDirections[players.Count][i];

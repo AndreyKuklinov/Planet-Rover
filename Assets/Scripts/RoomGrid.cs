@@ -19,9 +19,21 @@ public class RoomGrid : MonoBehaviour
         {
             if (!obj.isActiveAndEnabled)
                 continue;
-            obj.AttachToGrid(this);
-            obj.Destroyed += OnRoomObjectDestroyed;
+            TrackObject(obj);
         }
+    }
+
+    public void TrackObject(GridObject obj)
+    {
+        obj.AttachToGrid(this);
+        obj.Destroyed -= OnRoomObjectDestroyed;
+        obj.Destroyed += OnRoomObjectDestroyed;
+    }
+
+    public void ForgetObject(GridObject obj)
+    {
+        obj.Destroyed -= OnRoomObjectDestroyed;
+        if (Objects.Contains(obj)) Objects.Remove(obj);
     }
 
     public void PlaceObject(GridObject obj)
