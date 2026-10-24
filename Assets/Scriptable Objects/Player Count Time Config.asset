@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Player Count Time Config
   m_EditorClassIdentifier: 
   onePlayerMultiplier: 1
-  twoPlayerMultiplier: 1.5
-  threePlayerMultiplier: 1.5
-  fourPlayerMultiplier: 1.5
-
+  twoPlayerMultiplier: 2
+  threePlayerMultiplier: 2
+  fourPlayerMultiplier: 2

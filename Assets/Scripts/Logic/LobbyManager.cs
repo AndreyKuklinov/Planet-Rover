@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LobbyManager : MonoBehaviour
 {
+    public bool IsRoomTesting { get; set; }
     [SerializeField] Room lobbyPrefab;
     [SerializeField] LevelManager levelManager;
     [SerializeField] RoomLoader roomLoader;
@@ -28,11 +29,13 @@ public class LobbyManager : MonoBehaviour
 
     private void OnLevelSelected(LevelData level)
     {
+        if (IsRoomTesting) return;
         levelManager.StartLevel(level);
     }
 
-    private void OnLevelCompleted(LevelData _)
+    private void OnLevelCompleted(LevelData level)
     {
+        if (IsRoomTesting || level.IsRoomTest) return;
         roomLoader.LoadRoom(lobbyPrefab);
     }
 }

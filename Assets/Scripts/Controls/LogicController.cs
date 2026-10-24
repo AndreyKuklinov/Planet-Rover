@@ -20,13 +20,14 @@ public class LogicController : MonoBehaviour
 
     private void OnDeleteTriggered()
     {
+        if (levelManager.IsRoomTestSession) return;
         Debug.Log("Deleted all save data");
         SaveDataManager.DeleteAllSaveData();
     }
 
     private void OnRestartTriggered()
     {
-        if (!levelManager.IsLevelRunning)
+        if (!levelManager.IsLevelRunning && !levelManager.IsRoomTestFinished)
             return;
 
         levelManager.RestartLevel();

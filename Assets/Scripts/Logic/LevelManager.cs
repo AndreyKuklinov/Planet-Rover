@@ -9,7 +9,12 @@ public class LevelManager : MonoBehaviour
     public LevelData CurrentLevel { get; private set; }
     public int CompletedRoomCount { get; private set; }
     public int FinalStars { get; private set; }
-    public bool IsLevelRunning => CurrentLevel != null;
+    public bool IsLevelRunning => CurrentLevel != null && !IsRoomTestFinished;
+    public bool IsRoomTestFinished { get; private set; }
+    public bool IsTestingRoom => CurrentLevel != null && (IsRoomTestSession || CurrentLevel.IsRoomTest);
+    public float ElapsedTime => roomTimer.ElapsedTime;
+    public bool IsRoomTestSession { get; private set; }
+    public void BeginRoomTestSession() => IsRoomTestSession = true;
     public bool IsCurrentRoomTimed => IsLevelRunning && levelLoader.CurrentRoom.IsTimed;
     public float StandardTime => levelLoader.StandardTime * playerTimeMultiplier;
     public int AchievableStars => starConfig.GetStars(roomTimer.ElapsedTime, StandardTime);
@@ -46,10 +51,14 @@ public class LevelManager : MonoBehaviour
             throw new InvalidOperationException("Player time multipliers must be finite and positive.");
         levelLoader.SetLevelData(level);
         CurrentLevel = level;
+        IsRoomTestFinished = false;
         CompletedRoomCount = 0;
         FinalStars = 0;
         roomCompletionPending = false;
-        roomTimer.StartLevelTime(StandardTime * starConfig.MaximumMultiplier);
+        if (IsTestingRoom)
+            roomTimer.StartStopwatch();
+        else
+            roomTimer.StartLevelTime(StandardTime * starConfig.MaximumMultiplier);
         LevelStarted?.Invoke();
         StartNextRoom();
     }
@@ -71,7 +80,7 @@ public class LevelManager : MonoBehaviour
     private void OnAllObjectivesCompleted() => roomCompletionPending = IsLevelRunning;
     private void OnTimeOut()
     {
-        if (IsLevelRunning)
+        if (IsLevelRunning && !IsTestingRoom)
             EndLevel(0);
     }
     private void LateUpdate()
@@ -97,11 +106,16 @@ public class LevelManager : MonoBehaviour
     private void EndLevel(int stars)
     {
         var level = CurrentLevel;
+        bool isRoomTest = IsTestingRoom;
         FinalStars = stars;
-        CurrentLevel = null;
+        if (isRoomTest)
+            IsRoomTestFinished = true;
+        else
+            CurrentLevel = null;
         roomCompletionPending = false;
         roomTimer.StopTime();
-        SaveDataManager.AddStars(level, stars);
+        if (!isRoomTest)
+            SaveDataManager.AddStars(level, stars);
         LevelFinished?.Invoke(level);
     }
 }
