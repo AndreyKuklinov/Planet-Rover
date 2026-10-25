@@ -310,7 +310,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec0ceb0f04adcd44b63024c29cadb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: fca97d62638f485ca72ed1252b12aa04, type: 2}
+  isTimed: 1
+  canUseReset: 1
+  allowHorizontalReflection: 1
+  allowVerticalReflection: 1
   <StandardTime>k__BackingField: 5
   grid: {fileID: 4907612537804486792}
   swapper: {fileID: 7096622743589440181}

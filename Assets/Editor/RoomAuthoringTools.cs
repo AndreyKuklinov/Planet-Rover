@@ -7,7 +7,6 @@ using UnityEngine;
 
 public static class RoomAuthoringTools
 {
-    public const string DefaultConfigPath = "Assets/Scriptable Objects/Configs/Room configs/Default Room Config.asset";
     const string TemplatePath = "Assets/Prefabs/Levels/Empty Level.prefab";
     const string WallPath = "Assets/Prefabs/Level Objects/Obstacle.prefab";
     const string RoverPath = "Assets/Prefabs/Rover/Rover.prefab";
@@ -125,8 +124,6 @@ public static class RoomAuthoringTools
         if (!path.StartsWith("Assets/", StringComparison.Ordinal) || !path.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase)
             || path.Contains("..") || File.Exists(path))
             throw new InvalidOperationException("Choose a new prefab filename inside Assets.");
-        var config = AssetDatabase.LoadAssetAtPath<RoomConfig>(DefaultConfigPath);
-        if (config == null) throw new InvalidOperationException("Default Room Config missing: " + DefaultConfigPath);
         var root = PrefabUtility.LoadPrefabContents(TemplatePath);
         try
         {
@@ -134,7 +131,8 @@ public static class RoomAuthoringTools
             root.transform.position = new Vector3(0.5f, 0.5f, 0f);
             var room = root.GetComponent<Room>();
             var settings = new SerializedObject(room);
-            settings.FindProperty("config").objectReferenceValue = config;
+            foreach (string option in new[] { "isTimed", "canUseReset", "allowHorizontalReflection", "allowVerticalReflection" })
+                settings.FindProperty(option).boolValue = true;
             settings.FindProperty("<StandardTime>k__BackingField").floatValue = standardTime;
             settings.ApplyModifiedPropertiesWithoutUndo();
             var objects = root.transform.Find("Objects");

@@ -17,6 +17,18 @@ PrefabInstance:
       value: lobby 26
       objectReference: {fileID: 0}
     - target: {fileID: 7808436244341271782, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
+      propertyPath: canUseReset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808436244341271782, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
+      propertyPath: allowVerticalReflection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808436244341271782, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
+      propertyPath: allowHorizontalReflection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808436244341271782, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
       propertyPath: <StandardTime>k__BackingField
       value: 5
       objectReference: {fileID: 0}

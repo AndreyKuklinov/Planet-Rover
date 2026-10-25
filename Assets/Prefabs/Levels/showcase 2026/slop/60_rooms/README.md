@@ -1,6 +1,6 @@
 # 60-second room studies
 
-Ten standalone 17 x 9 rooms combining the basic vocabulary into multi-stage cooperative work. All use the unchanged Default Room Config and have StandardTime = 60 seconds. This is a scoring target, not a forced duration: coordinated teams can finish faster. No idle waiting was added to pad the duration; the timer serves actual saw-power windows.
+Ten standalone 17 x 9 rooms combining the basic vocabulary into multi-stage cooperative work. All use the default options on the Room component and have StandardTime = 60 seconds. This is a scoring target, not a forced duration: coordinated teams can finish faster. No idle waiting was added to pad the duration; the timer serves actual saw-power windows.
 
 Target audience: teams familiar with the basic blocks, primarily four players. Aim for roughly 45-90 seconds on early informed attempts, centered near 60; actual human timings still need measurement. Longer work comes from carrying decisions, return trips, production dependencies, signal transitions and handoffs. Reset remains available in every room; only Refill Contracts deliberately requires it. These are standalone prototypes, not additions to an existing lobby or repeated level pool.
 

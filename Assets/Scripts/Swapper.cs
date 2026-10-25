@@ -8,14 +8,14 @@ public class Swapper : MonoBehaviour
 
     public void SwapAllObjects()
     {
-        var markersByIndex = FindObjectsOfType<SwapMarker>()
+        var markersByIndex = levelGrid.GetComponentsInChildren<SwapMarker>()
             .GroupBy(m => m.Index)
             .ToDictionary(
                 g => g.Key,
                 g => g.Select(m => levelGrid.WorldToCell(m.transform.position)).ToList()
             );
 
-        var levelObjects = FindObjectsOfType<GridObject>();
+        var levelObjects = levelGrid.GetComponentsInChildren<GridObject>();
 
         foreach (var markerGroup in markersByIndex.Values)
         {

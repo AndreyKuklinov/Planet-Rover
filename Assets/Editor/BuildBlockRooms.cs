@@ -15,7 +15,6 @@ public static class BuildBlockRooms
 {
     const string Folder = "Assets/Prefabs/Levels/showcase 2026/blocks";
     const string Pending = "PlanetRover.BlockValidation";
-    const string ConfigPath = "Assets/Scriptable Objects/Configs/Room configs/Default Room Config.asset";
     class Obj
     {
         public string prefab; public int x, y; public string[] requests; public bool timed;
@@ -146,7 +145,6 @@ public static class BuildBlockRooms
         specs=a;return specs;
     }
     static Spec Gate(string n,string c,string idea) => new Spec(n,c,"Direct / Fixed / Fractured",idea).Wall(8,1,8,7).Rect(8,4,8,4).Start(3,4);
-    static RoomConfig DefaultConfig => AssetDatabase.LoadAssetAtPath<RoomConfig>(ConfigPath);
     static ItemData ItemDataFor(string name) => AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Scriptable Objects/Items/"+name+".asset");
     static ItemColorData ColorFor(string name) => AssetDatabase.LoadAssetAtPath<ItemColorData>("Assets/Scriptable Objects/Items/Colors/Color "+name+".asset");
     static void Check(bool condition,string message) { if(!condition)throw new Exception(message); }
@@ -158,12 +156,11 @@ public static class BuildBlockRooms
     {
         try
         {
-            Check(DefaultConfig!=null,"Default Room Config missing");
             if(!AssetDatabase.IsValidFolder(Folder))AssetDatabase.CreateFolder("Assets/Prefabs/Levels/showcase 2026","blocks");
             for(int i=0;i<Specs().Count;i++) BuildOne(i);
             AssetDatabase.SaveAssets();
             WriteCatalogue(false);
-            Debug.Log("BLOCKS: Generated "+Specs().Count+" distinct room prefabs with Default Room Config.");
+            Debug.Log("BLOCKS: Generated "+Specs().Count+" distinct room prefabs with default room options.");
             Validate();
         }
         catch(Exception ex) { Debug.LogException(ex);EditorApplication.Exit(1); }
@@ -175,7 +172,7 @@ public static class BuildBlockRooms
         try
         {
             root.name=s.name;root.transform.position=new Vector3(-.5f,-.5f,0);
-            SetRef(root.GetComponent<Room>(),"config",DefaultConfig);
+            var options=new SerializedObject(root.GetComponent<Room>());foreach(var option in new[]{"isTimed","canUseReset","allowHorizontalReflection","allowVerticalReflection"})options.FindProperty(option).boolValue=true;options.ApplyModifiedPropertiesWithoutUndo();
             var b=root.transform.Find("Bounds");
             b.Find("BottomLeft").localPosition=new Vector3(-8,-4,0);
             b.Find("TopRight").localPosition=new Vector3(9,5,0);
@@ -227,7 +224,7 @@ public static class BuildBlockRooms
     }
     static void WriteCatalogue(bool passed)
     {
-        var text=new StringBuilder("# Basic room blocks\n\n35 standalone 17 x 9 room prefabs. Use Assets > Test Room to run any prefab. These are vocabulary studies, not a production level pool; none was added to an existing level. All use Default Room Config; the inherited 30-second StandardTime is provisional, not a human-calibrated score target.\n\n");
+        var text=new StringBuilder("# Basic room blocks\n\n35 standalone 17 x 9 room prefabs. Use Assets > Test Room to run any prefab. These are vocabulary studies, not a production level pool; none was added to an existing level. All use the default Room options; the inherited 30-second StandardTime is provisional, not a human-calibrated score target.\n\n");
         text.Append("The framework's earlier one-rock experiment and all-four-directions requirement are not imposed on these full-mechanic studies. No Danger or Visibility mechanics are introduced. Rotation means changing arms, never rotating the rover. Baseline interactions are not artificially labeled Carrying or Timing. Geometry labels refer to the route used for the task; stationary workstations do not exercise the Flexible/Fixed path-choice axis.\n\n");
         text.Append("![Authored room layouts](overview.png)\n\n## Vocabulary and geometry comparisons\n\n01-04 compare alignment, long straight carry, alternate island routes, and linked bays. 07-08 hold the transfer task constant while changing spatial division; 13-14 compare open liquid delivery with a two-connection relay. 05/06/34 compare rock, rocket, and plant clearance. 16/17/18/21 compare cloud effects on different cargo. 24/25/26 isolate signaling a door, configuring a door, and configuring a lever. 28/29/30 compare timed passage, timed processing, and postponement. 31/32 contrast renewable solid and liquid supply across a rewind.\n\n");
         text.Append("| Room | Challenge emphasis | Task geometry | Reusable situation | Qualification |\n|---|---|---|---|---|\n");
@@ -301,12 +298,14 @@ public static class BuildBlockRooms
     static void BeginRoom()
     {
         manager.StartLevel(LevelData.CreateRoomTest(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath(roomIndex)).GetComponent<Room>()));
+        // Scripted solutions use the authored orientation; real room startups remain randomized.
+        var options=new SerializedObject(loader.CurrentRoom);options.FindProperty("allowHorizontalReflection").boolValue=false;options.FindProperty("allowVerticalReflection").boolValue=false;options.ApplyModifiedPropertiesWithoutUndo();
         stage=1;commandIndex=0;queue.Clear();running=null;parallelHands=null;hand=null;
         deadline=EditorApplication.timeSinceStartup+150;
     }
     static void VerifyLayout()
     {
-        var s=Specs()[roomIndex];Check(room.Config==DefaultConfig,"Wrong shared config");
+        var s=Specs()[roomIndex];Check(room.IsTimed&&room.CanUseReset,"Wrong room options");
         for(int y=0;y<9;y++)for(int x=0;x<17;x++)
         {
             var obj=room.Grid.Objects.GetObject(Cell(x,y));var spec=s.objects.FirstOrDefault(o=>o.x==x&&o.y==y);

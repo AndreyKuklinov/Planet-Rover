@@ -28,7 +28,7 @@ public class CreateRoomWindow : EditorWindow
         standardTime = EditorGUILayout.FloatField("Standard time (seconds)", standardTime);
         addRover = EditorGUILayout.Toggle("Add rover", addRover);
         addBorder = EditorGUILayout.Toggle("Fill border", addBorder);
-        EditorGUILayout.HelpBox("Creates a room prefab with border markers, grid, and Default Room Config, then opens it for editing.", MessageType.Info);
+        EditorGUILayout.HelpBox("Creates a room prefab with border markers and grid, then opens it for editing. Timing, reset, and both random reflections start enabled in the Room Inspector.", MessageType.Info);
         using (new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode || width < 3 || height < 3
             || width > 200 || height > 200 || standardTime <= 0 || float.IsNaN(standardTime) || float.IsInfinity(standardTime)))
             if (GUILayout.Button("Create Room")) Create();

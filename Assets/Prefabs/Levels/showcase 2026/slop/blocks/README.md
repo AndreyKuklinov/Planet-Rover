@@ -1,6 +1,6 @@
 # Basic room blocks
 
-35 standalone 17 x 9 room prefabs. Use Assets > Test Room to run any prefab. These are vocabulary studies, not a production level pool; none was added to an existing level. All use Default Room Config; the inherited 30-second StandardTime is provisional, not a human-calibrated score target.
+35 standalone 17 x 9 room prefabs. Use Assets > Test Room to run any prefab. These are vocabulary studies, not a production level pool; none was added to an existing level. All use the default Room options; the inherited 30-second StandardTime is provisional, not a human-calibrated score target.
 
 The framework's earlier one-rock experiment and all-four-directions requirement are not imposed on these full-mechanic studies. No Danger or Visibility mechanics are introduced. Rotation means changing arms, never rotating the rover. Baseline interactions are not artificially labeled Carrying or Timing. Geometry labels refer to the route used for the task; stationary workstations do not exercise the Flexible/Fixed path-choice axis.
 

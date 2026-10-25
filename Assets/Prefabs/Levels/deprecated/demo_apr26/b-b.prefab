@@ -460,7 +460,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec0ceb0f04adcd44b63024c29cadb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 9ca0b554548f4dfd8ec522e2678af3c7, type: 2}
+  isTimed: 0
+  canUseReset: 1
+  allowHorizontalReflection: 1
+  allowVerticalReflection: 1
   <TimeBoostMultiplier>k__BackingField: 1
   grid: {fileID: 1436300232520707209}
   swapper: {fileID: 7926010459453210003}

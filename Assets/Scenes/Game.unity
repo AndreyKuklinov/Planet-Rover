@@ -282,7 +282,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 477128053249209617, guid: 75e43acd8a2b8814b8478e913a0e10cf, type: 3}
       propertyPath: padding
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 477128053249209617, guid: 75e43acd8a2b8814b8478e913a0e10cf, type: 3}
       propertyPath: extraPadding

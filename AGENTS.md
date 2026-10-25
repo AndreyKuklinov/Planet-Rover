@@ -1,6 +1,6 @@
 # Room authoring
 
-Use the existing `Assets/Scriptable Objects/Configs/Room configs/Default Room Config.asset`
-for new or updated rooms unless the user explicitly requests a different config.
-This preference takes precedence over config suggestions in imported room packs.
-Do not modify the shared config to match an imported pack.
+Room options live directly on the Room component. New rooms should enable timing,
+room reset, horizontal reflection, and vertical reflection by default unless the
+user explicitly requests different settings. Preserve existing room options when
+editing an existing room. Do not introduce shared room config assets.

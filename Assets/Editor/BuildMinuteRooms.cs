@@ -15,7 +15,6 @@ public static class BuildMinuteRooms
 {
     const string Folder = "Assets/Prefabs/Levels/showcase 2026/60_rooms";
     const string Pending = "PlanetRover.MinuteValidation";
-    const string ConfigPath = "Assets/Scriptable Objects/Configs/Room configs/Default Room Config.asset";
     class Obj
     {
         public string prefab; public int x, y; public string[] requests; public bool timed;
@@ -123,7 +122,6 @@ public static class BuildMinuteRooms
     }
 
     static Spec Gate(string n,string c,string idea) => new Spec(n,c,"Direct / Fixed / Fractured",idea).Wall(8,1,8,7).Rect(8,4,8,4).Start(3,4);
-    static RoomConfig DefaultConfig => AssetDatabase.LoadAssetAtPath<RoomConfig>(ConfigPath);
     static ItemData ItemDataFor(string name) => AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Scriptable Objects/Items/"+name+".asset");
     static ItemColorData ColorFor(string name) => AssetDatabase.LoadAssetAtPath<ItemColorData>("Assets/Scriptable Objects/Items/Colors/Color "+name+".asset");
     static void Check(bool condition,string message) { if(!condition)throw new Exception(message); }
@@ -135,12 +133,11 @@ public static class BuildMinuteRooms
     {
         try
         {
-            Check(DefaultConfig!=null,"Default Room Config missing");
             if(!AssetDatabase.IsValidFolder(Folder))AssetDatabase.CreateFolder("Assets/Prefabs/Levels/showcase 2026","60_rooms");
             for(int i=0;i<Specs().Count;i++) BuildOne(i);
             AssetDatabase.SaveAssets();
             WriteCatalogue(false);
-            Debug.Log("MINUTE: Generated "+Specs().Count+" distinct room prefabs with Default Room Config.");
+            Debug.Log("MINUTE: Generated "+Specs().Count+" distinct room prefabs with default room options.");
             Validate();
         }
         catch(Exception ex) { Debug.LogException(ex);EditorApplication.Exit(1); }
@@ -152,7 +149,7 @@ public static class BuildMinuteRooms
         try
         {
             root.name=s.name;root.transform.position=new Vector3(-.5f,-.5f,0);
-            SetRef(root.GetComponent<Room>(),"config",DefaultConfig);
+            var options=new SerializedObject(root.GetComponent<Room>());foreach(var option in new[]{"isTimed","canUseReset","allowHorizontalReflection","allowVerticalReflection"})options.FindProperty(option).boolValue=true;options.ApplyModifiedPropertiesWithoutUndo();
             var roomSettings=new SerializedObject(root.GetComponent<Room>());roomSettings.FindProperty("<StandardTime>k__BackingField").floatValue=60f;roomSettings.ApplyModifiedPropertiesWithoutUndo();
             var b=root.transform.Find("Bounds");
             b.Find("BottomLeft").localPosition=new Vector3(-8,-4,0);
@@ -205,7 +202,7 @@ public static class BuildMinuteRooms
     }
     static void WriteCatalogue(bool passed)
     {
-        var text=new StringBuilder("# 60-second room studies\n\nTen standalone 17 x 9 rooms combining the basic vocabulary into multi-stage cooperative work. All use the unchanged Default Room Config and have StandardTime = 60 seconds. This is a scoring target, not a forced duration: coordinated teams can finish faster. No idle waiting was added to pad the duration; the timer serves actual saw-power windows.\n\n");
+        var text=new StringBuilder("# 60-second room studies\n\nTen standalone 17 x 9 rooms combining the basic vocabulary into multi-stage cooperative work. All use the default options on the Room component and have StandardTime = 60 seconds. This is a scoring target, not a forced duration: coordinated teams can finish faster. No idle waiting was added to pad the duration; the timer serves actual saw-power windows.\n\n");
         text.Append("Target audience: teams familiar with the basic blocks, primarily four players. Aim for roughly 45-90 seconds on early informed attempts, centered near 60; actual human timings still need measurement. Longer work comes from carrying decisions, return trips, production dependencies, signal transitions and handoffs. Reset remains available in every room; only Refill Contracts deliberately requires it. These are standalone prototypes, not additions to an existing lobby or repeated level pool.\n\n");
         text.Append("![Room layouts and delivery orders](overview.png)\n\n| Room | Challenge emphasis | Geometry | Work rhythm |\n|---|---|---|---|\n");
         foreach(var s in Specs())text.Append("| "+s.name+" | "+s.challenge+" | "+s.geometry+" | "+s.idea+" |\n");
@@ -283,13 +280,15 @@ public static class BuildMinuteRooms
     static void BeginRoom()
     {
         manager.StartLevel(LevelData.CreateRoomTest(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath(roomIndex)).GetComponent<Room>()));
+        // Scripted solutions use the authored orientation; real room startups remain randomized.
+        var options=new SerializedObject(loader.CurrentRoom);options.FindProperty("allowHorizontalReflection").boolValue=false;options.FindProperty("allowVerticalReflection").boolValue=false;options.ApplyModifiedPropertiesWithoutUndo();
         stage=1;commandIndex=0;queue.Clear();running=null;parallelHands=null;hand=null;
         roomStartTime=Time.time;armActions=moveSegments=0;
         deadline=EditorApplication.timeSinceStartup+240;
     }
     static void VerifyLayout()
     {
-        var s=Specs()[roomIndex];Check(room.Config==DefaultConfig,"Wrong shared config");
+        var s=Specs()[roomIndex];Check(room.IsTimed&&room.CanUseReset,"Wrong room options");
         for(int y=0;y<9;y++)for(int x=0;x<17;x++)
         {
             var obj=room.Grid.Objects.GetObject(Cell(x,y));var spec=s.objects.FirstOrDefault(o=>o.x==x&&o.y==y);
