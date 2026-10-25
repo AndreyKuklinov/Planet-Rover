@@ -7,14 +7,17 @@ public class StarContainer : MonoBehaviour
     [SerializeField] Image starPrefab;
     private readonly List<Image> stars = new List<Image>();
 
-    // Lobby ratings use whole stars; gameplay uses three persistent filled images.
-    public void SetStars(int starCount)
+    // Lobby and gameplay ratings use whole stars.
+    public void SetStars(int starCount, bool showLastStar = true)
     {
         EnsureCount(starCount);
-        foreach (var star in stars)
+        for (int i = 0; i < stars.Count; i++)
         {
+            var star = stars[i];
             star.type = Image.Type.Simple;
             star.fillAmount = 1f;
+            // Keep the layout slot in place while its icon blinks.
+            star.enabled = i < stars.Count - 1 || showLastStar;
         }
     }
 

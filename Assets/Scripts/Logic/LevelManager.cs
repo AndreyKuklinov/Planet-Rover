@@ -13,11 +13,13 @@ public class LevelManager : MonoBehaviour
     public bool IsRoomTestFinished { get; private set; }
     public bool IsTestingRoom => CurrentLevel != null && (IsRoomTestSession || CurrentLevel.IsRoomTest);
     public float ElapsedTime => roomTimer.ElapsedTime;
+    public float TimeRemaining => roomTimer.TimeRemaining;
     public bool IsRoomTestSession { get; private set; }
     public void BeginRoomTestSession() => IsRoomTestSession = true;
     public bool IsCurrentRoomTimed => IsLevelRunning && levelLoader.CurrentRoom.IsTimed;
     public float StandardTime => levelLoader.StandardTime * playerTimeMultiplier;
     public int AchievableStars => starConfig.GetStars(roomTimer.ElapsedTime, StandardTime);
+    public float TimeUntilStarLoss => starConfig.GetTimeUntilStarLoss(roomTimer.ElapsedTime, StandardTime);
     public float GetStarFill(int starNumber)
         => starConfig.GetStarFill(starNumber, roomTimer.ElapsedTime, StandardTime);
 

@@ -551,6 +551,8 @@ MonoBehaviour:
   ui: {fileID: 7419065835183359315}
   levelManager: {fileID: 8373723822254126440}
   scoreTracker: {fileID: 8373723822254126441}
+  starWarningDuration: 5
+  starBlinkInterval: 0.25
 --- !u!222 &526839383509058002
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -575,9 +577,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 33.613434, y: -22.0513}
-  m_SizeDelta: {x: 47.1557, y: 21.2069}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 10, y: -50}
+  m_SizeDelta: {x: 220, y: 30}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1001 &2264595185020136755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -592,11 +594,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_AnchorMax.x
@@ -652,11 +654,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 63.72699
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -74.324326
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -668,6 +670,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4465590445381812303, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817435765735193176, guid: 67ad3c4d1dabbef4fafaf4d558f354a5, type: 3}
+      propertyPath: m_ChildAlignment
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -844,7 +850,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.7713175, y: 0, z: -22.626225, w: 0.000107288855}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

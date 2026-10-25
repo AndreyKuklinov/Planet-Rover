@@ -10,6 +10,7 @@ public class RoomTimer : MonoBehaviour
     bool isStopwatchRunning;
     float stopwatchElapsed;
     public float ElapsedTime => isStopwatch ? stopwatchElapsed : timer.Duration - timer.TimeRemaining;
+    public float TimeRemaining => timer.TimeRemaining;
     public bool HasExpired => !isStopwatch && timer.Duration > 0f && timer.TimeRemaining <= 0f;
 
     private void OnEnable() => timer.TimeOut += OnTimeOut;

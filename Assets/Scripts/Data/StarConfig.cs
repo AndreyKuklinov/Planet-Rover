@@ -24,6 +24,20 @@ public class StarConfig : ScriptableObject
         return elapsedTime < standardTime * oneStarMultiplier ? 1 : 0;
     }
 
+    public float GetTimeUntilStarLoss(float elapsedTime, float standardTime)
+    {
+        if (standardTime <= 0f) return float.PositiveInfinity;
+        float multiplier;
+        switch (GetStars(elapsedTime, standardTime))
+        {
+            case 3: multiplier = threeStarMultiplier; break;
+            case 2: multiplier = twoStarMultiplier; break;
+            case 1: multiplier = oneStarMultiplier; break;
+            default: return float.PositiveInfinity;
+        }
+        return Mathf.Max(0f, standardTime * multiplier - elapsedTime);
+    }
+
     public float GetStarFill(int starNumber, float elapsedTime, float standardTime)
     {
         if (standardTime <= 0f)
