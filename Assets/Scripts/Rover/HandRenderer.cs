@@ -17,6 +17,8 @@ public class HandRenderer : MonoBehaviour
     float renderedDistance;
     bool hasRenderedPosition;
     bool isVisuallyRetracting;
+    RoomResetController resetController;
+    HandResetProgressIndicator resetIndicator;
 
     Vector3 TargetPosition
         => hand.transform.position
@@ -30,6 +32,11 @@ public class HandRenderer : MonoBehaviour
     {
         hasRenderedPosition = false;
         isVisuallyRetracting = false;
+    }
+
+    void OnDisable()
+    {
+        if (resetIndicator != null) resetIndicator.gameObject.SetActive(false);
     }
 
     void Start()
@@ -48,6 +55,41 @@ public class HandRenderer : MonoBehaviour
         UpdateHandSprite();
         UpdateLine();
         UpdateCellHightlight();
+        UpdateResetCharge();
+    }
+
+    void UpdateResetCharge()
+    {
+        if (resetController == null)
+            resetController = GetComponentInParent<RoomLoader>()?.ResetController;
+        float progress = 0f;
+        bool visible = resetController != null && resetController.TryGetHandCharge(hand.Direction, out progress);
+        if (!visible)
+        {
+            if (resetIndicator != null) resetIndicator.gameObject.SetActive(false);
+            return;
+        }
+        if (resetIndicator == null)
+        {
+            var indicator = new GameObject("Reset Charge", typeof(RectTransform), typeof(Canvas));
+            indicator.transform.SetParent(transform, false);
+            var canvas = indicator.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI";
+            canvas.sortingOrder = 1;
+            var fill = new GameObject("Progress", typeof(RectTransform));
+            fill.transform.SetParent(indicator.transform, false);
+            resetIndicator = fill.AddComponent<HandResetProgressIndicator>();
+            resetIndicator.color = Color.white;
+            resetIndicator.raycastTarget = false;
+        }
+        resetIndicator.gameObject.SetActive(true);
+        resetIndicator.rectTransform.sizeDelta = Vector2.one * Config.RoomResetIndicatorSize;
+        var canvasTransform = resetIndicator.canvas.transform;
+        ((RectTransform)canvasTransform).sizeDelta = resetIndicator.rectTransform.sizeDelta;
+        canvasTransform.SetPositionAndRotation(spriteRenderer.bounds.center, Quaternion.identity);
+        resetIndicator.SetProgress(progress);
     }
     void UpdateHandPosition(float deltaTime)
     {

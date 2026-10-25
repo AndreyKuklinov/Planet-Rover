@@ -5,15 +5,20 @@ using UnityEngine;
 public class RoomResetController : MonoBehaviour
 {
     public event Action<Room> RoomReset;
-    public float HoldProgress { get; private set; }
 
     RoomLoader loader;
     RoverHandConfig config;
     Room snapshot;
     GameObject snapshotContainer;
     readonly List<PreserveOnRoomReset> preserved = new();
-    float heldTime;
-    bool waitingForRelease;
+    sealed class HandCharge
+    {
+        public float HeldTime;
+        public float Progress;
+        public bool IsCharging;
+        public bool WaitingForRelease = true;
+    }
+    readonly Dictionary<PlayerDevice, HandCharge> charges = new();
     int rosterVersion = -1;
 
     public void Initialize(RoomLoader roomLoader, RoverHandConfig settings)
@@ -48,10 +53,6 @@ public class RoomResetController : MonoBehaviour
             marker.gameObject.SetActive(false);
             Destroy(marker.gameObject);
         }
-        heldTime = 0f;
-        HoldProgress = 0f;
-        // Do not reset immediately when entering a room with drop already held.
-        waitingForRelease = true;
     }
 
     public void ClearSnapshot()
@@ -60,7 +61,30 @@ public class RoomResetController : MonoBehaviour
         snapshot = null;
         snapshotContainer = null;
         preserved.Clear();
-        heldTime = HoldProgress = 0f;
+        ClearCharges();
+    }
+
+    void OnDisable() => ClearCharges();
+
+    void ClearCharges()
+    {
+        charges.Clear();
+        rosterVersion = -1;
+    }
+
+    public bool TryGetHandCharge(Direction direction, out float progress)
+    {
+        progress = 0f;
+        var input = PartyInputManager.Instance;
+        if (!isActiveAndEnabled || input == null || rosterVersion != input.RosterVersion || snapshot == null || loader.CurrentRoom == null
+            || !loader.CurrentRoom.CanUseReset || Time.timeScale <= 0f) return false;
+        int index = input.DirectionToPlayerIndex[direction];
+        if (index < 0 || index >= input.PlayerCount) return false;
+        var player = input.Players[index];
+        if (player == null || !player.IsDropHeld || !charges.TryGetValue(player, out var charge)
+            || !charge.IsCharging) return false;
+        progress = charge.Progress;
+        return true;
     }
 
     void Update()
@@ -69,42 +93,55 @@ public class RoomResetController : MonoBehaviour
         if (snapshot == null || config == null || loader.CurrentRoom == null
             || Time.timeScale <= 0f || input == null)
         {
-            heldTime = HoldProgress = 0f;
-            waitingForRelease = true;
+            ClearCharges();
             return;
         }
-        TickHold(input.AllPlayersHoldingDrop, input.AnyPlayerHoldingDrop,
-            input.RosterVersion, Time.deltaTime);
+        TickHold(input.Players, input.RosterVersion, Time.deltaTime);
     }
 
-    public void TickHold(bool allHeld, bool anyHeld, int currentRosterVersion, float deltaTime)
+    public void TickHold(IReadOnlyList<PlayerDevice> players, int currentRosterVersion, float deltaTime)
     {
+        if (snapshot == null || config == null || loader.CurrentRoom == null || !loader.CurrentRoom.CanUseReset)
+        {
+            ClearCharges();
+            return;
+        }
         if (rosterVersion != currentRosterVersion)
         {
+            ClearCharges();
             rosterVersion = currentRosterVersion;
-            heldTime = HoldProgress = 0f;
         }
-        if (waitingForRelease)
+        bool allReady = players.Count > 0;
+        foreach (var player in players)
         {
-            if (!anyHeld) waitingForRelease = false;
-            return;
+            if (player == null) { allReady = false; continue; }
+            if (!charges.TryGetValue(player, out var charge))
+            {
+                charge = new HandCharge();
+                charges.Add(player, charge);
+            }
+            if (!player.IsDropHeld)
+            {
+                charge.HeldTime = charge.Progress = 0f;
+                charge.IsCharging = charge.WaitingForRelease = false;
+                allReady = false;
+                continue;
+            }
+            // Each player must release once after entry, a roster change, or a reset.
+            if (charge.WaitingForRelease) { allReady = false; continue; }
+            charge.HeldTime += Mathf.Max(0f, deltaTime);
+            charge.IsCharging = charge.HeldTime >= Mathf.Max(0f, config.RoomResetHoldThreshold);
+            charge.Progress = Mathf.Clamp01((charge.HeldTime - Mathf.Max(0f, config.RoomResetHoldThreshold))
+                / Mathf.Max(0.01f, config.RoomResetHoldDuration));
+            if (!charge.IsCharging || charge.Progress < 1f) allReady = false;
         }
-        if (!allHeld || snapshot == null || config == null || !loader.CurrentRoom.CanUseReset)
-        {
-            heldTime = HoldProgress = 0f;
-            return;
-        }
-        heldTime += Mathf.Max(0f, deltaTime);
-        HoldProgress = Mathf.Clamp01(heldTime / Mathf.Max(0.01f, config.RoomResetHoldDuration));
-        if (HoldProgress < 1f) return;
-        waitingForRelease = true;
-        heldTime = HoldProgress = 0f;
-        ResetRoom();
+        if (allReady) ResetRoom();
     }
 
     public void ResetRoom()
     {
         if (snapshot == null || loader.CurrentRoom == null || !loader.CurrentRoom.CanUseReset) return;
+        ClearCharges();
         var oldRoom = loader.CurrentRoom;
         var oldGrid = oldRoom.Grid;
         var livePreserved = new List<(PreserveOnRoomReset marker, GridObject obj, bool registered)>();

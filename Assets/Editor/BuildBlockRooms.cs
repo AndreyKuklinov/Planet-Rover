@@ -377,7 +377,7 @@ public static class BuildBlockRooms
             var before=loader.CurrentRoom;var clock=manager.ElapsedTime;
             var rockets=before.GetComponentsInChildren<ItemCollector>();var counts=rockets.Select(r=>r.RequiredItems.Count).ToArray();
             Check(counts.Sum()>0&&!manager.IsRoomTestFinished,"Reset must occur before final completion");
-            loader.ResetController.TickHold(false,false,1,0);loader.ResetController.TickHold(true,true,1,10);
+            loader.ResetController.ResetRoom();
             Check(loader.CurrentRoom!=before,"Reset did not restore room");RefreshRoom();
             for(int i=0;i<rockets.Length;i++)Check(rockets[i]!=null&&rockets[i].RequiredItems.Count==counts[i]&&rockets[i].transform.IsChildOf(room.transform),"Rocket progress not preserved");
             Check(manager.ElapsedTime>=clock,"Reset refunded score time");

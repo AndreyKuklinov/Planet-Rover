@@ -24,3 +24,5 @@ MonoBehaviour:
   emptyHandRestingDistance: 0.2
   isCellHighlightEnabled: 0
   roomResetHoldDuration: 2
+  roomResetHoldThreshold: 0.3
+  roomResetIndicatorSize: 0.35

@@ -4,8 +4,16 @@ using UnityEngine;
 public class RoverHandConfig : ScriptableObject
 {
     [Header("Room Reset")]
-    [SerializeField, Min(0.01f)] float roomResetHoldDuration = 2f;
+    [SerializeField, Min(0f)]
+    [Tooltip("Hold drop this long before the hand starts charging and shows its reset circle.")]
+    float roomResetHoldThreshold = 0.3f;
+    [SerializeField, Min(0.01f)]
+    [Tooltip("Time to fully charge after the hold threshold. Releasing drop clears the charge, even when full.")]
+    float roomResetHoldDuration = 2f;
+    [SerializeField, Min(0.01f)] float roomResetIndicatorSize = 0.35f;
+    public float RoomResetHoldThreshold => roomResetHoldThreshold;
     public float RoomResetHoldDuration => roomResetHoldDuration;
+    public float RoomResetIndicatorSize => roomResetIndicatorSize;
 
     [Header("Movement")]
     [SerializeField, Min(0.01f)] float extendSpeed = 12f;
