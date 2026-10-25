@@ -9,10 +9,13 @@ public class LevelSelector : MonoBehaviour, IInteractable
     [SerializeField] StarContainer starContainer;
     [SerializeField] LevelDataEventChannel levelSelected;
 
-    void Start()
+    void OnEnable()
     {
+        SaveDataManager.ScoresChanged += DisplayStars;
         DisplayStars();
     }
+
+    void OnDisable() => SaveDataManager.ScoresChanged -= DisplayStars;
 
     public bool CanInteractWith(IGrabbable grabbedObject)
     {
