@@ -20,22 +20,24 @@ public static class RoomAuthoringTools
         if (EditorApplication.isPlayingOrWillChangePlaymode || selected == null) return;
         try
         {
-            var room = selected;
-            if (EditorUtility.IsPersistent(selected))
-            {
-                string path = AssetDatabase.GetAssetPath(selected);
-                var stage = PrefabStageUtility.GetCurrentPrefabStage();
-                if (stage == null || stage.assetPath != path)
-                {
-                    AssetDatabase.OpenAsset(selected.gameObject);
-                    stage = PrefabStageUtility.GetCurrentPrefabStage();
-                }
-                if (stage == null || stage.assetPath != path) return;
-                room = stage.prefabContentsRoot.GetComponent<Room>();
-            }
-            Fill(room, borderOnly, true);
+            var room = GetEditableRoom(selected);
+            if (room != null) Fill(room, borderOnly, true);
         }
         catch (Exception ex) { EditorUtility.DisplayDialog("Fill Room", ex.Message, "OK"); }
+    }
+
+    public static Room GetEditableRoom(Room selected)
+    {
+        if (selected == null || EditorApplication.isPlayingOrWillChangePlaymode) return null;
+        if (!EditorUtility.IsPersistent(selected)) return selected;
+        string path = AssetDatabase.GetAssetPath(selected);
+        var stage = PrefabStageUtility.GetCurrentPrefabStage();
+        if (stage == null || stage.assetPath != path)
+        {
+            AssetDatabase.OpenAsset(selected.gameObject);
+            stage = PrefabStageUtility.GetCurrentPrefabStage();
+        }
+        return stage != null && stage.assetPath == path ? stage.prefabContentsRoot.GetComponent<Room>() : null;
     }
 
     public static int Fill(Room room, bool borderOnly, bool useUndo = true)

@@ -43,6 +43,11 @@ public class RoomGrid : MonoBehaviour
         if (!IsWithinBounds(cell))
             throw new InvalidOperationException("Trying to place an object outside of bounds: " + cell);
 
+        var existing = Objects.GetObject(cell);
+        if (existing != null && existing != obj)
+            throw new InvalidOperationException($"Room '{GetComponentInParent<Room>()?.name ?? name}', cell ({cell.x}, {cell.y}): "
+                + $"'{existing.name}' overlaps '{obj.name}'. Open the room prefab and resolve the overlapping grid objects.");
+
         obj.transform.position = CellToWorld(cell);
         Objects.Add(obj, cell);
     }

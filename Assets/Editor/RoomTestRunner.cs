@@ -51,6 +51,13 @@ public static class RoomTestRunner
     public static void Launch(Room room)
     {
         if (room == null || EditorApplication.isPlayingOrWillChangePlaymode) return;
+        var overlaps = RoomDuplicateUtility.FindOverlaps(room);
+        if (overlaps.Count > 0)
+        {
+            Debug.LogError($"Cannot test room '{room.name}': overlapping grid objects.\n"
+                + RoomDuplicateUtility.Describe(room, overlaps) + "\nOpen the room prefab and fix the highlighted cells, or use Select Overlaps in the Room Inspector.", room);
+            return;
+        }
         if (AssetDatabase.LoadAssetAtPath<SceneAsset>(GameScene) == null)
         {
             EditorUtility.DisplayDialog("Test Room", "The Game scene could not be found at " + GameScene, "OK");
