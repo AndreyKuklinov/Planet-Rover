@@ -16,6 +16,9 @@ public class Rover : MonoBehaviour, IPassable
     public RoomGrid LevelGrid
         => gridObject.RoomGrid;
 
+    public bool CanReceiveInput => isActiveAndEnabled && gridObject != null && gridObject.isActiveAndEnabled
+        && gridObject.RoomGrid != null && gridObject.RoomGrid.isActiveAndEnabled;
+
     public bool IsMoving
         => mover.IsMoving;
 

@@ -80,6 +80,15 @@ public class PlayerDevice : MonoBehaviour
     void Update()
     {
         if (DropButtons().Any(button => button.wasPressedThisFrame)) TriggerDrop();
+
+        if (playerInput == null || !playerInput.isActiveAndEnabled || !playerInput.inputIsActive
+            || playerInput.actions == null) return;
+        // Retry extension while held, including after the hand finishes retracting.
+        // Poll the player's actions so keyboard profiles and gamepad bindings stay respected.
+        foreach (var action in playerInput.actions)
+            if (action.IsPressed() && Enum.TryParse<Direction>(action.name, out var direction)
+                && (AllowedDirections == null || AllowedDirections.Contains(direction)))
+                DirectionTriggered?.Invoke(direction, InputInteraction.Hold, this);
     }
 
     void TriggerDrop()

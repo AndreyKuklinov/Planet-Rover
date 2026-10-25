@@ -26,7 +26,10 @@ public class RoomLoader : MonoBehaviour
     {
         ResetController.ClearSnapshot();
         if (CurrentRoom != null)
+        {
+            CurrentRoom.gameObject.SetActive(false);
             Destroy(CurrentRoom.gameObject);
+        }
 
         CurrentRoom = Instantiate(room, transform);
         LoadedRoom?.Invoke();

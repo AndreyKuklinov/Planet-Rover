@@ -13,10 +13,16 @@ public class RoverController : MonoBehaviour
     public bool CanControl
         => TryFindRover();
 
-    void Start()
+    void OnEnable()
     {
         partyManager.DirectionTriggered += OnDirectionTriggered;
         partyManager.DropTriggered += OnDropTriggered;
+    }
+
+    void OnDisable()
+    {
+        partyManager.DirectionTriggered -= OnDirectionTriggered;
+        partyManager.DropTriggered -= OnDropTriggered;
     }
 
     void OnDropTriggered(PlayerDevice obj)
@@ -49,14 +55,11 @@ public class RoverController : MonoBehaviour
 
     bool TryFindRover()
     {
-        if (rover != null && rover.isActiveAndEnabled)
+        if (rover != null && rover.CanReceiveInput)
             return true;
 
         rover = FindObjectOfType<Rover>();
 
-        if (rover == null)
-            return false;
-
-        return true;
+        return rover != null && rover.CanReceiveInput;
     }
 }
