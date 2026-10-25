@@ -1,5 +1,10 @@
+param(
+    [string]$RoomFolder = 'Assets/Prefabs/Levels/showcase 2026/blocks',
+    [int]$ExpectedCount = 35,
+    [string]$Title = 'Planet Rover / Basic room blocks'
+)
 Add-Type -AssemblyName System.Drawing
-$blockFolder = Join-Path (Get-Location) 'Assets/Prefabs/Levels/showcase 2026/blocks'
+$blockFolder = Join-Path (Get-Location) $RoomFolder
 $guidNames = @{}
 $itemNames = @{}
 foreach ($item in Get-ChildItem -LiteralPath 'Assets/Scriptable Objects/Items' -Filter '*.asset') {
@@ -12,7 +17,8 @@ foreach ($source in $prefabSources) {
     $guidNames[$guidLine.Line.Substring(6)] = $source.BaseName
 }
 $symbols = @{'Rover'='@';'Rock'='r';'Cog'='c';'Bucket'='b';'Liquid'='w';'Cloud'='C';'Flower'='f';'Sapling'='p';'Button'='L';'Door'='D';'Saw'='S';'Rocket'='R';'Timed'='T'}
-$bitmap = [System.Drawing.Bitmap]::new(1350, 1490)
+$canvasHeight = 104 + 198 * [int][math]::Ceiling($ExpectedCount / 5.0)
+$bitmap = [System.Drawing.Bitmap]::new(1350, $canvasHeight)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 $graphics.Clear([System.Drawing.ColorTranslator]::FromHtml('#f5f2eb'))
 $graphics.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::AntiAliasGridFit
@@ -28,8 +34,8 @@ $blue = [System.Drawing.SolidBrush]::new([System.Drawing.ColorTranslator]::FromH
 $neutral = [System.Drawing.SolidBrush]::new([System.Drawing.ColorTranslator]::FromHtml('#ccc5e2'))
 $white = [System.Drawing.SolidBrush]::new([System.Drawing.Color]::White)
 $gridPen = [System.Drawing.Pen]::new([System.Drawing.ColorTranslator]::FromHtml('#cbd6d2'))
-$graphics.DrawString('Planet Rover / Basic room blocks',$titleFont,$ink,20,12)
-$graphics.DrawString('Authored prefab layouts: 35 rooms, 17 x 9 cells. Orange = A, blue = B, purple = neutral.',$legendFont,$ink,20,43)
+$graphics.DrawString($Title,$titleFont,$ink,20,12)
+$graphics.DrawString("Authored prefab layouts: $ExpectedCount rooms, 17 x 9 cells. Orange = A, blue = B, purple = neutral.",$legendFont,$ink,20,43)
 $graphics.DrawString('@ rover   r rock   c cog   b bucket   w liquid   C cloud   p plant   f flower   L lever   D door   S saw   R rocket   T timer',$legendFont,$ink,20,63)
 $index = 0
 foreach ($file in Get-ChildItem -LiteralPath $blockFolder -Filter '*.prefab' | Sort-Object Name) {
@@ -81,10 +87,11 @@ foreach ($file in Get-ChildItem -LiteralPath $blockFolder -Filter '*.prefab' | S
         $graphics.DrawString($symbol,$symbolFont,$textBrush,$px+2,$py)
     }
     $requestText = ($requests | Group-Object | ForEach-Object { if ($_.Count -gt 1) { "$($_.Count)x $($_.Name)" } else { $_.Name } }) -join ', '
-    $graphics.DrawString("Deliver: $requestText",$legendFont,$ink,$baseX+15,$baseY+161)
+    $requestRect = [System.Drawing.RectangleF]::new($baseX+12,$baseY+156,234,30)
+    $graphics.DrawString("Deliver: $requestText",$legendFont,$ink,$requestRect)
     $index++
 }
-if ($index -ne 35) { throw 'Expected 35 rooms' }
+if ($index -ne $ExpectedCount) { throw "Expected $ExpectedCount rooms, found $index" }
 $imagePath = Join-Path $blockFolder 'overview.png'
 $bitmap.Save($imagePath,[System.Drawing.Imaging.ImageFormat]::Png)
 $graphics.Dispose()
