@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTimed: 1
   canUseReset: 1
-  <StandardTime>k__BackingField: 60
+  <StandardTime>k__BackingField: 21
   allowHorizontalReflection: 1
   allowVerticalReflection: 1
   grid: {fileID: 7739660288577760156}

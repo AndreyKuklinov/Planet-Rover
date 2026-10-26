@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
+  m_Name: andrey 1
+  m_EditorClassIdentifier: 
+  <IsRandomOrder>k__BackingField: 0
+  roomCountToComplete: 4
+  <Rooms>k__BackingField:
+  - {fileID: 2825435723683156032, guid: 301c3db67327c4649b68ef07752b8290, type: 3}
+  - {fileID: 6866367746556100746, guid: 48340710af215714d89fc1ea028a7025, type: 3}
+  - {fileID: 7146681605560428711, guid: bf9b62632775b1741b1ba2938a9a5321, type: 3}
+  - {fileID: 4827734181423867463, guid: 2c3cebc259e8f6347b6040eba051d6a2, type: 3}
