@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: challenge level
   m_EditorClassIdentifier: 
   <IsRandomOrder>k__BackingField: 1
-  roomCountToComplete: 8
+  roomCountToComplete: 9
   <Rooms>k__BackingField:
   - {fileID: 4353785497454095424, guid: 4b2837e8c34960b4697266d4ee8745fc, type: 3}
   - {fileID: 5205469026897112640, guid: 6183e9a00de127b4fa31b13734a3715c, type: 3}
@@ -23,3 +23,4 @@ MonoBehaviour:
   - {fileID: 8380182080984853638, guid: 977fdc74c0aa43e4980ac94672ed6c18, type: 3}
   - {fileID: 5181259079776437752, guid: 99603a83b67800346b5dd80f2928c564, type: 3}
   - {fileID: 6131466724117136786, guid: be87f6047bff78e4493209e701f30cb7, type: 3}
+  - {fileID: 3558900085531857371, guid: c9274de7c1afcea4996f801f7afa37d1, type: 3}

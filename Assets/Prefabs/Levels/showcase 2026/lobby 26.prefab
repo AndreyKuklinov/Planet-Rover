@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4716500869546703480, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7377244487854333734, guid: dd809fa5dcc0d13489e71643ef40c731, type: 3}
       propertyPath: m_Name
       value: lobby 26
@@ -105,7 +109,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.y
@@ -147,7 +151,7 @@ PrefabInstance:
       propertyPath: m_text
       value: 'LVL
 
-        3'
+        1*'
       objectReference: {fileID: 0}
     - target: {fileID: 4840795175888693855, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: levelData
@@ -177,11 +181,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.z
@@ -219,7 +223,7 @@ PrefabInstance:
       propertyPath: m_text
       value: 'LVL
 
-        4'
+        2*'
       objectReference: {fileID: 0}
     - target: {fileID: 4840795175888693855, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: levelData
@@ -249,11 +253,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.z
@@ -291,7 +295,15 @@ PrefabInstance:
       propertyPath: m_text
       value: 'LVL
 
-        1'
+        MAIN'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058722203151675232, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
+      propertyPath: m_fontSize
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058722203151675232, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 4840795175888693855, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: levelData
@@ -321,11 +333,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2923958814578110793, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: m_LocalPosition.z
@@ -363,7 +375,7 @@ PrefabInstance:
       propertyPath: m_text
       value: 'LVL
 
-        5'
+        3*'
       objectReference: {fileID: 0}
     - target: {fileID: 4840795175888693855, guid: 12f976f3ba85e644f89a5c181baf7a31, type: 3}
       propertyPath: levelData
