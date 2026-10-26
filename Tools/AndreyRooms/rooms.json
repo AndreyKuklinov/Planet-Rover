@@ -1,0 +1,1161 @@
+{
+  "source": "reference.png",
+  "rooms": [
+    {
+      "number": 1,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#####..#....###......#",
+        "#####..#....###......#",
+        "#...#..#.............#",
+        "#...#................#",
+        "#...#.........###....#",
+        "#...#.........###....#",
+        "#.............#......#",
+        "#.....###.....#......#",
+        "#.....###.....#......#",
+        "#.....###.....#......#",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 2,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 18,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 16,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 10,
+          "y": 7,
+          "requests": [
+            "Bucket",
+            "Bucket",
+            "Bucket"
+          ]
+        }
+      ],
+      "name": "01 Bucket Collection"
+    },
+    {
+      "number": 2,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#............####....#",
+        "#.....###....####....#",
+        "#.....###............#",
+        "#.....#..............#",
+        "#.....#.......#......#",
+        "#.....#.......#......#",
+        "#..####..............#",
+        "#.....#..............#",
+        "#.............###....#",
+        "#.............###....#",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 4,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 18,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 18,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 10,
+          "y": 9,
+          "requests": [
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "02 First Flower"
+    },
+    {
+      "number": 3,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "######.......#.......#",
+        "######...............#",
+        "######...............#",
+        "#...##...............#",
+        "#...##.......#.......#",
+        "#............#.......#",
+        "#..####.....##.......#",
+        "#..................###",
+        "#..................###",
+        "#..................###",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 9,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 13,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 9,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 5,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 17,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 13,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 9,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 16,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 17,
+          "y": 5,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "03 Three Plant Route"
+    },
+    {
+      "number": 4,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#........#......#....#",
+        "#........#......#....#",
+        "#........#......#....#",
+        "##...................#",
+        "##................#..#",
+        "##...#............#..#",
+        "##........###.#...#..#",
+        "#.........#...#......#",
+        "#.........#...#......#",
+        "#.............#......#",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 9,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 18,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 12,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 8,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 8,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 5,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 5,
+          "y": 10,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 18,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 18,
+          "y": 10,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 7,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 11,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 17,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 11,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 7,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 17,
+          "y": 10,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 3,
+          "y": 3,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 3,
+          "y": 8,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "04 Two Flower Docks"
+    },
+    {
+      "number": 5,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#....................#",
+        "#....................#",
+        "#...##........##.....#",
+        "#...##........##.....#",
+        "#...##........##.....#",
+        "#...##........##.....#",
+        "#...##........##.....#",
+        "#...##...............#",
+        "#.......###..........#",
+        "#.......###..........#",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 2,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 17,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 10,
+          "y": 7,
+          "requests": [
+            "Bucket",
+            "Bucket",
+            "Bucket"
+          ]
+        }
+      ],
+      "name": "05 Bucket Rewind"
+    },
+    {
+      "number": 6,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#....................#",
+        "#....................#",
+        "###....#......#......#",
+        "###....#......#......#",
+        "#......#......#......#",
+        "#......#......#......#",
+        "#......#.............#",
+        "#..#####...........###",
+        "#..................###",
+        "#..................###",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 13,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 4,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 14,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 17,
+          "y": 10,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 5,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 16,
+          "y": 5,
+          "requests": [
+            "Bucket",
+            "Flower A",
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "06 Flower Rewind"
+    },
+    {
+      "number": 7,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#....................#",
+        "#....................#",
+        "#.......#......#######",
+        "#.......#......#.....#",
+        "#.....###......#.....#",
+        "#.......#......#.....#",
+        "#.......###..........#",
+        "#.......#............#",
+        "#..............#######",
+        "#..............#######",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 4,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 9,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 11,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 18,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 3,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 18,
+          "y": 6,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 15,
+          "y": 8,
+          "requests": [
+            "Bucket",
+            "Bucket",
+            "Bucket"
+          ]
+        }
+      ],
+      "name": "07 Restock Both Docks"
+    },
+    {
+      "number": 8,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#######.......###....#",
+        "#.....#.........#....#",
+        "#.....#.........#....#",
+        "#.....#....##........#",
+        "#.....#..............#",
+        "#.....#.........######",
+        "#....................#",
+        "#....................#",
+        "####....#............#",
+        "####....#............#",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 11,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 12,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 16,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 2,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 19,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 8,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 11,
+          "y": 9,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 3,
+          "y": 3,
+          "requests": [
+            "Flower A",
+            "Bucket",
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 18,
+          "y": 8,
+          "requests": [
+            "Bucket",
+            "Flower A",
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "08 Split Contracts"
+    },
+    {
+      "number": 9,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#....#...#........####",
+        "#....#...#........####",
+        "#....#...#...###..####",
+        "#....................#",
+        "#....................#",
+        "#....................#",
+        "#........#...........#",
+        "#........#.###.......#",
+        "#........#.###.....###",
+        "#..................###",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 9,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 5,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 8,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 14,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 16,
+          "y": 10,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 10,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 6,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 12,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 2,
+          "y": 5,
+          "requests": [
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 16,
+          "y": 6,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "09 Spend the Bucket"
+    },
+    {
+      "number": 10,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "###...........##.....#",
+        "###....###....##.....#",
+        "#.............##.....#",
+        "#.............##.....#",
+        "#....................#",
+        "#....................#",
+        "#..###...............#",
+        "#..###...............#",
+        "#.......##.......##..#",
+        "#.......##.......##..#",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 18,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 4,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 7,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 4,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 3,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 6,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 5,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 5,
+          "y": 5,
+          "requests": [
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 13,
+          "y": 8,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        }
+      ],
+      "name": "10 Bucket in the Garden"
+    },
+    {
+      "number": 11,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#....##.....##.......#",
+        "#....##..............#",
+        "#....##..............#",
+        "#....##..............#",
+        "#....##..............#",
+        "#....................#",
+        "#...........##.......#",
+        "###.........#........#",
+        "#######..........##..#",
+        "#######..........#####",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 1,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 4,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 2,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 3,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 2,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 4,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 1,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 1,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 11,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 20,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 16,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 18,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 12,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 13,
+          "y": 8,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 9,
+          "y": 3,
+          "requests": [
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 19,
+          "y": 3,
+          "requests": [
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 16,
+          "y": 5,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 14,
+          "y": 7,
+          "requests": [
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 10,
+          "y": 10,
+          "requests": [
+            "Bucket"
+          ]
+        }
+      ],
+      "name": "11 Bucket Depot"
+    },
+    {
+      "number": 12,
+      "width": 22,
+      "height": 12,
+      "walls": [
+        "######################",
+        "#...####.............#",
+        "#...####.............#",
+        "#....................#",
+        "#...............##...#",
+        "#...............##...#",
+        "#.....#..............#",
+        "#.....#..............#",
+        "#....................#",
+        "##...................#",
+        "##................####",
+        "######################"
+      ],
+      "objects": [
+        {
+          "prefab": "Rover",
+          "x": 10,
+          "y": 5,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 2,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 14,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 10,
+          "y": 10,
+          "requests": []
+        },
+        {
+          "prefab": "Bucket",
+          "x": 19,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 17,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 19,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 20,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 18,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 19,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 17,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 18,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 20,
+          "y": 3,
+          "requests": []
+        },
+        {
+          "prefab": "Liquid A",
+          "x": 19,
+          "y": 4,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 8,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 9,
+          "y": 1,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 8,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 9,
+          "y": 2,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 4,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 5,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 4,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 5,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 16,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 17,
+          "y": 6,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 16,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Sapling A",
+          "x": 17,
+          "y": 7,
+          "requests": []
+        },
+        {
+          "prefab": "Rocket",
+          "x": 8,
+          "y": 7,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 12,
+          "y": 3,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 13,
+          "y": 9,
+          "requests": [
+            "Flower A",
+            "Flower A",
+            "Flower A"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 15,
+          "y": 5,
+          "requests": [
+            "Bucket"
+          ]
+        },
+        {
+          "prefab": "Rocket",
+          "x": 6,
+          "y": 10,
+          "requests": [
+            "Bucket"
+          ]
+        }
+      ],
+      "name": "12 Nursery Warehouse"
+    }
+  ]
+}

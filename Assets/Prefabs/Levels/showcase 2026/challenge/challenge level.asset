@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
+  m_Name: challenge level
+  m_EditorClassIdentifier: 
+  <IsRandomOrder>k__BackingField: 1
+  roomCountToComplete: 8
+  <Rooms>k__BackingField:
+  - {fileID: 4353785497454095424, guid: 4b2837e8c34960b4697266d4ee8745fc, type: 3}
+  - {fileID: 5205469026897112640, guid: 6183e9a00de127b4fa31b13734a3715c, type: 3}
+  - {fileID: 404022489586000561, guid: 4cd2078850b37ba49bf9cf97e65401cc, type: 3}
+  - {fileID: 6305915772140589568, guid: a6c25332e71e0e14ea5878fc1f98d564, type: 3}
+  - {fileID: 402804035442022121, guid: d5f1ecae145b26f409dd363092c84efd, type: 3}
+  - {fileID: 8380182080984853638, guid: 977fdc74c0aa43e4980ac94672ed6c18, type: 3}
+  - {fileID: 5181259079776437752, guid: 99603a83b67800346b5dd80f2928c564, type: 3}
+  - {fileID: 6131466724117136786, guid: be87f6047bff78e4493209e701f30cb7, type: 3}

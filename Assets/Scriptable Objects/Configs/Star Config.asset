@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Star Config
   m_EditorClassIdentifier: 
   threeStarMultiplier: 1
-  twoStarMultiplier: 2
-  oneStarMultiplier: 3
+  twoStarMultiplier: 1.5
+  oneStarMultiplier: 2.5
