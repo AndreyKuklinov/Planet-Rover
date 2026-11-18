@@ -7,7 +7,9 @@ using UnityEngine;
 
 public static class RoomAuthoringTools
 {
-    const string TemplatePath = "Assets/Prefabs/Levels/Empty Level.prefab";
+    public const int MaxRoomDimension = 100;
+
+    const string TemplateGuid = "dd809fa5dcc0d13489e71643ef40c731";
     const string WallPath = "Assets/Prefabs/Level Objects/Obstacle.prefab";
     const string RoverPath = "Assets/Prefabs/Rover/Rover.prefab";
 
@@ -117,14 +119,16 @@ public static class RoomAuthoringTools
 
     public static GameObject CreateRoom(string path, int width, int height, float standardTime, bool addRover, bool addBorder)
     {
-        if (width < 3 || height < 3 || width > 200 || height > 200)
-            throw new ArgumentOutOfRangeException(nameof(width), "Room dimensions must be between 3 and 200 cells.");
+        if (width < 3 || height < 3 || width > MaxRoomDimension || height > MaxRoomDimension)
+            throw new ArgumentOutOfRangeException(nameof(width), $"Room dimensions must be between 3 and {MaxRoomDimension} cells.");
         if (standardTime <= 0 || float.IsNaN(standardTime) || float.IsInfinity(standardTime))
             throw new ArgumentOutOfRangeException(nameof(standardTime));
         if (!path.StartsWith("Assets/", StringComparison.Ordinal) || !path.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase)
             || path.Contains("..") || File.Exists(path))
             throw new InvalidOperationException("Choose a new prefab filename inside Assets.");
-        var root = PrefabUtility.LoadPrefabContents(TemplatePath);
+        string templatePath = AssetDatabase.GUIDToAssetPath(TemplateGuid);
+        if (string.IsNullOrEmpty(templatePath)) throw new InvalidOperationException("Empty Level room template prefab is missing.");
+        var root = PrefabUtility.LoadPrefabContents(templatePath);
         try
         {
             root.name = Path.GetFileNameWithoutExtension(path);
