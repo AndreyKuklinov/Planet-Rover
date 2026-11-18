@@ -4,14 +4,10 @@ using UnityEngine;
 public class RoverHandConfig : ScriptableObject
 {
     [Header("Room Reset")]
-    [SerializeField, Min(0f)]
-    [Tooltip("Hold drop this long before the hand starts charging and shows its reset circle.")]
-    float roomResetHoldThreshold = 0.3f;
     [SerializeField, Min(0.01f)]
-    [Tooltip("Time to fully charge after the hold threshold. Releasing drop clears the charge, even when full.")]
+    [Tooltip("Time to charge the room reset once all hands are tucked. Any player releasing drop clears the shared charge.")]
     float roomResetHoldDuration = 2f;
     [SerializeField, Min(0.01f)] float roomResetIndicatorSize = 0.35f;
-    public float RoomResetHoldThreshold => roomResetHoldThreshold;
     public float RoomResetHoldDuration => roomResetHoldDuration;
     public float RoomResetIndicatorSize => roomResetIndicatorSize;
 
@@ -35,6 +31,8 @@ public class RoverHandConfig : ScriptableObject
     [SerializeField, Min(0.01f)]
     [Tooltip("Visual retraction speed after an instant hand snap. Does not affect movement or interaction logic.")]
     float snapRetractSpeed = 60f;
+    [SerializeField, Min(0.01f)] float dropTuckSpeed = 3f;
+    [SerializeField, Min(0.01f)] float dropReturnSpeed = 2f;
     [SerializeField, Min(0f)] float visibleDistance = 0.1f;
     [SerializeField, Min(0f)] float holdingDistance = 0.5f;
     [SerializeField, Min(0f)] float emptyHandRestingDistance = 0.2f;
@@ -47,6 +45,8 @@ public class RoverHandConfig : ScriptableObject
     public bool OnlyAffectInteractablePassables => onlyAffectInteractablePassables;
     public bool EnablePassableSnapBack => enablePassableSnapBack;
     public float SnapRetractSpeed => snapRetractSpeed;
+    public float DropTuckSpeed => dropTuckSpeed;
+    public float DropReturnSpeed => dropReturnSpeed;
     public float VisibleDistance => visibleDistance;
     public float HoldingDistance => holdingDistance;
     public float EmptyHandRestingDistance => emptyHandRestingDistance;

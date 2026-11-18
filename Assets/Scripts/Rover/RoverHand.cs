@@ -8,6 +8,8 @@ public class RoverHand : MonoBehaviour
 {
     public static event Action<RoverHand, Vector3> SelectedMovementTarget;
     public event Action<IGrabbable> GrabbedObject;
+    public event Action<PlayerDevice> DropPressed;
+    public event Action<GridObject> ObjectDropped;
 
     [field: SerializeField] public Direction Direction { get; private set; }
 
@@ -20,6 +22,7 @@ public class RoverHand : MonoBehaviour
     [SerializeField] RoverHandConfig config;
 
     public RoverHandConfig Config => config;
+    internal bool IsDropTucking { get; set; }
 
     Vector2Int? pendingMovementCell;
     Vector2Int? previousExtensionCell;
@@ -38,16 +41,24 @@ public class RoverHand : MonoBehaviour
 
     public void TryExtend()
     {
-        if (HandState != HandState.None || IsMovingRover)
+        if (HandState != HandState.None || IsMovingRover || IsDropTucking)
             return;
 
         previousExtensionCell = LevelGrid.WorldToCell(transform.position);
         HandState = HandState.Extending;
     }
 
-    public void TryDrop()
+    public void TryDrop(PlayerDevice player = null)
     {
-        if (HandState == HandState.Retracting || IsMovingRover || !IsHoldingObject)
+        DropPressed?.Invoke(player);
+        if (HandState == HandState.Retracting || IsMovingRover)
+            return;
+
+        // Drop supersedes the current aim, even when there is no cargo to place.
+        if (HandState == HandState.Extending)
+            RetractInstantly();
+
+        if (!IsHoldingObject)
             return;
 
         var roverCell = LevelGrid.WorldToCell(transform.position);
@@ -58,14 +69,17 @@ public class RoverHand : MonoBehaviour
             return;
 
         var nextCellPos = LevelGrid.CellToWorld(nextCell);
-        HeldObject.GridObject.transform.position = nextCellPos;
-        HeldObject.GridObject.AttachToGrid();
+        var droppedObject = HeldObject.GridObject;
+        droppedObject.transform.position = nextCellPos;
+        droppedObject.AttachToGrid();
         HeldObject = null;
+        ObjectDropped?.Invoke(droppedObject);
     }
 
     public void TryInteract()
     {
-        if (HandState == HandState.Retracting || IsMovingRover || pendingMovementCell.HasValue)
+        if (HandState == HandState.Retracting || IsMovingRover || pendingMovementCell.HasValue
+            || (HandState == HandState.None && IsDropTucking))
             return;
 
         LastGrabbedPos = HandPosition;

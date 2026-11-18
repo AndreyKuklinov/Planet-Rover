@@ -30,8 +30,7 @@ public class RoverController : MonoBehaviour
         if (!CanControl)
             return;
 
-        else
-            rover.OnDrop(obj.AllowedDirections);
+        rover.OnDrop(obj.AllowedDirections, obj);
     }
 
     void OnDirectionTriggered(Direction direction, InputInteraction interaction, PlayerDevice player)

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(100)]
 public class RoomResetController : MonoBehaviour
 {
+    const float IndicatorHeight = 0.65f;
     public event Action<Room> RoomReset;
 
     RoomLoader loader;
@@ -11,14 +13,12 @@ public class RoomResetController : MonoBehaviour
     Room snapshot;
     GameObject snapshotContainer;
     readonly List<PreserveOnRoomReset> preserved = new();
-    sealed class HandCharge
-    {
-        public float HeldTime;
-        public float Progress;
-        public bool IsCharging;
-        public bool WaitingForRelease = true;
-    }
-    readonly Dictionary<PlayerDevice, HandCharge> charges = new();
+    Rover rover;
+    HandRenderer[] hands;
+    RectTransform indicatorRect;
+    HandResetProgressIndicator resetIndicator;
+    float chargeTime;
+    bool isCharging;
     int rosterVersion = -1;
 
     public void Initialize(RoomLoader roomLoader, RoverHandConfig settings)
@@ -33,6 +33,7 @@ public class RoomResetController : MonoBehaviour
     {
         Room.RoomStarted -= CaptureRoom;
         if (snapshotContainer != null) Destroy(snapshotContainer);
+        if (indicatorRect != null) Destroy(indicatorRect.gameObject);
     }
 
     public void CaptureRoom(Room room)
@@ -40,6 +41,7 @@ public class RoomResetController : MonoBehaviour
         if (loader == null || room != loader.CurrentRoom) return;
         ClearSnapshot();
         if (!room.CanUseReset) return;
+        CacheRover(room);
         foreach (var marker in room.GetComponentsInChildren<PreserveOnRoomReset>(true))
             if (marker.transform.parent.GetComponentInParent<PreserveOnRoomReset>() == null)
                 preserved.Add(marker);
@@ -61,87 +63,96 @@ public class RoomResetController : MonoBehaviour
         snapshot = null;
         snapshotContainer = null;
         preserved.Clear();
-        ClearCharges();
+        rover = null;
+        hands = null;
+        ClearCharge();
     }
 
-    void OnDisable() => ClearCharges();
-
-    void ClearCharges()
+    void CacheRover(Room room)
     {
-        charges.Clear();
-        rosterVersion = -1;
+        rover = room.GetComponentInChildren<Rover>();
+        hands = rover != null ? rover.GetComponentsInChildren<HandRenderer>() : null;
     }
 
-    public bool TryGetHandCharge(Direction direction, out float progress)
+    void OnDisable() => ClearCharge();
+
+    void ClearCharge()
     {
-        progress = 0f;
-        var input = PartyInputManager.Instance;
-        if (!isActiveAndEnabled || input == null || rosterVersion != input.RosterVersion || snapshot == null || loader.CurrentRoom == null
-            || !loader.CurrentRoom.CanUseReset || Time.timeScale <= 0f) return false;
-        int index = input.DirectionToPlayerIndex[direction];
-        if (index < 0 || index >= input.PlayerCount) return false;
-        var player = input.Players[index];
-        if (player == null || !player.IsDropHeld || !charges.TryGetValue(player, out var charge)
-            || !charge.IsCharging) return false;
-        progress = charge.Progress;
+        chargeTime = 0f;
+        isCharging = false;
+        if (indicatorRect != null) indicatorRect.gameObject.SetActive(false);
+    }
+
+    bool CanCharge(PartyInputManager input)
+    {
+        if (snapshot == null || config == null || loader.CurrentRoom == null || !loader.CurrentRoom.CanUseReset
+            || rover == null || hands == null || hands.Length == 0 || Time.timeScale <= 0f
+            || input == null || !input.AllPlayersHoldingDrop)
+            return false;
+
+        foreach (var hand in hands)
+        {
+            if (hand == null) return false;
+            int playerIndex = input.DirectionToPlayerIndex[hand.Direction];
+            if (playerIndex >= input.PlayerCount || !hand.IsFullyTuckedBy(input.Players[playerIndex]))
+                return false;
+        }
         return true;
     }
 
-    void Update()
+    void LateUpdate()
     {
         var input = PartyInputManager.Instance;
-        if (snapshot == null || config == null || loader.CurrentRoom == null
-            || Time.timeScale <= 0f || input == null)
+        if (input != null && rosterVersion != input.RosterVersion)
         {
-            ClearCharges();
+            ClearCharge();
+            rosterVersion = input.RosterVersion;
+        }
+
+        if (!CanCharge(input))
+        {
+            ClearCharge();
             return;
         }
-        TickHold(input.Players, input.RosterVersion, Time.deltaTime);
+
+        if (isCharging) chargeTime += Time.deltaTime;
+        isCharging = true;
+        float duration = Mathf.Max(0.01f, config.RoomResetHoldDuration);
+        if (chargeTime >= duration)
+            ResetRoom();
+        else
+            ShowCharge(chargeTime / duration);
     }
 
-    public void TickHold(IReadOnlyList<PlayerDevice> players, int currentRosterVersion, float deltaTime)
+    void ShowCharge(float progress)
     {
-        if (snapshot == null || config == null || loader.CurrentRoom == null || !loader.CurrentRoom.CanUseReset)
+        if (resetIndicator == null)
         {
-            ClearCharges();
-            return;
+            var indicator = new GameObject("Room Reset Charge", typeof(RectTransform), typeof(Canvas));
+            indicator.transform.SetParent(transform, false);
+            indicatorRect = (RectTransform)indicator.transform;
+            var canvas = indicator.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI";
+            canvas.sortingOrder = 1;
+            var fill = new GameObject("Progress", typeof(RectTransform));
+            fill.transform.SetParent(indicator.transform, false);
+            resetIndicator = fill.AddComponent<HandResetProgressIndicator>();
+            resetIndicator.color = Color.white;
+            resetIndicator.raycastTarget = false;
         }
-        if (rosterVersion != currentRosterVersion)
-        {
-            ClearCharges();
-            rosterVersion = currentRosterVersion;
-        }
-        bool allReady = players.Count > 0;
-        foreach (var player in players)
-        {
-            if (player == null) { allReady = false; continue; }
-            if (!charges.TryGetValue(player, out var charge))
-            {
-                charge = new HandCharge();
-                charges.Add(player, charge);
-            }
-            if (!player.IsDropHeld)
-            {
-                charge.HeldTime = charge.Progress = 0f;
-                charge.IsCharging = charge.WaitingForRelease = false;
-                allReady = false;
-                continue;
-            }
-            // Each player must release once after entry, a roster change, or a reset.
-            if (charge.WaitingForRelease) { allReady = false; continue; }
-            charge.HeldTime += Mathf.Max(0f, deltaTime);
-            charge.IsCharging = charge.HeldTime >= Mathf.Max(0f, config.RoomResetHoldThreshold);
-            charge.Progress = Mathf.Clamp01((charge.HeldTime - Mathf.Max(0f, config.RoomResetHoldThreshold))
-                / Mathf.Max(0.01f, config.RoomResetHoldDuration));
-            if (!charge.IsCharging || charge.Progress < 1f) allReady = false;
-        }
-        if (allReady) ResetRoom();
+
+        indicatorRect.sizeDelta = resetIndicator.rectTransform.sizeDelta = Vector2.one * config.RoomResetIndicatorSize;
+        indicatorRect.SetPositionAndRotation(rover.transform.position + Vector3.up * IndicatorHeight, Quaternion.identity);
+        resetIndicator.SetProgress(progress);
+        indicatorRect.gameObject.SetActive(true);
     }
 
     public void ResetRoom()
     {
         if (snapshot == null || loader.CurrentRoom == null || !loader.CurrentRoom.CanUseReset) return;
-        ClearCharges();
+        ClearCharge();
         var oldRoom = loader.CurrentRoom;
         var oldGrid = oldRoom.Grid;
         var livePreserved = new List<(PreserveOnRoomReset marker, GridObject obj, bool registered)>();
@@ -160,6 +171,7 @@ public class RoomResetController : MonoBehaviour
         restored.transform.SetParent(oldRoom.transform.parent, true);
         loader.SetResetRoom(restored);
         restored.Grid.AttachAllObjects();
+        CacheRover(restored);
         foreach (var entry in livePreserved)
         {
             entry.marker.transform.SetParent(restored.Grid.transform, true);

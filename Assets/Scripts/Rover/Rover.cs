@@ -38,10 +38,10 @@ public class Rover : MonoBehaviour, IPassable
             hands[(int)direction].TryInteract();
     }
 
-    public void OnDrop(IEnumerable<Direction> direction)
+    public void OnDrop(IEnumerable<Direction> directions, PlayerDevice player = null)
     {
-        foreach(var dir in direction)
-            hands[(int)dir].TryDrop();
+        foreach (var direction in directions)
+            hands[(int)direction].TryDrop(player);
     }
 
     void Start()
