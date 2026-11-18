@@ -410,18 +410,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1398572982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1398572979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61a691dba34047ce85ed78f89ed32c75, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
 --- !u!4 &1398572981
 Transform:
   m_ObjectHideFlags: 0
@@ -437,6 +425,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1914724173}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1398572982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398572979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a691dba34047ce85ed78f89ed32c75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1914724173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9199247509866288071, guid: 75e43acd8a2b8814b8478e913a0e10cf, type: 3}
@@ -982,7 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac59b38bc83120b438192f2bef55e93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyPrefab: {fileID: 8785264272414102714, guid: 772fcb6717a27a24eacd5c2bdd83a94b, type: 3}
+  lobbyPrefab: {fileID: 4909691981242156016, guid: e2aee21daa4369046b69461d78f3da8e, type: 3}
   levelManager: {fileID: 8373723822254126440}
   roomLoader: {fileID: 8373723822254126438}
   levelSelected: {fileID: 11400000, guid: 712d74e65dfea0946ac88aa07aa219b5, type: 2}

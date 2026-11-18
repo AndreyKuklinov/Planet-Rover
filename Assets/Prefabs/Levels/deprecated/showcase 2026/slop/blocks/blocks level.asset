@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: blocks level
   m_EditorClassIdentifier: 
   <IsRandomOrder>k__BackingField: 1
+  beatAllRooms: 0
   roomCountToComplete: 35
   <Rooms>k__BackingField:
   - {fileID: 558042789434977413, guid: 9a4737bb747e1c4428ebf1742d531468, type: 3}

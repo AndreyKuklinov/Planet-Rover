@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tutorial Bucket
   m_EditorClassIdentifier: 
   <IsRandomOrder>k__BackingField: 0
+  beatAllRooms: 0
   roomCountToComplete: 3
   <Rooms>k__BackingField:
   - {fileID: 1336206892249136254, guid: 1721c29584be77e4a9cd5cbaff69383a, type: 3}

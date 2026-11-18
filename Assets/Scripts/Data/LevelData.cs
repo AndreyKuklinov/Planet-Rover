@@ -4,9 +4,10 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     [field: SerializeField] public bool IsRandomOrder { get; private set; }
+    [SerializeField] private bool beatAllRooms = true;
     [SerializeField, Min(1)] private int roomCountToComplete = 1;
     [field: SerializeField] public Room[] Rooms { get; private set; }
-    public int RoomCountToComplete => roomCountToComplete;
+    public int RoomCountToComplete => beatAllRooms ? (Rooms?.Length ?? 0) : roomCountToComplete;
     public bool IsRoomTest { get; private set; }
 
     public static LevelData CreateRoomTest(Room room)

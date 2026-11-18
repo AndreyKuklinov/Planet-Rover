@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tutorial Rocket
   m_EditorClassIdentifier: 
   <IsRandomOrder>k__BackingField: 0
+  beatAllRooms: 0
   roomCountToComplete: 4
   <Rooms>k__BackingField:
   - {fileID: 1336206892249136254, guid: 176882ad274ac7e41b8d0bb0583af5ac, type: 3}

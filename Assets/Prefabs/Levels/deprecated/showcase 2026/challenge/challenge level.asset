@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: challenge level
   m_EditorClassIdentifier: 
   <IsRandomOrder>k__BackingField: 1
+  beatAllRooms: 0
   roomCountToComplete: 9
   <Rooms>k__BackingField:
   - {fileID: 4353785497454095424, guid: 4b2837e8c34960b4697266d4ee8745fc, type: 3}

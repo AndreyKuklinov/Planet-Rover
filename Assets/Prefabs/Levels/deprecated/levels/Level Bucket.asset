@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level Bucket
   m_EditorClassIdentifier: 
   <IsRandomOrder>k__BackingField: 1
+  beatAllRooms: 0
   roomCountToComplete: 4
   <Rooms>k__BackingField:
   - {fileID: 1336206892249136254, guid: c85b6bd2b5fe8224f8ef1a446545dbf0, type: 3}
