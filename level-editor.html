@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Planet Rover · Level editor</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f3eb;color:#20352d;font:15px "DM Sans",Segoe UI,sans-serif}header{background:#20352d;color:#f8f7e9;padding:15px 5vw;display:flex;align-items:center;gap:13px}header img{width:34px}header strong{font-size:20px;letter-spacing:-1px}header span{margin-left:auto;font:12px Consolas,monospace;color:#c9d6bd}main{max-width:1510px;margin:auto;padding:30px 4vw}.heading,.actions,.bar,.tools,.settings,.status{display:flex;align-items:center;gap:10px}.heading{justify-content:space-between;flex-wrap:wrap;margin-bottom:23px}h1{font-size:clamp(34px,4vw,55px);letter-spacing:-.065em;margin:0;font-weight:650}button,input{font:inherit;color:inherit}button{cursor:pointer;background:#faf9f3;border:1px solid #bcc5b8;border-radius:7px;padding:9px 13px;font-weight:600}button:hover{background:#e2e7d9}button:disabled{opacity:.45;cursor:default}.primary{background:#c2ee78;border-color:#92ad68}.primary:hover{background:#b4e265}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:18px;align-items:start}.panel{border:1px solid #c7cec0;border-radius:13px;background:#fcfbf6;overflow:hidden}.bar,.status{justify-content:space-between;padding:13px 17px}.bar strong{font-size:17px}.boardwrap{background:#293d34;padding:clamp(12px,2vw,28px);display:grid;place-items:center;min-height:290px;height:clamp(340px,43vw,680px)}canvas{display:block;touch-action:none;cursor:crosshair;max-width:100%;max-height:100%}.status{font:12px Consolas,monospace;color:#4e6256}.side{padding:19px}.side h2,.controls h2{font-size:17px;margin:0 0 12px;letter-spacing:-.035em}.palette{display:grid;grid-template-columns:1fr 1fr;gap:6px}.palette button{display:flex;align-items:center;gap:4px;padding:6px 4px;font-size:13px;text-align:left}.palette img{width:32px;height:32px;object-fit:contain}.palette small{margin-left:auto;color:#657465}.selected,[aria-pressed=true]{background:#e1ebd4;border-color:#607d58}.side section+section{border-top:1px solid #d3d9ce;margin-top:15px;padding-top:15px}.settings label{flex:1;font-size:12px}.settings input{width:100%;margin-top:4px;padding:5px;background:#fafaf5;border:1px solid #bdc6b9;border-radius:5px}.check{display:inline-flex;align-items:center;gap:3px;font-size:13px;margin:8px 8px 0 0}input{accent-color:#416e43}.controls{margin-top:15px;padding:15px 18px}.controls p{margin:5px 0;line-height:1.5}.tools{gap:5px}.tools button{font-size:12px;padding:6px 9px}.boardtitle{display:flex;align-items:center;gap:9px}.dot{width:9px;height:9px;border-radius:50%;background:#82a64b}.side fieldset{border:0;padding:0;margin:0;min-width:0}.help{font:12px/1.6 Consolas,monospace;color:#5e6e61;margin:10px 0 0}#notice{font-weight:600}button:focus-visible,input:focus-visible,canvas:focus-visible{outline:3px solid #dca845;outline-offset:2px}@media(max-width:820px){.workspace{grid-template-columns:1fr}.side fieldset{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:15px}.side section+section{margin:0;padding:0;border:0}.boardwrap{height:50vw;min-height:230px}main{padding:18px 3vw}.actions{flex-wrap:wrap}}
+.countdown{padding:10px 17px 12px;background:#20352d;color:#f4f3eb}
+.clock-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;font-size:13px}
+.clock-label strong{font:600 18px Consolas,monospace}
+.countdown progress{display:block;width:100%;height:9px;border:0;border-radius:5px;overflow:hidden;background:#53675b;color:#c2ee78;accent-color:#c2ee78}
+.countdown progress::-webkit-progress-bar{background:#53675b}
+.countdown progress::-webkit-progress-value{background:#c2ee78}
+.countdown progress::-moz-progress-bar{background:#c2ee78}
+.boardwrap{position:relative}
+.result{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:max-content;max-width:90%;padding:20px 32px;border:1px solid #92ad68;border-radius:12px;background:#fcfbf6;color:#20352d;text-align:center;box-shadow:0 6px 24px #13251e55}
+.result strong{display:block;font-size:clamp(22px,3vw,34px);letter-spacing:-.045em}
+.result span{font:600 18px/1.6 Consolas,monospace}
+body.playing header,.playing .side{display:none}
+.playing main{height:100vh;height:100dvh;padding:clamp(6px,2vh,16px) clamp(8px,3vw,36px);display:flex;flex-direction:column;gap:8px}
+.playing .heading{margin:0;gap:6px}
+.playing h1{font-size:clamp(24px,3vw,36px)}
+.playing .workspace,.playing .workspace>div,.playing article{display:flex;flex:1;flex-direction:column;min-height:0;align-items:stretch;gap:0}
+.playing .boardwrap{flex:1;min-height:0;height:auto;padding:clamp(4px,1.4vh,14px);grid-template:minmax(0,1fr)/minmax(0,1fr)}
+.playing .bar,.playing .status{padding:6px 12px}
+.playing .controls{margin-top:8px;padding:8px 12px}
+.playing .controls h2{display:none}
+.playing .controls p{margin:0}
+@media(max-height:560px){
+  .playing .controls #guide{display:none}
+  .playing .controls{padding:4px 10px;margin-top:4px}
+  .playing .countdown{padding:5px 12px 7px}
+  .playing .clock-label{margin-bottom:3px}
+}
+</style></head><body>
+<header><img id="logo" alt=""><strong>Planet Rover</strong><span>ROOM WORKSHOP</span></header>
+<main><div class="heading"><h1>Level editor</h1><div class="actions"><button id="share">↓ Save HTML</button><button class="primary" id="run">▶ Run level</button></div></div>
+<div class="workspace"><div><article class="panel"><div class="bar"><div class="boardtitle"><i class="dot"></i><strong id="mode">Room canvas</strong></div><div class="tools"><button id="undo">Undo</button><button id="redo">Redo</button><button id="fresh">New room</button><button id="restart" hidden>Restart</button></div></div>
+<div class="countdown" id="countdown" hidden><div class="clock-label"><label for="remaining">Time remaining</label><strong id="clock"></strong></div><progress id="remaining" max="1" value="1"></progress></div>
+<div class="boardwrap"><canvas tabindex="0" aria-label="Room grid. Use arrow keys to select a cell and Space to paint in edit mode."></canvas><div class="result" id="result" role="status" hidden><strong id="outcome"></strong><span id="finishTime"></span></div></div>
+<div class="status"><span id="notice" role="status"></span><span id="size"></span></div></article>
+<section class="controls panel"><h2>Controls</h2><p id="guide"></p><p class="help" id="keys"></p></section></div>
+<aside class="side panel"><fieldset id="fields"><section><h2>Object palette</h2><div class="palette" id="palette"></div><p class="help">1–7 select a brush</p></section>
+<section><h2>Room settings</h2><div class="settings"><label>Width<input type="number" min="3" max="99" id="width"></label><label>Height<input type="number" min="3" max="99" id="height"></label></div><label class="check"><input type="checkbox" id="ratio">Lock 16:9</label><div><label class="check"><input type="checkbox" id="timed">Show elapsed time</label><label class="check"><input type="checkbox" id="flipX">Mirror X</label><label class="check"><input type="checkbox" id="flipY">Mirror Y</label></div><div class="settings" style="margin-top:12px"><label>Time limit (seconds)<input id="limit" type="number" min="1" step="1" placeholder="Unlimited"></label></div></section>
+<section><h2>Playtest crew</h2><div class="tools"><button id="solo">1 player</button><button id="duo">2 players</button></div></section></fieldset></aside></div></main>
+<script id="saved" type="application/json">null</script>
+<script>
+'use strict';
+function makeSprites() {
+  const icons = {};
+  for (const type of ['rockA','rockB','rocketA','rocketB','wall','rover']) {
+    const sheet = document.createElement('canvas');
+    sheet.width = sheet.height = 128;
+    const pen = sheet.getContext('2d');
+    pen.scale(2,2);
+    pen.lineJoin = pen.lineCap = 'round';
+    const ink = '#18352e', shell = '#fff1cd';
+    const amber = type.endsWith('A');
+    const color = amber ? '#ffae60' : '#83d6e9';
+    const light = amber ? '#ffe0a1' : '#c7f7ff';
+    const shade = amber ? '#bc6748' : '#468ca5';
+    function shape(path, fill, outlined=false) {
+      const form = new Path2D(path);
+      pen.fillStyle = fill;
+      pen.fill(form);
+      if (outlined) {
+        pen.lineWidth = 2.6;
+        pen.strokeStyle = ink;
+        pen.stroke(form);
+      }
+    }
+    function box(x,y,w,h,r,fill) {
+      pen.beginPath();
+      pen.roundRect(x,y,w,h,r);
+      pen.fillStyle = fill;
+      pen.fill();
+    }
+    function circle(x,y,r,fill) {
+      pen.beginPath();
+      pen.arc(x,y,r,0,Math.PI*2);
+      pen.fillStyle = fill;
+      pen.fill();
+    }
+    if (type === 'rockA') {
+      shape('M6 40 L14 23 L34 14 L50 19 L59 37 L48 50 L21 52 Z',color,true);
+      shape('M15 24 L34 16 L31 29 L9 39 Z',light);
+      shape('M31 29 L49 21 L56 37 L45 35 Z',shade);
+      shape('M10 40 L25 44 L45 35 L56 38 L47 49 L22 50 Z',shade);
+    } else if (type === 'rockB') {
+      shape('M8 41 L15 24 L23 26 L34 7 L45 25 L52 20 L59 37 L47 49 L25 55 Z',color,true);
+      shape('M25 29 L34 10 L33 40 L24 51 Z',light);
+      shape('M34 10 L43 26 L33 40 Z',shade);
+      shape('M46 30 L52 23 L56 36 L46 46 Z',light);
+      shape('M10 40 L17 28 L23 30 L21 47 Z',shade);
+    } else if (type.startsWith('rocket')) {
+      shape('M22 30 L11 39 L9 54 L24 47 L40 47 L55 54 L53 39 L42 30 Z',color,true);
+      box(24,46,16,12,3,ink);
+      shape('M20 47 Q17 21 32 5 Q47 21 44 47 Q32 52 20 47 Z',shell,true);
+      shape('M23 19 Q26 12 32 7 Q38 13 41 19 Z',color);
+      circle(32,31,8,ink);
+      if (amber) shape('M32 25 L37 34 L27 34 Z',color);
+      else shape('M32 25 L38 31 L32 37 L26 31 Z',color);
+      box(24,43,16,4,2,color);
+    } else if (type === 'wall') {
+      shape('M8 20 L19 12 L47 12 L56 19 L56 45 L46 53 L16 53 L8 45 Z','#75847b',true);
+      shape('M10 21 L20 14 L46 14 L53 19 L44 26 L18 26 Z','#b6c0ab');
+      shape('M45 28 L54 21 L54 44 L46 50 Z','#50665b');
+      box(15,32,22,5,2,'#455e53');
+      box(17,41,13,3,1,'#a7b4a2');
+    } else {
+      for (const x of [5,47]) for (const y of [14,37]) {
+        box(x,y,12,16,4,ink);
+        box(x+2,y+3,8,4,2,'#879c87');
+      }
+      shape('M15 17 L22 10 L42 10 L49 17 L49 46 L42 53 L22 53 L15 46 Z',shell,true);
+      box(19,20,26,16,6,ink);
+      for (const x of [23,36]) box(x,25,5,5,2,'#bdeb8a');
+      box(24,41,16,4,2,'#718677');
+      box(30,4,4,8,2,ink);
+      circle(32,5,3.5,'#f5ae64');
+    }
+    icons[type] = sheet.toDataURL();
+  }
+  return icons;
+}
+const sprites = makeSprites();
+const $ = id => document.getElementById(id);
+const images = {};
+for (const [name,src] of Object.entries(sprites)) {
+  const img = new Image(); img.onload = () => draw(); img.src = src; images[name] = img;
+}
+$('logo').src = sprites.rover;
+const types = ['rockA','rockB','rocketA','rocketB','wall','rover','erase'];
+const labels = ['Rock A','Rock B','Rocket A','Rocket B','Obstacle','Rover','Eraser'];
+
+const canvas = document.querySelector('canvas'), ctx = canvas.getContext('2d');
+const key = (x,y) => x+','+y;
+const point = k => k.split(',').map(Number);
+const clone = obj => JSON.parse(JSON.stringify(obj));
+function newRoom(w=17,h=9) {
+  return {w,h,ratio:true,limit:null,timed:true,flipX:false,flipY:false,players:1,cells:{[key(w>>1,h>>1)]:'rover'}};
+}
+function demo() {
+  const room = newRoom();
+  Object.assign(room.cells,{'10,4':'rockA','14,4':'rocketA','8,3':'rockB','8,1':'rocketB'});
+  for (const [x,y] of [[2,2],[3,2],[3,3],[4,6],[5,6],[11,1],[12,1],[13,6],[13,7]]) room.cells[key(x,y)]='wall';
+  return room;
+}
+let room=JSON.parse($('saved').textContent)||demo(), game=null, brush='rockA', cursor=null, stroke=null;
+room.limit ??= null;
+const past=[],future=[];
+const directions=[[0,-1],[0,1],[-1,0],[1,0]];
+function record(before) {
+  if(JSON.stringify(before)===JSON.stringify(room))return;
+  past.push(before); if(past.length>80)past.shift(); future.length=0;
+}
+function history(from,to) {
+  if(game||!from.length)return;
+  to.push(room);room=from.pop();cursor=null;sync();
+}
+function message(s){$('notice').textContent=s}
+function select(type){
+  brush=type;
+  for(const b of $('palette').children)b.setAttribute('aria-pressed',b.dataset.type===brush);
+  draw();
+}
+types.forEach((type,i)=>{
+  const b=document.createElement('button'); b.dataset.type=type;b.title=labels[i]+' ('+(i+1)+')';
+  if(type!=='erase'){const img=new Image();img.src=sprites[type];img.alt='';b.append(img)}
+  b.append((type==='erase'?'⌫  ':'')+labels[i]);b.onclick=()=>select(type);$('palette').append(b);
+});
+function sync(){
+  document.body.classList.toggle('playing', !!game);
+  document.querySelector('h1').textContent = game ? 'Planet Rover' : 'Level editor';
+  $('countdown').hidden = !(game && room.limit);
+  $('result').hidden = true;
+  if(game && room.limit) $('remaining').max = room.limit;
+  for(const [id,prop] of [['width','w'],['height','h']])$(id).value=room[prop];
+  $('limit').value=room.limit ?? '';
+  for(const id of ['ratio','timed','flipX','flipY'])$(id).checked=room[id];
+  $('solo').setAttribute('aria-pressed',room.players===1);$('duo').setAttribute('aria-pressed',room.players===2);
+  $('fields').disabled=!!game;$('run').textContent=game?'■ Back to editor':'▶ Run level';
+  $('mode').textContent=game?'Playtest':'Room canvas';$('size').textContent=room.w+' × '+room.h;
+  for(const id of ['undo','redo','fresh'])$(id).hidden=!!game;
+  $('undo').disabled=!past.length;$('redo').disabled=!future.length;$('restart').hidden=!game;
+  $('guide').textContent=game?'Hold a direction to extend an arm. Release on empty ground to move, on a rock to grab or swap, or on a matching rocket to deliver.':'Click or drag to paint. Right-drag to erase. Place the rover, then run the level to test it.';
+  $('keys').textContent=(room.players===1?'Solo · WASD or arrows to aim · Space to drop':'P1 · W/S to aim, A/D to drop   |   P2 · ←/→ to aim, ↑/↓ to drop   |   Space drops both')+(game?'   |   Enter restart · Esc edit':'   |   Enter playtest · Ctrl+Z undo');
+  if(!game)message('Editing room');fit();
+}
+function closestAspectDimension(prop, size){
+  let closest=3, min=Infinity;
+  for(let i=3;i<=99;i+=2){
+    const error=Math.abs((prop==='w'?size/i:i/size)-16/9);
+    if(error<min){min=error;closest=i}
+  }
+  return closest;
+}
+function resize(prop,value,before=clone(room)){
+  let n=Number(value);if(!value||!Number.isFinite(n)){sync();return}
+  room[prop]=Math.min(99,Math.max(3,Math.trunc(n)))|1;
+  if(room.ratio){
+    room[prop==='w'?'h':'w']=closestAspectDimension(prop,room[prop]);
+  }
+  for(const k of Object.keys(room.cells)){const [x,y]=point(k);if(x>=room.w||y>=room.h)delete room.cells[k]}
+  cursor=null;record(before);sync();
+}
+for(const [id,p] of [['width','w'],['height','h']])$(id).onchange=e=>resize(p,e.target.value);
+for(const id of ['ratio','timed','flipX','flipY'])$(id).onchange=e=>{
+  const before=clone(room);room[id]=e.target.checked;
+  if(id==='ratio'&&room.ratio){resize('w',room.w,before);return}
+  record(before);sync();
+};
+$('limit').onchange = e => {
+  const input = e.target;
+  const seconds = input.valueAsNumber;
+  if (input.validity.badInput || (input.value && (!Number.isSafeInteger(seconds) || seconds < 1))) {
+    sync();
+    message('Use a positive whole number of seconds, or leave the limit blank.');
+    return;
+  }
+  const before = clone(room);
+  room.limit = input.value ? seconds : null;
+  record(before);
+  sync();
+};
+for(const [id,n] of [['solo',1],['duo',2]])$(id).onclick=()=>{const before=clone(room);room.players=n;record(before);sync()};
+$('fresh').onclick=()=>{
+  const before=clone(room);
+  room=newRoom(before.w,before.ratio?before.h:closestAspectDimension('w',before.w));
+  room.players=before.players;
+  record(before);sync();
+};
+$('undo').onclick=()=>history(past,future);$('redo').onclick=()=>history(future,past);
+function paint(x,y,type){
+  if(type==='rover')for(const k of Object.keys(room.cells))if(room.cells[k]==='rover')delete room.cells[k];
+  if(type==='erase')delete room.cells[key(x,y)];else room.cells[key(x,y)]=type;
+}
+function cellAt(e){
+  const r=canvas.getBoundingClientRect();return [Math.floor((e.clientX-r.left)*room.w/r.width),Math.floor((e.clientY-r.top)*room.h/r.height)];
+}
+const inside=(x,y)=>x>=0&&y>=0&&x<room.w&&y<room.h;
+function pointer(e){
+  if(game)return;const [x,y]=cellAt(e);if(!inside(x,y)){cursor=null;if(stroke)stroke.last=null;draw();return}
+  cursor=[x,y];
+  if(stroke){
+    const [a,b]=stroke.last||cursor, steps=Math.max(1,Math.abs(x-a),Math.abs(y-b));
+    for(let i=1;i<=steps;i++)paint(Math.round(a+(x-a)*i/steps),Math.round(b+(y-b)*i/steps),stroke.type);
+    stroke.last=cursor;
+  }
+  draw();
+}
+canvas.onpointerdown=e=>{if(game||stroke||![0,2].includes(e.button))return;e.preventDefault();canvas.focus();canvas.setPointerCapture(e.pointerId);stroke={before:clone(room),type:e.button===2?'erase':brush};pointer(e)};
+canvas.onpointermove=pointer;canvas.oncontextmenu=e=>e.preventDefault();
+canvas.onlostpointercapture=()=>{if(stroke){record(stroke.before);stroke=null;sync()}};
+canvas.onpointerleave=()=>{cursor=null;draw()};
+function fit(){
+  const wrap=canvas.parentElement,style=getComputedStyle(wrap);
+  const cell=Math.min((wrap.clientWidth-2*parseFloat(style.paddingLeft))/room.w,(wrap.clientHeight-2*parseFloat(style.paddingTop))/room.h);
+  const w=Math.max(1,cell*room.w),h=Math.max(1,cell*room.h),scale=window.devicePixelRatio||1;
+  canvas.style.width=w+'px';canvas.style.height=h+'px';canvas.width=Math.round(w*scale);canvas.height=Math.round(h*scale);draw();
+}
+function tile(type,x,y,scale=1){
+  const im=images[type];if(!im?.naturalWidth)return;
+  const size=.90*scale,ratio=im.naturalWidth/im.naturalHeight,w=size*Math.min(1,ratio),h=size*Math.min(1,1/ratio);
+  ctx.drawImage(im,x+.5-w/2,y+.5-h/2,w,h);
+  if(type.startsWith('rocket')){
+    ctx.fillStyle=type==='rocketA'?'#ffae64':'#87d6ff';ctx.beginPath();ctx.arc(x+.77,y+.76,.20,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#20352d';ctx.font='bold .28px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(type.at(-1),x+.77,y+.77);
+  }
+}
+function draw(){
+  ctx.setTransform(canvas.width/room.w,0,0,canvas.height/room.h,0,0);
+  ctx.fillStyle='#344f42';ctx.fillRect(0,0,room.w,room.h);ctx.strokeStyle='#59705f';ctx.lineWidth=.014;ctx.beginPath();
+  for(let x=0;x<=room.w;x++){ctx.moveTo(x,0);ctx.lineTo(x,room.h)}
+  for(let y=0;y<=room.h;y++){ctx.moveTo(0,y);ctx.lineTo(room.w,y)}ctx.stroke();
+  const cells=game?game.cells:room.cells;
+  for(const [k,type] of Object.entries(cells))tile(type,...point(k));
+  if(game){
+    const {x,y,arms}=game;
+    arms.forEach((arm,i)=>{
+      const [dx,dy]=directions[i],length=Math.max(arm.distance,arm.cargo?.45:.24),ex=x+dx*length,ey=y+dy*length;
+      ctx.strokeStyle=room.players===2&&i>=2?'#94d3fa':'#dfe8a9';ctx.lineWidth=.11;ctx.beginPath();ctx.moveTo(x+.5,y+.5);ctx.lineTo(ex+.5,ey+.5);ctx.stroke();
+      if(arm.cargo)tile(arm.cargo,ex,ey,.52);
+      else if(arm.distance>.3){ctx.fillStyle='#dfe8a9';ctx.fillRect(ex+.39,ey+.39,.22,.22)}
+    });tile('rover',x,y);
+  }else if(cursor){
+    const [x,y]=cursor;ctx.fillStyle='#def9a729';ctx.fillRect(x,y,1,1);ctx.strokeStyle='#d7ef91';ctx.lineWidth=.05;ctx.strokeRect(x+.03,y+.03,.94,.94);
+  }
+}
+const pressed=new Set(), padHeld=new Set(), padDrop=new Set();
+const codes=['KeyW','KeyS','KeyA','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'];
+function owned(player,i){return room.players===1||(i<2?0:1)===player}
+function start(){
+  const spawn=Object.keys(room.cells).find(k=>room.cells[k]==='rover');
+  if(!spawn){message('Place a rover before running.');return}
+  const mx=room.flipX&&Math.random()<.5,my=room.flipY&&Math.random()<.5;
+  const cells={};let x,y,rockets=0;
+  for(const [k,v] of Object.entries(room.cells)){
+    const [a,b]=point(k),px=mx?room.w-1-a:a,py=my?room.h-1-b:b;
+    if(v==='rover'){x=px;y=py}else cells[key(px,py)]=v;
+    if(v.startsWith('rocket'))rockets++;
+  }
+  game={x,y,cells,rockets,total:rockets,time:0,done:false,move:null,
+    arms:directions.map(()=>({distance:0,state:'idle',cargo:null}))};
+  last=performance.now();pressed.clear();padHeld.clear();padDrop.clear();cursor=null;sync();canvas.focus();report();
+}
+function stop(){game=null;pressed.clear();padHeld.clear();sync()}
+$('run').onclick=()=>game?stop():start();$('restart').onclick=start;
+function report(){
+  if(room.limit){
+    const remaining = Math.max(0, room.limit - game.time);
+    $('remaining').value = remaining;
+    const seconds = Math.ceil(remaining);
+    const clock = Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2,'0');
+    if($('clock').textContent !== clock){
+      $('clock').textContent = clock;
+      $('remaining').setAttribute('aria-valuetext', seconds + ' seconds remaining');
+    }
+  }
+  if(game.done && $('result').hidden){
+    $('outcome').textContent = game.expired ? 'Time’s up!' : 'Room complete!';
+    $('finishTime').textContent = game.expired ? 'Restart to try again' : 'Finished in ' + game.time.toFixed(1) + ' s';
+    $('result').hidden = false;
+  }
+  const prefix=game.total?'Rockets '+(game.total-game.rockets)+' / '+game.total:'Free play';
+  const s=prefix+(!room.limit && room.timed?'  ·  '+Math.floor(game.time)+' s':'');
+  if($('notice').textContent!==s)message(s);
+}
+function target(i,n){
+  const [dx,dy]=directions[i];return [Math.round(game.x)+dx*n,Math.round(game.y)+dy*n];
+}
+function reach(i){
+  for(let n=1;;n++){
+    const [x,y]=target(i,n),v=game.cells[key(x,y)];
+    if(!inside(x,y))return n-1;
+    if(!v)continue;
+    if(v.startsWith('rock')&&!v.startsWith('rocket'))return n;
+    return v.startsWith('rocket')&&game.arms[i].cargo==='rock'+v.at(-1)?n:n-1;
+  }
+}
+function release(i){
+  const arm=game.arms[i];if(game.done||arm.state!=='aim')return;
+  const n=Math.min(Math.round(arm.distance),reach(i)),[x,y]=target(i,n),k=key(x,y),obj=game.cells[k];
+  arm.state='retract';
+  if(!n)return;
+  if(!obj){game.move={x,y,i};arm.state='idle';arm.distance=0}
+  else if(obj==='rockA'||obj==='rockB'){
+    if(arm.cargo)game.cells[k]=arm.cargo;else delete game.cells[k];arm.cargo=obj;
+  }else if(obj==='rocketA'||obj==='rocketB'){
+    if(arm.cargo!=='rock'+obj.at(-1))return;
+    delete game.cells[k];arm.cargo=null;game.rockets--;game.done=game.rockets===0;report();
+  }
+}
+function drop(player){
+  if(game.done)return;
+  game.arms.forEach((arm,i)=>{
+    if(!owned(player,i)||arm.state==='retract'||game.move?.i===i)return;
+    arm.state='idle';arm.distance=0;
+    const [x,y]=target(i,1),k=key(x,y);
+    if(arm.cargo&&inside(x,y)&&!game.cells[k]&&!(game.move&&game.move.x===x&&game.move.y===y)){
+      game.cells[k]=arm.cargo;arm.cargo=null;
+    }
+  });
+}
+function held(i){return padHeld.has(i)||pressed.has(codes[i])||pressed.has(codes[i+4])}
+function pollPads(){
+  const pads=Array.from(navigator.getGamepads?.()||[]).filter(Boolean).slice(0,room.players);
+  const next=new Set();
+  pads.forEach((pad,p)=>{
+    const btn=i=>!!pad.buttons[i]?.pressed;
+    const dirs=[[3,12],[0,13],[2,14],[1,15]].map(([a,b],i)=>btn(a)||btn(b)||[0,2].some(ax=>(pad.axes[ax+(i<2?1:0)]||0)*([-1,1,-1,1][i])>.55));
+    dirs.forEach((on,i)=>{if(on&&owned(p,i))next.add(i)});
+    const dropping=[4,5,6,7,10,11].some(btn)||dirs.some((on,i)=>on&&!owned(p,i));
+    if(dropping&&!padDrop.has(p))drop(p);
+    if(dropping)padDrop.add(p);else padDrop.delete(p);
+  });
+  const old=[...padHeld];padHeld.clear();next.forEach(i=>padHeld.add(i));
+  for(const i of old)if(!held(i))release(i);
+}
+function tick(dt){
+  if(game.done)return;
+  game.time += dt;
+  if(room.limit && game.time >= room.limit){
+    game.time = room.limit;
+    game.expired = game.done = true;
+    report();
+    return;
+  }
+  dt = Math.min(dt,.1);
+  pollPads();
+  if(game.move){
+    const {x,y}=game.move,dx=x-game.x,dy=y-game.y,d=Math.hypot(dx,dy);
+    if(d<=30*dt){game.x=x;game.y=y;game.move=null}
+    else{game.x+=dx/d*30*dt;game.y+=dy/d*30*dt}
+  }
+  game.arms.forEach((arm,i)=>{
+    if(arm.state==='retract'){
+      arm.distance=Math.max(0,arm.distance-30*dt);if(!arm.distance)arm.state='idle';
+    }
+    if(held(i)&&arm.state==='idle'&&game.move?.i!==i)arm.state='aim';
+    if(arm.state==='aim')arm.distance=Math.min(reach(i),arm.distance+12*dt);
+  });report();
+}
+let last=performance.now();
+window.addEventListener('focus',()=>{last=performance.now()});
+function frame(now){if(game&&document.hasFocus()){tick(Math.max(0,(now-last)/1000));draw()}last=now;requestAnimationFrame(frame)}
+window.addEventListener('blur',()=>{
+  pressed.clear();padHeld.clear();padDrop.clear();if(game)for(const arm of game.arms)if(arm.state==='aim')arm.state='retract';
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input')||e.altKey)return;
+  const idx=codes.indexOf(e.code),ctrl=e.ctrlKey||e.metaKey;
+  if(ctrl){
+    if(!game&&['KeyZ','KeyY'].includes(e.code)){e.preventDefault();if(e.shiftKey||e.code==='KeyY')history(future,past);else history(past,future)}return;
+  }
+  if(e.code==='Enter'&&(game||!e.target.closest('button'))){e.preventDefault();if(!e.repeat)start();return}
+  if(game){
+    if(e.code==='Escape'){stop();return}
+    if(idx>=0||e.code==='Space'){
+      e.preventDefault();if(e.repeat)return;
+      if(e.code==='Space'){drop(0);if(room.players===2)drop(1)}
+      else if(owned(idx<4?0:1,idx%4))pressed.add(e.code);
+      else drop(idx<4?0:1);
+    }else if(!e.repeat&&e.key.length===1){drop(0);if(room.players===2)drop(1)}
+  }else if(/^[1-7]$/.test(e.key))select(types[Number(e.key)-1]);
+  else if(e.target===canvas){
+    if(idx>=4){e.preventDefault();cursor??=[room.w>>1,room.h>>1];const [dx,dy]=directions[idx%4];cursor=[Math.max(0,Math.min(room.w-1,cursor[0]+dx)),Math.max(0,Math.min(room.h-1,cursor[1]+dy))];draw()}
+    if(e.code==='Space'){e.preventDefault();cursor??=[room.w>>1,room.h>>1];const before=clone(room);paint(...cursor,brush);record(before);sync()}
+  }
+});
+document.addEventListener('keyup',e=>{
+  if(!game||!pressed.delete(e.code))return;
+  const i=codes.indexOf(e.code)%4;if(!held(i))release(i);
+});
+$('share').onclick=()=>{
+  const copy=document.documentElement.cloneNode(true);
+  copy.querySelector('#palette').replaceChildren();
+  copy.querySelector('#logo').removeAttribute('src');
+  copy.querySelector('#saved').textContent=JSON.stringify(room);
+  const file=new Blob(['<!doctype html>\n',copy.outerHTML],{type:'text/html'});
+  const link=document.createElement('a');link.href=URL.createObjectURL(file);link.download='planet-rover-room.html';link.click();
+  setTimeout(()=>URL.revokeObjectURL(link.href),1000);message('Room saved as HTML');
+};
+select(brush);sync();new ResizeObserver(fit).observe(canvas.parentElement);requestAnimationFrame(frame);
+</script></body></html>
