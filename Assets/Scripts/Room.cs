@@ -20,6 +20,11 @@ public class Room : MonoBehaviour
     bool allowVerticalReflection = true;
     public bool AllowHorizontalReflection => allowHorizontalReflection;
     public bool AllowVerticalReflection => allowVerticalReflection;
+    public void SetReflections(bool horizontal, bool vertical)
+    {
+        allowHorizontalReflection = horizontal;
+        allowVerticalReflection = vertical;
+    }
     public static event Action<Room> RoomStarted;
 
     [SerializeField] RoomGrid grid;

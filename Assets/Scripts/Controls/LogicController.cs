@@ -39,6 +39,8 @@ public class LogicController : MonoBehaviour
 
     private void OnDeleteTriggered()
     {
+        var workshop = FindObjectOfType<RoomWorkshop>();
+        if (workshop != null && workshop.EditingNumber) return;
         // A paired keyboard's action and the global shortcut can arrive in the same frame.
         if (lastDeleteFrame == Time.frameCount) return;
         lastDeleteFrame = Time.frameCount;
@@ -48,6 +50,8 @@ public class LogicController : MonoBehaviour
 
     private void OnRestartTriggered()
     {
+        var workshop = FindObjectOfType<RoomWorkshop>();
+        if (workshop != null) { if (!workshop.EditingNumber) workshop.Play(); return; }
         if (!levelManager.IsLevelRunning && !levelManager.IsRoomTestFinished)
             return;
 
@@ -57,6 +61,8 @@ public class LogicController : MonoBehaviour
 
     private void OnQuitTriggered()
     {
+        var workshop = FindObjectOfType<RoomWorkshop>();
+        if (workshop != null) { if (!workshop.EditingNumber) workshop.Back(); return; }
         if(levelManager.IsLevelRunning)
         {
             Debug.Log("Quit level");

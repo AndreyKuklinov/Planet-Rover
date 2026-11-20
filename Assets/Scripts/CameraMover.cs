@@ -17,7 +17,7 @@ public class CameraMover : MonoBehaviour
         if (bounds == null)
             return;
 
-        var aspect = (float)Screen.width / Screen.height;
+        var aspect = cam.aspect;
         var sizeFromHeight = (bounds.Size.y) * 0.5f;
         var sizeFromWidth = (bounds.Size.x) * 0.5f / aspect;
         var targetSize = Mathf.Max(sizeFromHeight, sizeFromWidth);
