@@ -65,6 +65,27 @@ public class RoomWorkshop : MonoBehaviour
         public bool Valid => width >= 3 && height >= 3 && width <= 99 && height <= 99
             && width % 2 == 1 && height % 2 == 1 && cells?.Length == width * height
             && Array.TrueForAll(cells, t => (uint)t <= (uint)Tile.Rover) && seconds > 0;
+
+        public static Draft FromRoomString(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text) || text.Length > 128 * 1024) return null;
+            text = text.Trim();
+            Draft candidate;
+            if (text.StartsWith(RoomShareCode.Prefix, StringComparison.Ordinal))
+                candidate = RoomShareCode.Decode(text);
+            else
+            {
+                if (!text.StartsWith("{", StringComparison.Ordinal)) return null;
+                candidate = new Draft { width = 0, height = 0, seconds = 0, cells = null };
+                try { JsonUtility.FromJsonOverwrite(text, candidate); }
+                catch (ArgumentException) { return null; }
+            }
+            if (candidate == null || !candidate.Valid || candidate.seconds > 3600) return null;
+            candidate.FillBorder();
+            int rover = Array.IndexOf(candidate.cells, Tile.Rover);
+            if (rover != Array.LastIndexOf(candidate.cells, Tile.Rover)) return null;
+            return candidate;
+        }
     }
 
     const string SaveKey = "PlanetRover.Workshop.Draft.v1";
@@ -84,8 +105,10 @@ public class RoomWorkshop : MonoBehaviour
     string editingNumber, numberText, focusNumber;
     GUIStyle numberStyle;
     Rect editingRect;
-    int numberKeyFrame = -1;
-    public bool EditingNumber => editingNumber != null || focusNumber != null || numberKeyFrame == Time.frameCount;
+    int consumedKeyFrame = -1;
+    Draft pendingPaste;
+    public bool BlocksGameShortcuts => pendingPaste != null || editingNumber != null ||
+        focusNumber != null || consumedKeyFrame == Time.frameCount;
     Draft draft;
     LobbyManager lobby;
     Room template;
@@ -324,6 +347,11 @@ public class RoomWorkshop : MonoBehaviour
 
     void DrawEditor(float w, float h)
     {
+        if (pendingPaste != null)
+        {
+            DrawPasteDialog(w,h);
+            return;
+        }
         Event e = Event.current;
         if (editingNumber != null)
         {
@@ -340,12 +368,12 @@ public class RoomWorkshop : MonoBehaviour
             else if (e.type == EventType.KeyDown &&
                 (e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter || e.keyCode == KeyCode.Escape))
             {
-                numberKeyFrame = Time.frameCount;
+                consumedKeyFrame = Time.frameCount;
                 FinishNumber(e.keyCode != KeyCode.Escape);
                 e.Use();
             }
         }
-        if (!EditingNumber && e.type == EventType.KeyDown && e.keyCode >= KeyCode.Alpha1 && e.keyCode <= KeyCode.Alpha7)
+        if (!BlocksGameShortcuts && e.type == EventType.KeyDown && e.keyCode >= KeyCode.Alpha1 && e.keyCode <= KeyCode.Alpha7)
         {
             brush = (Tile)(((int)e.keyCode - (int)KeyCode.Alpha1 + 1) % Labels.Length);
             e.Use();
@@ -366,7 +394,7 @@ public class RoomWorkshop : MonoBehaviour
         var board = new Rect(area.center.x-draft.width*size/2,area.center.y-draft.height*size/2,
             draft.width*size,draft.height*size);
         DrawBoard(board,size);
-        if (settingsOpen) DrawSettings(new Rect(w-212,60,196,286));
+        if (settingsOpen) DrawSettings(new Rect(w-212,60,196,324));
 
         float trayWidth = Mathf.Min(620,w-16);
         float slotPitch = (trayWidth-109)/7;
@@ -419,7 +447,46 @@ public class RoomWorkshop : MonoBehaviour
             int delta = Stepper(x,y+211,"Seconds",draft.seconds);
             if (delta != 0) draft.seconds = Mathf.Clamp(draft.seconds+5*delta,1,3600);
         }
-        Text(new Rect(x,y+247,178,24),"Saves on playtest or exit",13,Muted);
+        if (Button(new Rect(x,y+247,85,30),"Copy room"))
+        {
+            string code = RoomShareCode.Encode(draft);
+            GUIUtility.systemCopyBuffer = code;
+            message = $"Room code copied · {code.Length} characters";
+        }
+        if (Button(new Rect(x+91,y+247,85,30),"Paste room"))
+        {
+            pendingPaste = Draft.FromRoomString(GUIUtility.systemCopyBuffer);
+            if (pendingPaste == null) message = "Clipboard does not contain a valid room string.";
+        }
+        Text(new Rect(x,y+285,178,24),"Saves on playtest or exit",13,Muted);
+    }
+
+    void DrawPasteDialog(float w, float h)
+    {
+        Fill(new Rect(0,0,w,h),new Color(0,0,0,.55f));
+        var r = new Rect((w-410)/2,(h-142)/2,410,142);
+        Plate(r,Amber,Hull);
+        float x = r.x+18, y = r.y+12;
+        Text(new Rect(x,y,374,29),"Replace the current room?",20,Cream,bold:true);
+        Text(new Rect(x,y+34,374,22),$"Clipboard room: {pendingPaste.width} × {pendingPaste.height}",15,Cream);
+        Text(new Rect(x,y+58,374,22),"This replaces your layout and settings and clears Undo.",14,Muted);
+        Event e = Event.current;
+        bool escape = e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape;
+        if (Button(new Rect(x+144,y+90,90,29),"Cancel") || escape)
+        {
+            pendingPaste = null;
+            if (escape) { consumedKeyFrame = Time.frameCount; e.Use(); }
+            return;
+        }
+        if (Button(new Rect(x+242,y+90,132,29),"Replace room",true))
+        {
+            draft = pendingPaste;
+            pendingPaste = null;
+            undo.Clear();
+            beforeStroke = null;
+            painting = false;
+            message = "Room pasted.";
+        }
     }
 
     bool Switch(float x,float y,string label,bool value)
