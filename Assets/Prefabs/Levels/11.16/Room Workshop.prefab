@@ -414,16 +414,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14202dc0b9045e08802bc488659c6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockA: {fileID: 8926348560427703860, guid: aacba28d9bfd59942800ed2c90705a5f, type: 3}
-  rockB: {fileID: 8926348560427703860, guid: 1466b3597cf7b22438b33f3ebdb0a038, type: 3}
-  rocket: {fileID: 8926348560427703860, guid: 500ecf4effbc1f44d826c265ff6bcdd6, type: 3}
-  wall: {fileID: 8926348560427703860, guid: ef35e2d0ecb337b4a901d77fe07e9acb, type: 3}
-  rover: {fileID: 6071374047630378491, guid: 5a27825b442fc894fa290916ab0510f1, type: 3}
-  icons:
-  - {fileID: 2800000, guid: 859fe7a1f9cd1aa4cbe0e24a8b1d031f, type: 3}
-  - {fileID: 2800000, guid: e189221a05bd4724fb350b186f9c33dd, type: 3}
-  - {fileID: 2800000, guid: be763be4f31b45f44b3bfeee7fb13a0b, type: 3}
-  - {fileID: 2800000, guid: be763be4f31b45f44b3bfeee7fb13a0b, type: 3}
-  - {fileID: 2800000, guid: cf663d52af680f248a5a13920c99badc, type: 3}
-  - {fileID: 2800000, guid: eb28501a8677dbe45885c344c94fd451, type: 3}
+  palette:
+  - tile: 1
+    label: Seed A
+    prefab: {fileID: 8931408297091463711, guid: 79aa381d72f7ac740a0952c57f70c1b1, type: 3}
+    icon: {fileID: 2800000, guid: 2b6ed6d70fe049609491f24f18c7b90d, type: 3}
+  - tile: 2
+    label: Seed B
+    prefab: {fileID: 6488049780390761983, guid: ba0ae96ba104af143ba237940ca5a549, type: 3}
+    icon: {fileID: 2800000, guid: 0719a64917634388bdc50691943b3c4a, type: 3}
+  - tile: 7
+    label: Seed C
+    prefab: {fileID: 6488049780390761983, guid: 7e7a878eff514241bb25fbdd371f6ad3, type: 3}
+    icon: {fileID: 2800000, guid: 99d88f57c7024d24947379a73253792f, type: 3}
+  - tile: 3
+    label: Planter A
+    prefab: {fileID: 2848403993978756467, guid: 63272ba83effec44eaf3feb8fa450367, type: 3}
+    icon: {fileID: 2800000, guid: 90f75c19f8b74dd7badccab9473f5501, type: 3}
+  - tile: 4
+    label: Planter B
+    prefab: {fileID: 866508622890763360, guid: 49f6042cd77df1145a439406b958b89c, type: 3}
+    icon: {fileID: 2800000, guid: 90f75c19f8b74dd7badccab9473f5501, type: 3}
+  - tile: 8
+    label: Planter C
+    prefab: {fileID: 866508622890763360, guid: 179021d932124023b380a34079ba671b, type: 3}
+    icon: {fileID: 2800000, guid: 90f75c19f8b74dd7badccab9473f5501, type: 3}
+  - tile: 5
+    label: Obstacle
+    prefab: {fileID: 8926348560427703860, guid: ef35e2d0ecb337b4a901d77fe07e9acb, type: 3}
+    icon: {fileID: 2800000, guid: cf663d52af680f248a5a13920c99badc, type: 3}
+  - tile: 6
+    label: Rover
+    prefab: {fileID: 6071374047630378491, guid: 5a27825b442fc894fa290916ab0510f1, type: 3}
+    icon: {fileID: 2800000, guid: eb28501a8677dbe45885c344c94fd451, type: 3}
+  - tile: 0
+    label: Eraser
+    prefab: {fileID: 0}
+    icon: {fileID: 0}
+  gardenSign: {fileID: 2800000, guid: 05a8a31524ab4604b8baa3ca77290c9e, type: 3}
   hudFont: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}

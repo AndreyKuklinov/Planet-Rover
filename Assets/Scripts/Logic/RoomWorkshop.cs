@@ -5,7 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Room))]
 public class RoomWorkshop : MonoBehaviour
 {
-    public enum Tile { Empty, RockA, RockB, RocketA, RocketB, Wall, Rover }
+    // Tile numbers are stored in workshop drafts and share codes.
+    public enum Tile { Empty = 0, SeedA = 1, SeedB = 2, PlanterA = 3, PlanterB = 4, Wall = 5, Rover = 6, SeedC = 7, PlanterC = 8 }
+
+    [Serializable]
+    class Tool
+    {
+        public Tile tile;
+        public string label;
+        public GameObject prefab;
+        public Texture2D icon;
+        [NonSerialized] public Texture2D requiredSeed;
+    }
     enum Mode { Edit, Play, Result }
 
     [Serializable]
@@ -19,10 +30,12 @@ public class RoomWorkshop : MonoBehaviour
         {
             var d = new Draft();
             d.cells[4 * 17 + 8] = Tile.Rover;
-            d.cells[4 * 17 + 10] = Tile.RockA;
-            d.cells[4 * 17 + 14] = Tile.RocketA;
-            d.cells[3 * 17 + 8] = Tile.RockB;
-            d.cells[1 * 17 + 8] = Tile.RocketB;
+            d.cells[4 * 17 + 10] = Tile.SeedA;
+            d.cells[4 * 17 + 14] = Tile.PlanterA;
+            d.cells[3 * 17 + 8] = Tile.SeedB;
+            d.cells[1 * 17 + 8] = Tile.PlanterB;
+            d.cells[4 * 17 + 6] = Tile.SeedC;
+            d.cells[4 * 17 + 2] = Tile.PlanterC;
             foreach (int cell in new[] { 36, 37, 54, 107, 108, 115 }) d.cells[cell] = Tile.Wall;
             d.FillBorder();
             return d;
@@ -64,18 +77,17 @@ public class RoomWorkshop : MonoBehaviour
 
         public bool Valid => width >= 3 && height >= 3 && width <= 99 && height <= 99
             && width % 2 == 1 && height % 2 == 1 && cells?.Length == width * height
-            && Array.TrueForAll(cells, t => (uint)t <= (uint)Tile.Rover) && seconds > 0;
+            && Array.TrueForAll(cells, t => (uint)t <= (uint)Tile.PlanterC) && seconds > 0;
 
         public static Draft FromRoomString(string text)
         {
             if (string.IsNullOrWhiteSpace(text) || text.Length > 128 * 1024) return null;
             text = text.Trim();
             Draft candidate;
-            if (text.StartsWith(RoomShareCode.Prefix, StringComparison.Ordinal))
+            if (!text.StartsWith("{", StringComparison.Ordinal))
                 candidate = RoomShareCode.Decode(text);
             else
             {
-                if (!text.StartsWith("{", StringComparison.Ordinal)) return null;
                 candidate = new Draft { width = 0, height = 0, seconds = 0, cells = null };
                 try { JsonUtility.FromJsonOverwrite(text, candidate); }
                 catch (ArgumentException) { return null; }
@@ -89,10 +101,11 @@ public class RoomWorkshop : MonoBehaviour
     }
 
     const string SaveKey = "PlanetRover.Workshop.Draft.v1";
-    static readonly string[] Labels = { "Eraser", "Rock A", "Rock B", "Rocket A", "Rocket B", "Obstacle", "Rover" };
     static readonly string[] NumberFields = { "Width", "Height", "Seconds" };
-    [SerializeField] GameObject rockA, rockB, rocket, wall, rover;
-    [SerializeField] Texture2D[] icons;
+    [SerializeField] Tool[] palette;
+    [SerializeField] Texture2D gardenSign;
+    readonly Dictionary<Tile, Tool> toolsByTile = new();
+
     [SerializeField] Font hudFont;
     static readonly Color Hull = new Color32(40, 38, 36, 247);
     static readonly Color Rim = new Color32(139, 119, 95, 255);
@@ -113,17 +126,27 @@ public class RoomWorkshop : MonoBehaviour
     LobbyManager lobby;
     Room template;
     Mode mode;
-    Tile brush = Tile.RockA;
+    Tile brush = Tile.SeedA;
     Rover liveRover;
     Camera playCamera;
     Rect originalViewport;
     readonly List<Tile[]> undo = new();
     float elapsed;
-    int rockets, delivered;
+    int planters, planted;
     string message = "";
     bool painting;
     Tile[] beforeStroke;
     Vector2Int lastCell;
+
+    void Awake()
+    {
+        foreach (var tool in palette)
+        {
+            toolsByTile.Add(tool.tile, tool);
+            if (tool.prefab != null && tool.prefab.TryGetComponent<ItemCollector>(out var planter))
+                tool.requiredSeed = planter.RequiredItems[0].MainSprite.texture;
+        }
+    }
 
     static Draft LoadDraft()
     {
@@ -167,24 +190,17 @@ public class RoomWorkshop : MonoBehaviour
             var tile = draft.cells[i];
             if (tile == Tile.Empty) continue;
             var cell = topLeft + new Vector2Int(i % draft.width, -i / draft.width);
-            var obj = Instantiate(Prefab(tile), grid.CellToWorld(cell), Quaternion.identity, grid.transform);
+            var obj = Instantiate(toolsByTile[tile].prefab, grid.CellToWorld(cell), Quaternion.identity, grid.transform);
             if (tile == Tile.Rover) liveRover = obj.GetComponent<Rover>();
-            if (tile != Tile.RocketA && tile != Tile.RocketB) continue;
-            var collector = obj.GetComponent<ItemCollector>();
-            collector.RequiredItems.Clear();
-            collector.RequiredItems.Add((tile == Tile.RocketA ? rockA : rockB).GetComponent<Item>().ItemData);
-            collector.AllObjectsCollected += OnDelivery;
-            rockets++;
+            if (obj.TryGetComponent<ItemCollector>(out var planter))
+            {
+                planter.AllObjectsCollected += OnPlanted;
+                planters++;
+            }
         }
     }
 
-    GameObject Prefab(Tile tile) => tile switch
-    {
-        Tile.Rover => rover, Tile.Wall => wall, Tile.RockA => rockA, Tile.RockB => rockB,
-        Tile.RocketA or Tile.RocketB => rocket, _ => throw new ArgumentOutOfRangeException(nameof(tile))
-    };
-
-    void OnDelivery() => delivered++;
+    void OnPlanted() => planted++;
 
     float InterfaceScale => Mathf.Min(Screen.width / (Screen.width < Screen.height ? 540f : 900f), Screen.height / 520f);
 
@@ -207,7 +223,7 @@ public class RoomWorkshop : MonoBehaviour
         if (mode != Mode.Play) return;
         elapsed += Time.deltaTime;
         bool expired = draft.countdown && elapsed >= draft.seconds;
-        if (!expired && (rockets == 0 || delivered < rockets)) return;
+        if (!expired && (planters == 0 || planted < planters)) return;
         mode = Mode.Result;
         message = expired ? "Time is up" : $"Room complete in {elapsed:0.0} s";
         liveRover.enabled = false;
@@ -316,20 +332,23 @@ public class RoomWorkshop : MonoBehaviour
             Text(rect, "×", 26, Cream, TextAnchor.MiddleCenter, true);
             return;
         }
-        GUI.DrawTexture(rect, icons[(int)tile-1], ScaleMode.ScaleToFit);
-        if (tile == Tile.RocketA || tile == Tile.RocketB)
+        var tool = toolsByTile[tile];
+        GUI.DrawTexture(rect, tool.icon, ScaleMode.ScaleToFit);
+        if (tool.requiredSeed != null)
         {
-            float badge = rect.width * .46f;
-            GUI.DrawTexture(new Rect(rect.xMax-badge, rect.yMax-badge, badge, badge),
-                icons[tile == Tile.RocketA ? 0 : 1], ScaleMode.ScaleToFit);
+            var sign = new Rect(rect.x + rect.width * .16f, rect.y, rect.width * .68f, rect.height * .68f);
+            GUI.DrawTexture(sign, gardenSign, ScaleMode.ScaleToFit);
+            var seed = new Rect(rect.x + rect.width * .35f, rect.y + rect.height * .08f,
+                rect.width * .30f, rect.height * .30f);
+            GUI.DrawTexture(seed, tool.requiredSeed, ScaleMode.ScaleToFit);
         }
     }
 
     void DrawGame(float w, float h)
     {
         Fill(new Rect(0,0,w,38), Hull);
-        GUI.DrawTexture(new Rect(10,3,30,30),icons[(int)Tile.RocketA-1],ScaleMode.ScaleToFit);
-        Text(new Rect(48,2,200,31), $"{delivered} / {rockets} rockets", 16, Cream, bold:true);
+        GUI.DrawTexture(new Rect(10,3,30,30),toolsByTile[Tile.PlanterA].icon,ScaleMode.ScaleToFit);
+        Text(new Rect(48,2,200,31), $"{planted} / {planters} planted", 16, Cream, bold:true);
         float remaining = Mathf.Max(0, draft.seconds - elapsed);
         Text(new Rect(w/2-100,2,200,31), draft.countdown ? $"{remaining:0.0} s left" : $"{elapsed:0.0} s",
             17, draft.countdown ? Amber : Cream, TextAnchor.MiddleCenter, true);
@@ -373,9 +392,9 @@ public class RoomWorkshop : MonoBehaviour
                 e.Use();
             }
         }
-        if (!BlocksGameShortcuts && e.type == EventType.KeyDown && e.keyCode >= KeyCode.Alpha1 && e.keyCode <= KeyCode.Alpha7)
+        if (!BlocksGameShortcuts && e.type == EventType.KeyDown && e.keyCode >= KeyCode.Alpha1 && e.keyCode <= KeyCode.Alpha9)
         {
-            brush = (Tile)(((int)e.keyCode - (int)KeyCode.Alpha1 + 1) % Labels.Length);
+            brush = palette[e.keyCode - KeyCode.Alpha1].tile;
             e.Use();
         }
 
@@ -389,27 +408,29 @@ public class RoomWorkshop : MonoBehaviour
         if (Button(new Rect(w-181,7,73,33),"Lobby")) Back();
         if (Button(new Rect(w-101,7,90,33),"Playtest",true)) Play();
 
-        var area = new Rect(16,60,w-32-(settingsOpen ? 216 : 0),h-168);
+        bool compactTray = w < 720;
+        var area = new Rect(16,60,w-32-(settingsOpen ? 216 : 0),h-168-(compactTray ? 58 : 0));
         float size = Mathf.Min(area.width/draft.width, area.height/draft.height);
         var board = new Rect(area.center.x-draft.width*size/2,area.center.y-draft.height*size/2,
             draft.width*size,draft.height*size);
         DrawBoard(board,size);
         if (settingsOpen) DrawSettings(new Rect(w-212,60,196,324));
 
-        float trayWidth = Mathf.Min(620,w-16);
-        float slotPitch = (trayWidth-109)/7;
-        var tray = new Rect((w-trayWidth)/2,h-92,trayWidth,62);
+        float trayWidth = Mathf.Min(780,w-16);
+        int columns = compactTray ? (palette.Length + 1) / 2 : palette.Length;
+        float slotPitch = (trayWidth-101)/columns;
+        var tray = new Rect((w-trayWidth)/2,h-92-(compactTray ? 58 : 0),trayWidth,compactTray ? 120 : 62);
         Plate(tray, Rim, Hull);
-        for (int i=0; i<Labels.Length; i++)
+        for (int i=0; i<palette.Length; i++)
         {
-            var tile = (Tile)((i+1) % Labels.Length);
-            var slot = new Rect(tray.x+5+i*slotPitch,tray.y+4,slotPitch-3,54);
+            var tile = palette[i].tile;
+            var slot = new Rect(tray.x+5+(i%columns)*slotPitch,tray.y+4+(i/columns)*58,slotPitch-3,54);
             bool selected = brush == tile;
             bool hover = slot.Contains(e.mousePosition);
             Plate(slot, selected ? Amber : hover ? Cream : Rim, selected ? new Color32(96,72,47,255) : Slot);
             Text(new Rect(slot.x+5,slot.y+1,13,16),(i+1).ToString(),11,selected ? Amber : Muted);
             Stamp(new Rect(slot.center.x-16,slot.y+2,32,32),tile);
-            Text(new Rect(slot.x,slot.yMax-20,slot.width,18), Labels[(int)tile],13,Cream,TextAnchor.MiddleCenter);
+            Text(new Rect(slot.x,slot.yMax-20,slot.width,18), palette[i].label,13,Cream,TextAnchor.MiddleCenter);
             if (selected) Fill(new Rect(slot.x+1,slot.yMax-3,slot.width-2,2),Amber);
             if (GUI.Button(slot,GUIContent.none,GUIStyle.none)) brush = tile;
         }

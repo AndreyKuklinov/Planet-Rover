@@ -4,13 +4,14 @@ using System.IO.Compression;
 using Draft = RoomWorkshop.Draft;
 using Tile = RoomWorkshop.Tile;
 
-// R1 uses unpadded URL-safe Base64. Only interior cells are transmitted, in row-major order.
+// Workshop codes use unpadded URL-safe Base64. Only interior cells are transmitted, in row-major order.
 internal static class RoomShareCode
 {
-    public const string Prefix = "R1.";
+    const string Prefix = "R2.";
+    const string LegacyPrefix = "R1.";
     enum Layout { Sparse, SparseWithBackground, Packed, Deflated }
-    const int TileKinds = 7;
-    const int PackedBlock = 17; // 17 base-seven digits fit in six bytes.
+    const int TileKinds = 9;
+    const int PackedBlock = 17; // 17 base-nine digits fit in seven bytes.
 
     public static string Encode(Draft room)
     {
@@ -121,7 +122,11 @@ internal static class RoomShareCode
     public static Draft Decode(string text)
     {
         // The packed fallback bounds every code, even for a 99 × 99 room.
-        if (!text.StartsWith(Prefix, StringComparison.Ordinal) || text.Length > 4500) return null;
+        byte tileKinds;
+        if (text.StartsWith(Prefix, StringComparison.Ordinal)) tileKinds = TileKinds;
+        else if (text.StartsWith(LegacyPrefix, StringComparison.Ordinal)) tileKinds = 7;
+        else return null;
+        if (text.Length > 5300) return null;
         try
         {
             string body = text.Substring(Prefix.Length).Replace('-','+').Replace('_','/');
@@ -143,11 +148,11 @@ internal static class RoomShareCode
                     {
                         int end = Math.Min(start + PackedBlock, cells.Length);
                         ulong range = 1, value = 0;
-                        for (int i = start; i < end; i++) range *= TileKinds;
+                        for (int i = start; i < end; i++) range *= tileKinds;
                         for (ulong place = 1; place < range; place <<= 8)
                             value |= (ulong)reader.ReadByte() * place;
                         if (value >= range) return null;
-                        for (int i = start; i < end; i++) { cells[i] = (byte)(value % TileKinds); value /= TileKinds; }
+                        for (int i = start; i < end; i++) { cells[i] = (byte)(value % tileKinds); value /= tileKinds; }
                     }
                     break;
                 case Layout.Deflated:
@@ -165,21 +170,21 @@ internal static class RoomShareCode
                     break;
                 default:
                     int background = (Layout)(flags >> 6) == Layout.SparseWithBackground ? reader.ReadByte() : 0;
-                    if (background >= TileKinds) return null;
+                    if (background >= tileKinds) return null;
                     if (background != 0) Array.Fill(cells,(byte)background);
                     int next = 0;
                     while (input.Position < input.Length)
                     {
                         int token = ReadUInt(reader);
-                        int index = next + token / (TileKinds - 1);
+                        int index = next + token / (tileKinds - 1);
                         if (index >= cells.Length) return null;
-                        int symbol = token % (TileKinds - 1);
+                        int symbol = token % (tileKinds - 1);
                         cells[index] = (byte)(symbol < background ? symbol : symbol + 1);
                         next = index + 1;
                     }
                     break;
             }
-            if (input.Position != input.Length) return null;
+            if (input.Position != input.Length || Array.Exists(cells, tile => tile >= tileKinds)) return null;
             var draft = new Draft { width = width, height = height, seconds = seconds, cells = new Tile[width * height],
                 lockRatio = (flags & 1) == 0, countdown = (flags & 2) != 0, mirrorX = (flags & 4) != 0, mirrorY = (flags & 8) != 0 };
             for (int i = 0; i < cells.Length; i++)
