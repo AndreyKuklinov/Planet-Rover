@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 internal sealed class RoomLibraryEntry
 {
@@ -13,20 +14,17 @@ internal sealed class RoomLibraryEntry
     internal readonly string id;
     internal readonly DateTime? date;
     internal string Title => string.IsNullOrWhiteSpace(room.LibraryTitle) ? id : room.LibraryTitle;
-    readonly struct Cell
+    sealed class Layer
     {
-        public readonly Vector2Int pos;
-        public readonly bool wall, planter;
-        public readonly Sprite sprite;
-        public Cell(Vector2Int pos, bool wall, bool planter, Sprite sprite)
-        {
-            this.pos = pos;
-            this.wall = wall;
-            this.planter = planter;
-            this.sprite = sprite;
-        }
+        public Texture2D texture;
+        public Rect uv;
+        public Vector2 topLeft, right, down;
+        public Color tint;
+        public int sortingLayer, order;
+        public bool wall;
     }
-    List<Cell> cells;
+
+    List<Layer> layers;
     Vector2Int min, max;
     string contents;
     internal string Summary
@@ -75,9 +73,9 @@ internal sealed class RoomLibraryEntry
 
     void ReadLayout()
     {
-        if (cells != null)
+        if (layers != null)
             return;
-        cells = new List<Cell>();
+        layers = new List<Layer>();
         var counts = new SortedDictionary<string, int>();
         var grid = room.Grid;
         if (grid == null)
@@ -112,63 +110,121 @@ internal sealed class RoomLibraryEntry
             var source = PrefabUtility.GetCorrespondingObjectFromSource(obj.gameObject);
             string name = source != null ? source.name : obj.name;
             bool wall = name == "Obstacle";
-            bool planter = obj.TryGetComponent<PlantingPlatform>(out _);
-            Sprite sprite = null;
-            if (planter && obj.TryGetComponent<ItemCollector>(out var collector))
-                sprite = collector.RequiredItems?.FirstOrDefault()?.MainSprite;
-            else if (obj.TryGetComponent<Item>(out var item))
-                sprite = item.ItemData?.MainSprite;
-            if (sprite == null)
-                sprite = obj.GetComponentsInChildren<SpriteRenderer>().FirstOrDefault(r => r.enabled && r.sprite != null)?.sprite;
             var pos = grid.WorldToCell(obj.transform.position);
-            if (!haveBounds && cells.Count == 0)
+            if (!haveBounds)
+            {
                 min = max = pos;
+                haveBounds = true;
+            }
             min = Vector2Int.Min(min, pos);
             max = Vector2Int.Max(max, pos);
-            cells.Add(new Cell(pos, wall, planter, sprite));
+            foreach (var renderer in obj.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (!renderer.enabled || renderer.forceRenderingOff || renderer.sprite == null
+                    || renderer.GetComponentInParent<GridObject>(true) != obj)
+                    continue;
+                var sprite = renderer.sprite;
+                Vector2 size = sprite.rect.size / sprite.pixelsPerUnit;
+                Vector2 pivot = sprite.pivot / sprite.pixelsPerUnit;
+                Vector2 flip = new Vector2(renderer.flipX ? -1 : 1, renderer.flipY ? -1 : 1);
+                AddLayer(sprite, renderer.transform, Vector2.Scale(new Vector2(-pivot.x, size.y - pivot.y), flip),
+                    Vector2.right * size.x * flip.x, Vector2.down * size.y * flip.y, renderer.color,
+                    SortingLayer.GetLayerValueFromID(renderer.sortingLayerID), renderer.sortingOrder, wall);
+            }
+            var requests = obj.GetComponentInChildren<RocketIcons>();
+            if (requests != null)
+                ReadRocketIcons(requests);
             if (!wall && !obj.GetComponent<Rover>())
                 counts[name] = counts.TryGetValue(name, out int n) ? n + 1 : 1;
         }
+        layers = layers.OrderBy(l => l.sortingLayer).ThenBy(l => l.order).ToList();
         contents = string.Join(" · ", counts.Select(kv => $"{kv.Value} × {kv.Key}"));
+    }
+
+    void AddLayer(Sprite sprite, Transform transform, Vector2 corner, Vector2 right, Vector2 down,
+        Color tint, int sortingLayer, int order, bool wall)
+    {
+        var texture = sprite.packed ? AssetDatabase.LoadAssetAtPath<Texture2D>(AssetDatabase.GetAssetPath(sprite)) : sprite.texture;
+        if (texture == null) return;
+        var rect = sprite.rect;
+        layers.Add(new Layer {
+            texture = texture,
+            uv = new Rect(rect.x / texture.width, rect.y / texture.height, rect.width / texture.width, rect.height / texture.height),
+            topLeft = transform.TransformPoint(corner),
+            right = transform.TransformVector(right), down = transform.TransformVector(down),
+            tint = tint, sortingLayer = sortingLayer, order = order, wall = wall
+        });
+    }
+
+    // RocketIcons creates its images in Start. Read the same requests, icon repository and layout in edit mode.
+    void ReadRocketIcons(RocketIcons requests)
+    {
+        var settings = new SerializedObject(requests);
+        var repo = settings.FindProperty("deliveryIconRepo").objectReferenceValue as DeliveryIconRepo;
+        var collector = settings.FindProperty("collector").objectReferenceValue as ItemCollector;
+        var image = settings.FindProperty("iconPrefab").objectReferenceValue as Image;
+        var layout = requests.GetComponent<VerticalLayoutGroup>();
+        if (repo == null || collector == null || image == null || layout == null) return;
+        var frame = (RectTransform)layout.transform;
+        var slot = image.rectTransform.rect.size;
+        float y = frame.rect.yMax - layout.padding.top - slot.y / 2;
+        foreach (var item in collector.RequiredItems)
+        {
+            var sprite = item != null ? repo.GetIcon(item) : null;
+            if (sprite != null)
+            {
+                var size = image.preserveAspect ? sprite.rect.size * Mathf.Min(slot.x / sprite.rect.width, slot.y / sprite.rect.height) : slot;
+                var corner = new Vector2(frame.rect.center.x - size.x / 2, y + size.y / 2);
+                AddLayer(sprite, frame, corner, Vector2.right * size.x, Vector2.down * size.y, image.color, int.MaxValue, 0, false);
+            }
+            y -= slot.y + layout.spacing;
+        }
     }
 
     internal void Draw(Rect rect, bool dimWalls)
     {
-        if (Event.current.type != EventType.Repaint)
-            return;
+        if (Event.current.type != EventType.Repaint) return;
         ReadLayout();
         EditorGUI.DrawRect(rect, new Color(.12f, .16f, .18f));
+        if (room.Grid == null || layers.Count == 0) return;
         int w = max.x - min.x + 1, h = max.y - min.y + 1;
-        float side = Mathf.Min((rect.width - 6) / Mathf.Max(1, w), (rect.height - 6) / Mathf.Max(1, h));
-        if (side <= 0)
-            return;
-        var board = new Rect(rect.center.x - side * w / 2, rect.center.y - side * h / 2, w * side, h * side);
+        float side = Mathf.Min((rect.width - 6) / w, (rect.height - 6) / h);
+        if (side <= 0) return;
+        GUI.BeginClip(rect);
+        var board = new Rect((rect.width - side * w) / 2, (rect.height - side * h) / 2, w * side, h * side);
         EditorGUI.DrawRect(board, new Color(.21f, .28f, .29f));
-        foreach (var cell in cells)
+        Vector2 origin = room.Grid.CellToWorld(new Vector2Int(min.x, max.y));
+        Vector2 screenOrigin = board.position + Vector2.one * (side / 2);
+        var matrix = GUI.matrix;
+        var color = GUI.color;
+        try
         {
-            var r = new Rect(board.x + (cell.pos.x - min.x) * side, board.y + (max.y - cell.pos.y) * side, side, side);
-            if (cell.wall)
+            foreach (var layer in layers)
             {
-                EditorGUI.DrawRect(r, dimWalls ? new Color(.27f, .33f, .34f) : new Color(.48f, .56f, .57f));
-                continue;
+                Vector2 offset = layer.topLeft - origin;
+                var corner = screenOrigin + new Vector2(offset.x, -offset.y) * side;
+                var fit = new Rect(corner, new Vector2(layer.right.magnitude, layer.down.magnitude) * side);
+                var uv = layer.uv;
+                if (layer.right.x * layer.down.y > layer.right.y * layer.down.x)
+                {
+                    fit.y -= fit.height;
+                    uv = new Rect(uv.x, uv.yMax, uv.width, -uv.height);
+                }
+                float angle = Mathf.Atan2(-layer.right.y, layer.right.x) * Mathf.Rad2Deg;
+                if (!Mathf.Approximately(angle, 0f))
+                    GUIUtility.RotateAroundPivot(angle, corner);
+                var tint = color * layer.tint;
+                if (dimWalls && layer.wall) tint.a *= .35f;
+                GUI.color = tint;
+                GUI.DrawTextureWithTexCoords(fit, layer.texture, uv);
+                GUI.matrix = matrix;
             }
-            if (cell.planter)
-            {
-                EditorGUI.DrawRect(r, new Color(.93f, .84f, .67f));
-                r = new Rect(r.x + side * .12f, r.y + side * .12f, side * .76f, side * .76f);
-                EditorGUI.DrawRect(r, new Color(.35f, .28f, .22f));
-            }
-            if (cell.sprite == null)
-            {
-                EditorGUI.DrawRect(new Rect(r.center.x - side * .2f, r.center.y - side * .2f, side * .4f, side * .4f), Color.white);
-                continue;
-            }
-            var sprite = cell.sprite;
-            var uv = sprite.rect;
-            var texture = sprite.texture;
-            float scale = Mathf.Min(r.width / uv.width, r.height / uv.height);
-            var fit = new Rect(r.center.x - uv.width * scale / 2, r.center.y - uv.height * scale / 2, uv.width * scale, uv.height * scale);
-            GUI.DrawTextureWithTexCoords(fit, texture, new Rect(uv.x / texture.width, uv.y / texture.height, uv.width / texture.width, uv.height / texture.height));
+        }
+        finally
+        {
+            GUI.matrix = matrix;
+            GUI.color = color;
+            GUI.EndClip();
         }
     }
 }

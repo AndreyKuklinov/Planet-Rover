@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using System.Linq;
 
@@ -9,6 +10,11 @@ public class RoomTestInspector : Editor
     {
         DrawDefaultInspector();
         var room = RoomTestRunner.ResolveRoom(target);
+        if (room != null && !EditorApplication.isPlayingOrWillChangePlaymode)
+        {
+            var inspected = (Room)target;
+            DrawRoomTags(PrefabStageUtility.GetPrefabStage(inspected.gameObject) != null ? inspected : room);
+        }
         using (new EditorGUI.DisabledScope(room == null || EditorApplication.isPlayingOrWillChangePlaymode))
             if (GUILayout.Button("Test Room")) RoomTestRunner.Launch(room);
         using (new EditorGUI.DisabledScope(!RoomAuthoringTools.CanFill((Room)target) || EditorApplication.isPlayingOrWillChangePlaymode))
@@ -18,6 +24,36 @@ public class RoomTestInspector : Editor
         }
         EditorGUILayout.HelpBox("Fill adds walls to empty cells between the border markers. Existing objects are kept. Use Undo to revert.", MessageType.Info);
         DrawOverlaps((Room)target);
+    }
+
+    static void DrawRoomTags(Room room)
+    {
+        var catalog = RoomLibraryTags.instance;
+        GUILayout.Label("Room tags", EditorStyles.boldLabel);
+        foreach (var category in catalog.Categories)
+        foreach (var tag in category.tags.Where(t => t.IsAssigned(room)))
+        {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUI.DrawRect(GUILayoutUtility.GetRect(5, 15, GUILayout.Width(5)), category.color);
+                GUILayout.Label(category.name + ":" + tag.name, EditorStyles.miniLabel);
+            }
+        }
+        if (GUILayout.Button("Add or remove room tags…"))
+            catalog.ShowAssignmentMenu(1, tag => tag.IsAssigned(room) ? 1 : 0, (tag, add) =>
+            {
+                if (room == null) return;
+                var stage = PrefabStageUtility.GetPrefabStage(room.gameObject);
+                if (stage == null)
+                {
+                    RoomLibraryWindow.Assign(new[] { room }, tag.id, add);
+                    return;
+                }
+                var settings = new SerializedObject(room);
+                tag.SetAssigned(settings, add);
+                if (settings.ApplyModifiedProperties())
+                    EditorSceneManager.MarkSceneDirty(stage.scene);
+            });
     }
 
     void DrawOverlaps(Room room)
