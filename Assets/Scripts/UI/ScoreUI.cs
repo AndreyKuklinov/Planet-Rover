@@ -23,7 +23,7 @@ public class ScoreUI : MonoBehaviour
 
         roomText.gameObject.SetActive(!showStopwatch);
         if (stopwatchText != null) stopwatchText.gameObject.SetActive(showStopwatch);
-        bool showCountdown = !showStopwatch && levelManager.IsCurrentRoomTimed;
+        bool showCountdown = !showStopwatch && levelManager.CurrentLevel.Mode != LevelMode.Tutorial;
         if (countdownText != null) countdownText.gameObject.SetActive(showCountdown);
         if (showStopwatch)
         {
@@ -37,14 +37,18 @@ public class ScoreUI : MonoBehaviour
             return;
         }
         roomText.text = (scoreTracker.NumberOfCompletedRooms + 1) + "/" + scoreTracker.TotalNumberOfRooms;
-        starContainer.gameObject.SetActive(levelManager.IsCurrentRoomTimed);
-        if (levelManager.IsCurrentRoomTimed)
+        bool showStars = levelManager.CurrentLevel.Mode == LevelMode.Standard;
+        starContainer.gameObject.SetActive(showStars);
+        if (showStars)
         {
             float untilLoss = levelManager.TimeUntilStarLoss;
             bool warning = starWarningDuration > 0f && untilLoss <= starWarningDuration;
             bool showLastStar = !warning || Mathf.Repeat(starWarningDuration - untilLoss,
                 Mathf.Max(0.01f, starBlinkInterval) * 2f) < Mathf.Max(0.01f, starBlinkInterval);
             starContainer.SetStars(levelManager.AchievableStars, showLastStar);
+        }
+        if (showCountdown)
+        {
             if (countdownText == null) countdownText = CreateTimerText("Level Countdown", false);
             int secondsRemaining = Mathf.CeilToInt(Mathf.Max(0f, levelManager.TimeRemaining));
             countdownText.text = $"{secondsRemaining / 60}:{secondsRemaining % 60:00}";

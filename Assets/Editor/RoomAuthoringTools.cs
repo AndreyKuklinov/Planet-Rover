@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -12,6 +13,43 @@ public static class RoomAuthoringTools
     const string TemplateGuid = "dd809fa5dcc0d13489e71643ef40c731";
     const string WallPath = "Assets/Prefabs/Level Objects/Obstacle.prefab";
     const string RoverPath = "Assets/Prefabs/Rover/Rover.prefab";
+    const string DatedFolder = "Assets/Prefabs/Levels/dated";
+    const string DuplicateMenu = "Assets/Duplicate Dated Room";
+
+    public static string NextDatedRoomPath()
+    {
+        string prefix = DateTime.Today.ToString("yy_MM_dd_", CultureInfo.InvariantCulture);
+        int next = 0;
+        foreach (string file in Directory.EnumerateFiles(DatedFolder, prefix + "*.prefab"))
+        {
+            string suffix = Path.GetFileNameWithoutExtension(file).Substring(prefix.Length);
+            if (suffix.Length >= 3 && int.TryParse(suffix, NumberStyles.None, CultureInfo.InvariantCulture, out int number))
+                next = Math.Max(next, checked(number + 1));
+        }
+        return DatedFolder + "/" + prefix + next.ToString("D3", CultureInfo.InvariantCulture) + ".prefab";
+    }
+
+    [MenuItem(DuplicateMenu, true)]
+    static bool CanDuplicateRoom() =>
+        !EditorApplication.isPlayingOrWillChangePlaymode && Selection.objects.Length == 1
+        && Selection.activeObject is GameObject selected && AssetDatabase.IsMainAsset(selected)
+        && AssetDatabase.GetAssetPath(selected).EndsWith(".prefab", StringComparison.OrdinalIgnoreCase)
+        && selected.GetComponent<Room>() != null;
+
+    [MenuItem(DuplicateMenu, false, 2001)]
+    static void DuplicateSelectedRoom()
+    {
+        try
+        {
+            string path = NextDatedRoomPath();
+            if (!AssetDatabase.CopyAsset(AssetDatabase.GetAssetPath(Selection.activeObject), path))
+                throw new IOException("Could not copy the selected room to " + path);
+            var copy = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            Selection.activeObject = copy;
+            AssetDatabase.OpenAsset(copy);
+        }
+        catch (Exception ex) { EditorUtility.DisplayDialog("Duplicate Dated Room", ex.Message, "OK"); }
+    }
 
     public static bool CanFill(Room room) => room != null && room.Grid != null && room.Grid.Bounds != null;
 
@@ -135,7 +173,7 @@ public static class RoomAuthoringTools
             root.transform.position = new Vector3(0.5f, 0.5f, 0f);
             var room = root.GetComponent<Room>();
             var settings = new SerializedObject(room);
-            foreach (string option in new[] { "isTimed", "canUseReset", "allowHorizontalReflection", "allowVerticalReflection" })
+            foreach (string option in new[] { "canUseReset", "allowHorizontalReflection", "allowVerticalReflection" })
                 settings.FindProperty(option).boolValue = true;
             settings.FindProperty("<StandardTime>k__BackingField").floatValue = standardTime;
             settings.ApplyModifiedPropertiesWithoutUndo();

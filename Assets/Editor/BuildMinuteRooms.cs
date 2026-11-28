@@ -149,7 +149,7 @@ public static class BuildMinuteRooms
         try
         {
             root.name=s.name;root.transform.position=new Vector3(-.5f,-.5f,0);
-            var options=new SerializedObject(root.GetComponent<Room>());foreach(var option in new[]{"isTimed","canUseReset","allowHorizontalReflection","allowVerticalReflection"})options.FindProperty(option).boolValue=true;options.ApplyModifiedPropertiesWithoutUndo();
+            var options=new SerializedObject(root.GetComponent<Room>());foreach(var option in new[]{"canUseReset","allowHorizontalReflection","allowVerticalReflection"})options.FindProperty(option).boolValue=true;options.ApplyModifiedPropertiesWithoutUndo();
             var roomSettings=new SerializedObject(root.GetComponent<Room>());roomSettings.FindProperty("<StandardTime>k__BackingField").floatValue=60f;roomSettings.ApplyModifiedPropertiesWithoutUndo();
             var b=root.transform.Find("Bounds");
             b.Find("BottomLeft").localPosition=new Vector3(-8,-4,0);
@@ -288,7 +288,7 @@ public static class BuildMinuteRooms
     }
     static void VerifyLayout()
     {
-        var s=Specs()[roomIndex];Check(room.IsTimed&&room.CanUseReset,"Wrong room options");
+        var s=Specs()[roomIndex];Check(room.CanUseReset,"Wrong room options");
         for(int y=0;y<9;y++)for(int x=0;x<17;x++)
         {
             var obj=room.Grid.Objects.GetObject(Cell(x,y));var spec=s.objects.FirstOrDefault(o=>o.x==x&&o.y==y);

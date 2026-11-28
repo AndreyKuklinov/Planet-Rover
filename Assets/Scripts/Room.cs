@@ -6,10 +6,15 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+#if UNITY_EDITOR
+    [SerializeField, HideInInspector] string libraryTitle;
+    [SerializeField, HideInInspector] List<string> libraryTagIds = new();
+    public string LibraryTitle => libraryTitle;
+    public IReadOnlyList<string> LibraryTagIds => libraryTagIds;
+#endif
+
     [Header("Room Options")]
-    [SerializeField] bool isTimed = true;
     [SerializeField] bool canUseReset = true;
-    public bool IsTimed => isTimed;
     public bool CanUseReset => canUseReset;
     [field: SerializeField, Min(0.01f)] public float StandardTime { get; private set; } = 30f;
 

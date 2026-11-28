@@ -60,7 +60,7 @@ public static class BuildAndreyRooms
             if(!existing)
             {
                 var options=new SerializedObject(room);
-                foreach(string option in new[]{"isTimed","canUseReset","allowHorizontalReflection","allowVerticalReflection"})options.FindProperty(option).boolValue=true;
+                foreach(string option in new[]{"canUseReset","allowHorizontalReflection","allowVerticalReflection"})options.FindProperty(option).boolValue=true;
                 options.FindProperty("<StandardTime>k__BackingField").floatValue=60;
                 options.ApplyModifiedPropertiesWithoutUndo();
             }
@@ -318,7 +318,7 @@ public static class BuildAndreyRooms
     static Vector2Int Reflected(int x,int y) => Cell(reflectedH?21-x:x,reflectedV?11-y:y);
     static void VerifyLayout()
     {
-        var s=pack.rooms[roomIndex];Check(room.IsTimed&&room.CanUseReset&&room.AllowHorizontalReflection&&room.AllowVerticalReflection&&room.StandardTime==60,"Room defaults differ");
+        var s=pack.rooms[roomIndex];Check(room.CanUseReset&&room.AllowHorizontalReflection&&room.AllowVerticalReflection&&room.StandardTime==60,"Room defaults differ");
         for(int y=0;y<12;y++)for(int x=0;x<22;x++)
         {
             var authored=s.objects.FirstOrDefault(o=>o.x==x&&o.y==y);
@@ -409,7 +409,7 @@ public static class BuildAndreyRooms
     }
     static void WriteReport(bool passed)
     {
-        var text=new StringBuilder("# Andrey's image rooms\n\nTwelve faithful transcriptions of the supplied legend and numbered scheme, using the original 22 x 12 cell grid including walls. Red maps to the game's orange (A). Coordinates in rooms.json are zero-based, left-to-right and top-to-bottom; rocket coordinates refer to the rocket body, not the request icons above it.\n\nAll new rooms have StandardTime = 60 seconds, timing and room reset enabled, and both startup reflections enabled directly on the Room component. Existing room options are preserved on a rebuild. No shared config assets or gameplay-rule changes are introduced. These standalone rooms are not added to existing level pools.\n\n![Reference layouts](overview.png)\n\n| Room | Source family | Buckets | Liquid portions | Saplings | Rocket requests |\n|---|---|---:|---:|---:|---|\n");
+        var text=new StringBuilder("# Andrey's image rooms\n\nTwelve faithful transcriptions of the supplied legend and numbered scheme, using the original 22 x 12 cell grid including walls. Red maps to the game's orange (A). Coordinates in rooms.json are zero-based, left-to-right and top-to-bottom; rocket coordinates refer to the rocket body, not the request icons above it.\n\nAll new rooms have StandardTime = 60 seconds, room reset enabled, and both startup reflections enabled directly on the Room component. Existing room options are preserved on a rebuild. No shared config assets or gameplay-rule changes are introduced. These standalone rooms are not added to existing level pools.\n\n![Reference layouts](overview.png)\n\n| Room | Source family | Buckets | Liquid portions | Saplings | Rocket requests |\n|---|---|---:|---:|---:|---|\n");
         foreach(var s in pack.rooms)
         {
             string family=s.number<=4?"Ведро и ростки / Buckets and sprouts":s.number<=8?"Учимся ресетить / Learning to reset":"Случайная потеря ведра / Accidental bucket loss";

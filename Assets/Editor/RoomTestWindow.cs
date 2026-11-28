@@ -30,7 +30,6 @@ public class RoomTestWindow : EditorWindow
             return;
         }
         EditorGUILayout.LabelField(room.name, EditorStyles.boldLabel);
-        EditorGUILayout.LabelField(room.IsTimed ? "Timed room" : "Untimed room");
         EditorGUILayout.HelpBox("The test starts automatically. Players can join at any time in the Game view. Progress is not saved.", MessageType.Info);
         int players = PartyInputManager.Instance == null ? 0 : PartyInputManager.Instance.PlayerCount;
         EditorGUILayout.LabelField("Joined players", players + " / 4");

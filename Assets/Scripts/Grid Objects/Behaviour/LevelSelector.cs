@@ -31,6 +31,6 @@ public class LevelSelector : MonoBehaviour, IInteractable
     private void DisplayStars()
     {
         var stars = SaveDataManager.GetStars(levelData);
-        starContainer.SetStars(stars);
+        starContainer.SetStars(levelData.Mode == LevelMode.Challenge ? 0 : stars);
     }
 }

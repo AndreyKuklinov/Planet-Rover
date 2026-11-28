@@ -16,12 +16,14 @@ public class LevelManager : MonoBehaviour
     public float TimeRemaining => roomTimer.TimeRemaining;
     public bool IsRoomTestSession { get; private set; }
     public void BeginRoomTestSession() => IsRoomTestSession = true;
-    public bool IsCurrentRoomTimed => IsLevelRunning && levelLoader.CurrentRoom.IsTimed;
     public float StandardTime => levelLoader.StandardTime * playerTimeMultiplier;
-    public int AchievableStars => starConfig.GetStars(roomTimer.ElapsedTime, StandardTime);
-    public float TimeUntilStarLoss => starConfig.GetTimeUntilStarLoss(roomTimer.ElapsedTime, StandardTime);
+    public int AchievableStars => !IsLevelRunning || roomTimer.HasExpired ? 0
+        : CurrentLevel.Mode == LevelMode.Standard ? starConfig.GetStars(ElapsedTime, StandardTime) : 3;
+    public float TimeUntilStarLoss => IsLevelRunning && CurrentLevel.Mode == LevelMode.Standard
+        ? starConfig.GetTimeUntilStarLoss(ElapsedTime, StandardTime) : float.PositiveInfinity;
     public float GetStarFill(int starNumber)
-        => starConfig.GetStarFill(starNumber, roomTimer.ElapsedTime, StandardTime);
+        => IsLevelRunning && CurrentLevel.Mode == LevelMode.Standard
+            ? starConfig.GetStarFill(starNumber, ElapsedTime, StandardTime) : 0f;
 
     [SerializeField] LevelLoader levelLoader;
     [field: SerializeField] public ObjectiveTracker ObjectiveTracker { get; private set; }
@@ -43,7 +45,7 @@ public class LevelManager : MonoBehaviour
     }
     public void StartLevel(LevelData level)
     {
-        if (starConfig == null || !starConfig.IsValid)
+        if (level.Mode == LevelMode.Standard && (starConfig == null || !starConfig.IsValid))
             throw new InvalidOperationException("Assign a valid shared Star Config to LevelManager.");
         if (playerCountTimeConfig == null)
             throw new InvalidOperationException("Assign a Player Count Time Config to LevelManager.");
@@ -57,10 +59,10 @@ public class LevelManager : MonoBehaviour
         CompletedRoomCount = 0;
         FinalStars = 0;
         roomCompletionPending = false;
-        if (IsTestingRoom)
+        if (IsTestingRoom || level.Mode == LevelMode.Tutorial)
             roomTimer.StartStopwatch();
         else
-            roomTimer.StartLevelTime(StandardTime * starConfig.MaximumMultiplier);
+            roomTimer.StartLevelTime(level.Mode == LevelMode.Challenge ? StandardTime : StandardTime * starConfig.MaximumMultiplier);
         LevelStarted?.Invoke();
         StartNextRoom();
     }
@@ -77,7 +79,6 @@ public class LevelManager : MonoBehaviour
         roomCompletionPending = false;
         ObjectiveTracker.ClearObjectives();
         levelLoader.LoadNextRoom();
-        roomTimer.SetRoomTimed(levelLoader.CurrentRoom.IsTimed);
     }
     private void OnAllObjectivesCompleted() => roomCompletionPending = IsLevelRunning;
     private void OnTimeOut()

@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -63,7 +62,7 @@ public class CreateRoomWindow : EditorWindow
         standardTime = EditorGUILayout.FloatField("Standard time (seconds)", standardTime);
         addRover = EditorGUILayout.Toggle("Add rover", addRover);
         addBorder = EditorGUILayout.Toggle("Fill border", addBorder);
-        EditorGUILayout.HelpBox("Creates a room prefab with border markers and grid, then opens it for editing. Timing, reset, and both random reflections start enabled in the Room Inspector.", MessageType.Info);
+        EditorGUILayout.HelpBox("Creates the next YY_MM_DD_NNN room in Assets/Prefabs/Levels/dated and opens it for editing. Reset and both reflections start enabled.", MessageType.Info);
         using (new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode
             || standardTime <= 0 || float.IsNaN(standardTime) || float.IsInfinity(standardTime)))
             if (GUILayout.Button("Create Room")) Create();
@@ -90,13 +89,9 @@ public class CreateRoomWindow : EditorWindow
 
     void Create()
     {
-        string folder = AssetDatabase.GetAssetPath(Selection.activeObject);
-        if (!AssetDatabase.IsValidFolder(folder)) folder = Path.GetDirectoryName(folder)?.Replace('\\', '/');
-        if (string.IsNullOrEmpty(folder)) folder = "Assets/Prefabs/Levels";
-        string path = EditorUtility.SaveFilePanelInProject("Create Room", "New Room", "prefab", "Choose a filename for the new room.", folder);
-        if (string.IsNullOrEmpty(path)) return;
         try
         {
+            string path = RoomAuthoringTools.NextDatedRoomPath();
             var room = RoomAuthoringTools.CreateRoom(path, width, height, standardTime, addRover, addBorder);
             Selection.activeObject = room;
             AssetDatabase.OpenAsset(room);

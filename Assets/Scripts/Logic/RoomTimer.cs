@@ -18,11 +18,7 @@ public class RoomTimer : MonoBehaviour
     public void StartLevelTime(float duration)
     {
         isStopwatch = isStopwatchRunning = false;
-        if (duration > 0f)
-            timer.StartTime(duration);
-        else
-            timer.StopTime();
-        timer.SetPaused(true);
+        timer.StartTime(duration);
     }
     public void StartStopwatch()
     {
@@ -33,10 +29,6 @@ public class RoomTimer : MonoBehaviour
     void Update()
     {
         if (isStopwatchRunning) stopwatchElapsed += Time.deltaTime;
-    }
-    public void SetRoomTimed(bool isTimed)
-    {
-        if (!isStopwatch) timer.SetPaused(!isTimed);
     }
     public void StopTime()
     {

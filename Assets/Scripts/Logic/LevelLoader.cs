@@ -27,16 +27,16 @@ public class LevelLoader : MonoBehaviour
                 (batch[0], batch[batch.Length - 1]) = (batch[batch.Length - 1], batch[0]);
             foreach (var room in batch)
             {
-                if (room.IsTimed && (room.StandardTime <= 0f
+                if (level.Mode != LevelMode.Tutorial && (room.StandardTime <= 0f
                     || float.IsNaN(room.StandardTime) || float.IsInfinity(room.StandardTime)))
-                    throw new InvalidOperationException("Timed rooms must have a finite positive standard time.");
+                    throw new InvalidOperationException("Rooms in timed levels must have a finite positive standard time.");
                 sequence.Add(room);
                 previous = room;
                 if (sequence.Count == level.RoomCountToComplete)
                     break;
             }
         }
-        StandardTime = sequence.Where(room => room.IsTimed).Sum(room => room.StandardTime);
+        StandardTime = level.Mode == LevelMode.Tutorial ? 0f : sequence.Sum(room => room.StandardTime);
         roomQueue = new Queue<Room>(sequence);
     }
 

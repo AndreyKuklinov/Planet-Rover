@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d802cd2e98fab43bcc7858a853ccfb, type: 3}
+  m_Name: level_26_11_27_000
+  m_EditorClassIdentifier: 
+  <IsRandomOrder>k__BackingField: 1
+  beatAllRooms: 1
+  roomCountToComplete: 1
+  <Rooms>k__BackingField:
+  - {fileID: 8238245432250851067, guid: 061095f77aa68794ca8cf9a43f55c772, type: 3}
+  - {fileID: 8238245432250851067, guid: e76442a928984737b5a65c140b2f5d47, type: 3}
+  - {fileID: 8238245432250851067, guid: f8d025af19d147a190aa6954c0f4fc6e, type: 3}
+  - {fileID: 8238245432250851067, guid: 1ccc866c92e34db690d02c6cb6941463, type: 3}
+  - {fileID: 8238245432250851067, guid: e90741f8d2a34620b72e73786d10f678, type: 3}
+  - {fileID: 8238245432250851067, guid: 19a534fea8204f47b734e08bb620327f, type: 3}
+  - {fileID: 8238245432250851067, guid: e88f2505a7d24e7ab7b5ebe0667d8016, type: 3}
+  - {fileID: 8238245432250851067, guid: dc87d59d97254087befdcb0bd93943a8, type: 3}
+  - {fileID: 8238245432250851067, guid: 26667362225b496ab797addb43c94239, type: 3}
+  - {fileID: 8238245432250851067, guid: 3ba4c80bc3574c4cb4e48c37bc2e523e, type: 3}
+  - {fileID: 8238245432250851067, guid: f98488f0662b43d8b504d84049037eea, type: 3}
+  - {fileID: 8238245432250851067, guid: c1084536d7e3441eb4d95437bd513bee, type: 3}
+  - {fileID: 8238245432250851067, guid: 417718caf57047cfb410bb248ca14fa8, type: 3}
+  - {fileID: 8238245432250851067, guid: 97f45945b5fb4586940afaf09211c37a, type: 3}
+  - {fileID: 8238245432250851067, guid: 14c26a7ad019430bba76c406487ad4f6, type: 3}
+  - {fileID: 8238245432250851067, guid: 12b9b71992a14e4ca866e60651280a55, type: 3}
+  - {fileID: 8238245432250851067, guid: 3c6668a5957a4abcbf9a008443bbf675, type: 3}
+  - {fileID: 8238245432250851067, guid: b5a789cc55e94694ae5a887107e6de82, type: 3}
+  - {fileID: 8238245432250851067, guid: 8c9388ff9b2a4d6ba1623e01cd4b9a5a, type: 3}
+  - {fileID: 8238245432250851067, guid: e6f17749cc2947389f13e258a1365ad3, type: 3}
+  - {fileID: 8238245432250851067, guid: 7b8a41a1a98c447e9135e4deac0d96fd, type: 3}
