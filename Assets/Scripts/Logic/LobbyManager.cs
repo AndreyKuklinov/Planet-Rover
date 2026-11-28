@@ -30,7 +30,7 @@ public class LobbyManager : MonoBehaviour
     private void OnLevelSelected(LevelData level)
     {
         if (IsRoomTesting) return;
-        if (level.Rooms.Length == 1 && level.Rooms[0].TryGetComponent<RoomWorkshop>(out _))
+        if (level.IsWorkshop)
         {
             OpenWorkshop(level.Rooms[0], null, false);
             return;

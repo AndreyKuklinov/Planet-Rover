@@ -27,5 +27,6 @@ public static class SaveDataManager
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         ScoresChanged?.Invoke();
+        ScoresChanged?.Invoke();
     }
 }

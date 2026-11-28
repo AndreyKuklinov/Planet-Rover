@@ -25,6 +25,7 @@ public class LevelData : ScriptableObject
     [SerializeField, Min(1)] private int roomCountToComplete = 1;
     [field: SerializeField] public Room[] Rooms { get; private set; }
     public int RoomCountToComplete => beatAllRooms ? (Rooms?.Length ?? 0) : roomCountToComplete;
+    public bool IsWorkshop => Rooms?.Length == 1 && Rooms[0] != null && Rooms[0].TryGetComponent<RoomWorkshop>(out _);
     public bool IsRoomTest { get; private set; }
 
     public static LevelData CreateRoomTest(Room room)
